@@ -1,0 +1,26 @@
+{
+    "pluginName": "http测试",
+    "description": "轻量级http测试工具",
+    "author": "sushao",
+    "preload": "preload.js",
+    "logo": "read.png",
+    "main": "vue/index.html",
+    "homepage": "https://github.com/suxiaoshao/utools-novel-reader",
+    "version": "0.0.1",
+    "development":{
+        "main": "http://localhost:8084/index.html",
+        "preload": "preload.js",
+        "logo": "read.png"
+    },
+    "features": [
+        {
+            "code": "http",
+            "explain": "进入http测试",
+            "cmds": [
+                "http",
+                "测试",
+                "test"
+            ]
+        }
+    ]
+}

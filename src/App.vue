@@ -1,32 +1,47 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="app">
+        <!-- 侧边边框 -->
+        <div class="drawer full-height">
+            <my-drawer></my-drawer>
+        </div>
+
+        <!-- 路由页面 -->
+        <div class="main">
+            <router-view></router-view>
+        </div>
     </div>
-    <router-view/>
-  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+    import Vue from "vue"
+    import drawer from "@/components/myDrawer.vue";
 
-#nav {
-  padding: 30px;
+    export default Vue.extend({
+        name: 'LayoutDefault',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+        components: {
+            "my-drawer": drawer
+        }
+    })
+</script>
 
-    &.router-link-exact-active {
-      color: #42b983;
+<style scoped lang="scss">
+    .app {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        .drawer {
+            width: 160px;
+        }
+        .main{
+            position: absolute;
+            top: 0;
+            left: 160px;
+            right: 0;
+            bottom: 0;
+        }
+    ;
     }
-  }
-}
 </style>
