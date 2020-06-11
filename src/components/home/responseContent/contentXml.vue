@@ -39,14 +39,9 @@
             value: {
                 immediate: true,
                 handler(val: string) {
-                    this.editor!.dispose()
-                    const container = this.$refs.container as HTMLElement
-                    const theme: string = this.$q.dark.isActive ? "vs-dark" : "vs"
-                    this.editor = editor.create(container, {
-                        value: val,
-                        theme: theme,
-                        language: "xml"
-                    })
+                    if (this.editor !== null) {
+                        this.editor.setValue(val)
+                    }
                 }
             }
         }

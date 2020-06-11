@@ -22,6 +22,9 @@
                 <q-tab-panel name="html">
                     <my-response-html :value="responseContentData.text"></my-response-html>
                 </q-tab-panel>
+                <q-tab-panel name="image">
+                    <my-response-image :value="responseContentData.buffer.buffer"></my-response-image>
+                </q-tab-panel>
             </q-tab-panels>
         </div>
     </div>
@@ -34,10 +37,11 @@
     import contentHtml from "@/components/home/responseContent/contentHtml.vue";
     import contentXml from "@/components/home/responseContent/contentXml.vue";
     import contentText from "@/components/home/responseContent/contentText.vue";
+    import contentImage from "@/components/home/responseContent/contentImage.vue";
 
     interface OptionItem {
         label: string,
-        value: "empty" | "text" | "json" | "xml" | "html"
+        value: "empty" | "text" | "json" | "xml" | "html" | "image"
     }
 
     interface Data {
@@ -71,6 +75,10 @@
                     {
                         value: "html",
                         label: "html"
+                    },
+                    {
+                        value: "image",
+                        label: "图片"
                     }
                 ]
             }
@@ -79,7 +87,8 @@
             "my-response-json": contentJson,
             "my-response-html": contentHtml,
             "my-response-xml": contentXml,
-            "my-response-text": contentText
+            "my-response-text": contentText,
+            "my-response-image": contentImage
         },
         methods: {
             changeCharset() {

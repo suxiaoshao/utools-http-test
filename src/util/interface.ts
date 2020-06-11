@@ -58,11 +58,10 @@ export interface RequestContentData {
 }
 
 export interface ResponseContentData {
-    choose: "empty" | "text" | "json" | "xml" | "html"
+    choose: "empty" | "text" | "json" | "xml" | "html" | "image"
     charset: string
     buffer: Buffer
     text: string
-    arrayBuffer: ArrayBuffer
 }
 
 export interface ALLData {
@@ -74,6 +73,19 @@ export interface ALLData {
     requestContentData: RequestContentData
     responseContentData: ResponseContentData
     responseHeadersData: Header[]
+}
+
+/*
+* history data interface
+* */
+export interface HistoryItem {
+    requestHeadersData: RequestHeadersData
+    requestContentData: ResponseContentData
+}
+
+export interface AllHistory {
+    head: number
+    historyList: HistoryItem[]
 }
 
 /*

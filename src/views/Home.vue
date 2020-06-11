@@ -3,8 +3,8 @@
 
         <!-- 头部 -->
         <div class="row items-center my-header absolute-top">
-            <q-btn flat class="test-button" round @click="test">
-                <q-icon style="color: rgb(41,131,187)" class="cursor-pointer">
+            <q-btn flat class="test-button" round @click="makeRequest">
+                <q-icon style="color: rgb(41,131,187)">
                     <svg class="icon"
                          style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                          viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -12,10 +12,22 @@
                             d="M27.004302 377.13466L954.437748 3.789475c36.863015-14.57375 80.870025 14.57375 66.296275 58.58076L814.558323 984.517125c-7.286875 43.86413-66.296275 51.151005-88.299779 22.003505L475.932955 684.46933l353.341998-453.78657-404.778763 402.635565L27.004302 472.149795c-36.720135-14.57375-36.720135-73.15451 0-95.015135z m0 0"/>
                     </svg>
                 </q-icon>
+                <q-tooltip>发出请求</q-tooltip>
             </q-btn>
             <q-select class="col-2 col-lg-1" v-model="allData.method" :options="methodList" label="method"/>
             <q-input class="col-4 col-lg-3" v-model="allData.host" label="host" @blur="formatHost"/>
             <q-input class="col-grow" v-model="allData.path" label="path" @blur="formatPath"/>
+            <!--<q-btn flat class="test-button" round @click="saveRequest">
+                <q-icon style="color: #d8345f">
+                    <svg class="icon"
+                         style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+                         viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M314.921459 900.683417 370.854353 900.683417 370.854353 648.984884 482.72014 648.984884 482.72014 900.683417 482.72014 956.61631 314.921459 956.61631ZM706.45069 117.622908 314.921459 117.622908l0 223.731574 391.530254 0L706.451714 117.622908zM734.417649 956.61631 482.72014 956.61631l0-55.932893 223.731574 0L706.451714 593.053014 314.921459 593.053014l0 307.630403 0 55.932893-27.965935 0c-123.331933 0-223.731574-100.399641-223.731574-223.731574L63.22395 285.421588c0-123.331933 100.399641-223.731574 223.731574-223.731574l447.463148 0c123.331933 0 223.731574 100.399641 223.731574 223.731574L958.150246 732.884736C958.149223 856.216669 857.749582 956.61631 734.417649 956.61631z"/>
+                    </svg>
+                </q-icon>
+                <q-tooltip>保存这次请求</q-tooltip>
+            </q-btn>-->
         </div>
 
         <!-- 页脚 -->
@@ -105,7 +117,7 @@
     import myRequestContent from "@/components/home/myRequestContent.vue";
     import myResponseContent from "@/components/home/myResponseContent.vue";
     import myResponseHeaders from "@/components/home/myResponseHeaders.vue";
-    import WebData from "@/util/data";
+    import WebData from "@/util/webData";
 
     interface HttpData {
         methodList: string[]
@@ -157,8 +169,10 @@
                     this.allData.path = ""
                 }
             },
-            test() {
+            makeRequest() {
                 this.webData.networkAccess()
+            },
+            saveRequest() {
             }
         },
         components: {

@@ -10,6 +10,17 @@
 
 4. 这是我插件在官方论坛的[帖子](https://yuanliao.info/d/1843)，这个帖子下回复我会有提醒的
 
+## 更新
+
+### 0.0.2
+
+1. 添加了文件上传功能
+
+    在request-content界面使用,name属性是上传时formData的第一个参数，
+    不是文件名。
+
+2. 添加了返回结果是content-type=image时，直接显示图片的功能，接下来可能会添加其他二进制显示。
+
 ## 使用
 
 ### 输入host、path、method

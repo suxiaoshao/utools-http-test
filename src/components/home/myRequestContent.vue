@@ -70,10 +70,10 @@
                         value: "text",
                         label: "自定义"
                     },
-                    /*{
+                    {
                         value: "files",
                         label: "文件"
-                    },*/
+                    },
                     {
                         value: "json",
                         label: "json"

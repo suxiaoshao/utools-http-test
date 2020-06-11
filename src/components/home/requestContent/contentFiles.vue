@@ -95,7 +95,6 @@
                         "showHiddenFiles"
                     ]
                 })
-                console.log(filePath)
                 if (filePath === undefined) {
                     this.$q.notify({
                         message: "没有成功选择文件",

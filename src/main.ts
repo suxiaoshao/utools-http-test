@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './util/router'
 import './quasar'
 import "./styles/app.scss"
-import WebData from "@/util/data";
+import WebData from "@/util/webData";
 
 const webData = new WebData()
 Vue.config.productionTip = false

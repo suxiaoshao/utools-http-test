@@ -43,13 +43,9 @@
             value: {
                 immediate: true,
                 handler(val: string) {
-                    this.editor!.dispose()
-                    const container = this.$refs.container as HTMLElement
-                    const theme: string = this.$q.dark.isActive ? "vs-dark" : "vs"
-                    this.editor = editor.create(container, {
-                        value: this.value,
-                        theme: theme
-                    })
+                    if (this.editor !== null) {
+                        this.editor.setValue(val)
+                    }
                 }
             }
         }

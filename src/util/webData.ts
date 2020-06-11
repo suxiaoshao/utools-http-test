@@ -9,6 +9,7 @@ import {
 import {Method} from "axios";
 import {Notify} from "quasar";
 import {getHeaderListFromHeadersObject, getHeaderValueObject} from "@/util/headers";
+import FormData from "form-data"
 
 
 export default class WebData implements ALLData {
@@ -46,8 +47,7 @@ export default class WebData implements ALLData {
         choose: "empty",
         charset: "utf-8",
         buffer: new Buffer(0),
-        text: "",
-        arrayBuffer: new ArrayBuffer(0)
+        text: ""
     }
     public responseHeadersData: Header[] = []
 
@@ -59,7 +59,10 @@ export default class WebData implements ALLData {
         const url: string = this.host + this.path
         if (/^http(s)?:\/\/(.+\.)*.+(:\d+)?(\/.*)?$/.test(url)) {
             const headers: HeadersObject = this.getRequestHeadersObject()
-            const data: string = this.getRequestData()
+            const data: string | FormData = this.getRequestData()
+            if (typeof data !== "string") {
+                Object.assign(headers, data.getHeaders())
+            }
             window.axios.request({
                 url: url,
                 headers: headers,
@@ -69,20 +72,28 @@ export default class WebData implements ALLData {
             }).then(res => {
                 console.log(res)
                 this.responseContentData.buffer = res.data
-                this.responseContentData.charset = this.getResponseDataCharset(res.headers)
-                this.responseContentData.choose = this.getresponseDataChoose(res.headers)
+                this.setResponseDataCharset(res.headers)
+                this.setResponseDataChoose(res.headers)
                 this.setResponseDataText()
                 this.responseHeadersData = getHeaderListFromHeadersObject(res.headers)
                 this.setCookie()
                 this.tab = "response-content"
-            }).catch(error => {
-                Notify.create({
-                    message: "不知道哪里出错了...",
-                    color: "red-5",
-                    position: "top"
-                })
-                console.log(error)
             })
+                .catch(error => {
+                    const errorString = error.toString()
+                    Notify.create({
+                        message: "错误信息",
+                        color: "red-5",
+                        position: "top",
+                        caption: errorString
+                    })
+                    this.responseContentData.text = errorString
+                    this.responseContentData.choose = "text"
+                    this.responseContentData.charset = "utf-8"
+                    this.responseContentData.buffer = new Buffer(errorString)
+                    this.tab = "response-content"
+                    console.log(error)
+                })
         } else {
             Notify.create({
                 message: "'host'+'path'不是合法的url",
@@ -171,7 +182,7 @@ export default class WebData implements ALLData {
     }
 
     //获取responseContent的charset属性
-    getResponseDataCharset(headersObject: HeadersObject): string {
+    setResponseDataCharset(headersObject: HeadersObject) {
         let charset: string = "utf-8"
         Object.keys(headersObject).forEach(value => {
             if (value === "content-type") {
@@ -181,12 +192,12 @@ export default class WebData implements ALLData {
                 }
             }
         })
-        return charset
+        this.responseContentData.charset = charset
     }
 
     //获取responseContent的choose属性
-    getresponseDataChoose(headersObject: HeadersObject): "empty" | "text" | "json" | "xml" | "html" {
-        let choose: "empty" | "text" | "json" | "xml" | "html" = "text"
+    setResponseDataChoose(headersObject: HeadersObject) {
+        let choose: "empty" | "text" | "json" | "xml" | "html" | "image" = "text"
         Object.keys(headersObject).forEach(value => {
             if (value === "content-type") {
                 const valueObject: HeaderValueObject = getHeaderValueObject(headersObject[value])
@@ -194,16 +205,18 @@ export default class WebData implements ALLData {
                     choose = "json"
                 } else if ("text/html" in valueObject) {
                     choose = "html"
-                } else if ("text/xml") {
+                } else if ("text/xml" in valueObject) {
                     choose = "xml"
+                } else if ("image/png" in valueObject || "image/jpeg" in valueObject) {
+                    choose = "image"
                 }
             }
         })
-        return choose
+        this.responseContentData.choose = choose
     }
 
     //获取发送的data属性
-    getRequestData(): string {
+    getRequestData(): string | FormData {
         if (this.method === "GET" || this.method === "HEAD" || this.method === "DELETE"
             || this.method === "OPTIONS" || this.requestContentData.choose === "empty") {
             return ""
@@ -213,6 +226,12 @@ export default class WebData implements ALLData {
             return this.requestContentData.text
         } else if (this.requestContentData.choose === "form") {
             return this.getRequestFormString()
+        } else if (this.requestContentData.choose === "files") {
+            const form = new window.formData()
+            this.requestContentData.files.forEach(item => {
+                form.append(item.name, window.nodeFs.createReadStream(item.path))
+            })
+            return form
         } else {
             return ""
         }
