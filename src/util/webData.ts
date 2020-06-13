@@ -1,10 +1,10 @@
 import {
-    ALLData, Header,
+    ALLData,
     HeadersObject,
     HeaderValueObject,
     RequestContentData,
     RequestHeadersData,
-    ResponseContentData
+    ResponseContentData, ResponseHeadersData
 } from "@/util/interface";
 import {Method} from "axios";
 import {Notify} from "quasar";
@@ -49,7 +49,11 @@ export default class WebData implements ALLData {
         buffer: new Buffer(0),
         text: ""
     }
-    public responseHeadersData: Header[] = []
+    public responseHeadersData: ResponseHeadersData = {
+        headers: [],
+        responseTime: 0,
+        responseStatus: 0
+    }
 
     constructor() {
     }
@@ -58,11 +62,16 @@ export default class WebData implements ALLData {
     networkAccess() {
         const url: string = this.host + this.path
         if (/^http(s)?:\/\/(.+\.)*.+(:\d+)?(\/.*)?$/.test(url)) {
-            const headers: HeadersObject = this.getRequestHeadersObject()
-            const data: string | FormData = this.getRequestData()
+            const headers: HeadersObject = this.getRequestHeadersObject()//设置响应的头部
+            const data: string | FormData = this.getRequestData()//设置响应的body
+
+            //如果data属性不是string,那么就是form-data，需要添加头部信息
             if (typeof data !== "string") {
                 Object.assign(headers, data.getHeaders())
             }
+
+            const startTime: number = Date.now() / 1000
+            //发送请求
             window.axios.request({
                 url: url,
                 headers: headers,
@@ -71,12 +80,18 @@ export default class WebData implements ALLData {
                 responseType: "arraybuffer"
             }).then(res => {
                 console.log(res)
+
+                //headers属性的设置
+                this.responseHeadersData.responseTime = Date.now() / 1000 - startTime
+                this.responseHeadersData.headers = getHeaderListFromHeadersObject(res.headers)
+                this.responseHeadersData.responseStatus = res.status
+                this.setCookie()
+
+                //data属性的设置
                 this.responseContentData.buffer = res.data
                 this.setResponseDataCharset(res.headers)
                 this.setResponseDataChoose(res.headers)
                 this.setResponseDataText()
-                this.responseHeadersData = getHeaderListFromHeadersObject(res.headers)
-                this.setCookie()
                 this.tab = "response-content"
             })
                 .catch(error => {
@@ -105,7 +120,7 @@ export default class WebData implements ALLData {
 
     //从response中设置cookie
     setCookie() {
-        this.responseHeadersData.forEach(header => {
+        this.responseHeadersData.headers.forEach(header => {
 
             //获取set-cookie请求头
             if (header.name === "set-cookie" || header.name === "Set-Cookie") {

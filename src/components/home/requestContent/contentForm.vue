@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue"
+    import Vue, {PropType} from "vue"
     import {Column, RequestFormData} from "@/util/interface";
     import addIcon from "@/components/icon/addIcon.vue";
     import deleteIcon from "@/components/icon/deleteIcon.vue";
@@ -54,7 +54,7 @@
     export default Vue.extend({
         name: "contentForm",
         props: {
-            formData: Array as () => RequestFormData[]
+            formData: Array as PropType<RequestFormData[]>
         },
         data(): Data {
             return {

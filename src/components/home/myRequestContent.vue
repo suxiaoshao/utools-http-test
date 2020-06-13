@@ -13,13 +13,13 @@
                 </q-tab-panel>
 
                 <q-tab-panel name="text">
-                    <my-request-content-text v-model="requestContentData.text"></my-request-content-text>
+                    <my-text v-model="requestContentData.text"></my-text>
                 </q-tab-panel>
                 <q-tab-panel name="files">
                     <my-request-content-files :content-file-data="requestContentData.files"></my-request-content-files>
                 </q-tab-panel>
                 <q-tab-panel name="json">
-                    <my-request-content-json v-model="requestContentData.json"></my-request-content-json>
+                    <my-text v-model="requestContentData.json" language="json"></my-text>
                 </q-tab-panel>
                 <q-tab-panel name="form">
                     <my-request-content-form :form-data="requestContentData.form"></my-request-content-form>
@@ -30,12 +30,11 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue"
+    import Vue, {PropType} from "vue"
     import {RequestContentData} from "@/util/interface";
-    import contentText from "@/components/home/requestContent/contentText.vue";
-    import contentJson from "@/components/home/requestContent/contentJson.vue";
     import contentForm from "@/components/home/requestContent/contentForm.vue";
     import contentFiles from "@/components/home/requestContent/contentFiles.vue";
+    import myText from "@/components/myText.vue";
 
     interface OptionItem {
         label: string,
@@ -50,13 +49,12 @@
     export default Vue.extend({
         name: "myCookies",
         components: {
-            "my-request-content-text": contentText,
-            "my-request-content-json": contentJson,
             "my-request-content-form": contentForm,
-            "my-request-content-files": contentFiles
+            "my-request-content-files": contentFiles,
+            "my-text": myText
         },
         props: {
-            requestContentData: Object as () => RequestContentData
+            requestContentData: Object as PropType<RequestContentData>
         },
         data(): Data {
             return {

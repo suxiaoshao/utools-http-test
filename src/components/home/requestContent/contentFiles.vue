@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue"
+    import Vue, {PropType} from "vue"
     import {Column, RequestUploadFile} from "@/util/interface";
     import deleteIcon from "@/components/icon/deleteIcon.vue";
     import addIcon from "@/components/icon/addIcon.vue";
@@ -54,7 +54,7 @@
     export default Vue.extend({
         name: "contentFile",
         props: {
-            contentFileData: Array as () => RequestUploadFile[]
+            contentFileData: Array as PropType<RequestUploadFile[]>
         },
         data(): Data {
             return {

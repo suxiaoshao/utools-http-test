@@ -64,6 +64,12 @@ export interface ResponseContentData {
     text: string
 }
 
+export interface ResponseHeadersData {
+    headers: Header[]
+    responseTime: number
+    responseStatus: number
+}
+
 export interface ALLData {
     host: string,
     method: Method
@@ -72,7 +78,7 @@ export interface ALLData {
     requestHeadersData: RequestHeadersData
     requestContentData: RequestContentData
     responseContentData: ResponseContentData
-    responseHeadersData: Header[]
+    responseHeadersData: ResponseHeadersData
 }
 
 /*

@@ -12,6 +12,14 @@
 
 ## 更新
 
+### 0.0.3
+
+1. 在response-headers页面添加了响应的status和响应时间时间显示（单位为毫秒）
+
+2. 在response-data页面添加了response的body的Buffer的字节数
+
+> 注:下个版本将加入历史记录  
+
 ### 0.0.2
 
 1. 添加了文件上传功能

@@ -32,6 +32,12 @@
                         <template v-slot:body="props">
                             <q-tr :props="props">
 
+                                <q-td key="operation" :props="props" auto-width>
+                                    <q-btn flat @click="deleteHeader(props.rowIndex)" round>
+                                        <delete-icon></delete-icon>
+                                    </q-btn>
+                                </q-td>
+
                                 <!-- name列 -->
                                 <q-td key="name" :props="props">
                                     {{props.row.name}}
@@ -50,11 +56,6 @@
                                                   label-cancel="取消">
                                         <q-input v-model="props.row.value" dense autofocus></q-input>
                                     </q-popup-edit>
-                                </q-td>
-                                <q-td key="operation" :props="props" auto-width>
-                                    <q-btn flat @click="deleteHeader(props.rowIndex)" round>
-                                        <delete-icon></delete-icon>
-                                    </q-btn>
                                 </q-td>
                             </q-tr>
                         </template>
@@ -76,6 +77,12 @@
                         <!-- 表格主体 -->
                         <template v-slot:body="props">
                             <q-tr :props="props">
+
+                                <q-td key="operation" :props="props" auto-width>
+                                    <q-btn flat @click="deleteCookie(props.rowIndex)" round>
+                                        <delete-icon></delete-icon>
+                                    </q-btn>
+                                </q-td>
 
                                 <!-- name列 -->
                                 <q-td key="name" :props="props">
@@ -125,12 +132,6 @@
                                     </q-popup-edit>
                                 </q-td>
 
-                                <q-td key="operation" :props="props">
-                                    <q-btn flat @click="deleteCookie(props.rowIndex)" round>
-                                        <delete-icon></delete-icon>
-                                    </q-btn>
-                                </q-td>
-
                             </q-tr>
                         </template>
                     </q-table>
@@ -141,7 +142,7 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue"
+    import Vue, {PropType} from "vue"
     import {Column, RequestHeadersData} from "@/util/interface";
     import deleteIcon from "@/components/icon/deleteIcon.vue";
     import editIcon from "@/components/icon/editIcon.vue";
@@ -166,6 +167,12 @@
                 tab: "headers",
                 headersColumns: [
                     {
+                        name: "operation",
+                        label: "操作",
+                        field: "operation",
+                        align: "left"
+                    },
+                    {
                         name: "name",
                         label: "name",
                         field: "name",
@@ -176,15 +183,15 @@
                         label: "value",
                         field: "value",
                         align: 'left'
-                    },
+                    }
+                ],
+                cookieColumns: [
                     {
                         name: "operation",
                         label: "操作",
                         field: "operation",
                         align: "left"
-                    }
-                ],
-                cookieColumns: [
+                    },
                     {
                         name: "name",
                         label: "name",
@@ -214,12 +221,6 @@
                         label: "max-age",
                         field: "maxAge",
                         align: 'left'
-                    },
-                    {
-                        name: "operation",
-                        label: "操作",
-                        field: "operation",
-                        align: "left"
                     }
                 ],
                 errorProtein: false,
@@ -230,7 +231,7 @@
             }
         },
         props: {
-            requestHeadersData: Object as () => RequestHeadersData
+            requestHeadersData: Object as PropType<RequestHeadersData>
         },
         methods: {
             addHeader() {
