@@ -17,17 +17,10 @@
             <q-select class="col-2 col-lg-1" v-model="allData.method" :options="methodList" label="method"/>
             <q-input class="col-4 col-lg-3" v-model="allData.host" label="host" @blur="formatHost"/>
             <q-input class="col-grow" v-model="allData.path" label="path" @blur="formatPath"/>
-            <!--<q-btn flat class="test-button" round @click="saveRequest">
-                <q-icon style="color: #d8345f">
-                    <svg class="icon"
-                         style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
-                         viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M314.921459 900.683417 370.854353 900.683417 370.854353 648.984884 482.72014 648.984884 482.72014 900.683417 482.72014 956.61631 314.921459 956.61631ZM706.45069 117.622908 314.921459 117.622908l0 223.731574 391.530254 0L706.451714 117.622908zM734.417649 956.61631 482.72014 956.61631l0-55.932893 223.731574 0L706.451714 593.053014 314.921459 593.053014l0 307.630403 0 55.932893-27.965935 0c-123.331933 0-223.731574-100.399641-223.731574-223.731574L63.22395 285.421588c0-123.331933 100.399641-223.731574 223.731574-223.731574l447.463148 0c123.331933 0 223.731574 100.399641 223.731574 223.731574L958.150246 732.884736C958.149223 856.216669 857.749582 956.61631 734.417649 956.61631z"/>
-                    </svg>
-                </q-icon>
+            <q-btn flat class="test-button" round @click="openDialog">
+                <save-icon></save-icon>
                 <q-tooltip>保存这次请求</q-tooltip>
-            </q-btn>-->
+            </q-btn>
         </div>
 
         <!-- 页脚 -->
@@ -108,6 +101,21 @@
                 </q-tab-panel>
             </q-tab-panels>
         </div>
+
+        <!-- 保存对话框 -->
+        <q-dialog v-model="dialog">
+            <q-card flat bordered>
+                <q-card-section>
+                    <q-input v-model="historyName" :rules="rules" label="name"></q-input>
+                </q-card-section>
+                <q-card-actions align="around">
+                    <q-btn flat @click="saveHistory">
+                        <import-icon></import-icon>
+                    </q-btn>
+                    <q-tooltip>保存</q-tooltip>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -117,11 +125,19 @@
     import myRequestContent from "@/components/home/myRequestContent.vue";
     import myResponseContent from "@/components/home/myResponseContent.vue";
     import myResponseHeaders from "@/components/home/myResponseHeaders.vue";
-    import WebData from "@/util/webData";
+    import {WebData} from "@/util/webData";
+    import {Notify} from "quasar";
+    import saveIcon from "@/components/icon/saveIcon.vue";
+    import importIcon from "@/components/icon/importIcon.vue";
 
     interface HttpData {
         methodList: string[]
         allData: WebData
+        dialog: boolean
+        historyName: string
+        rules: {
+            (name: string): boolean | string
+        }[]
     }
 
     export default Vue.extend({
@@ -129,7 +145,14 @@
         data(): HttpData {
             return {
                 methodList: ["GET", "POST", "PUT", "PATCH", "HEAD", "DELETE", "OPTION"],
-                allData: this.webData
+                allData: this.webData,
+                dialog: false,
+                historyName: "",
+                rules: [
+                    val => {
+                        return !this.webHistory.verifyName(val) || "name不允许和之前的重复"
+                    }
+                ]
             }
         },
         methods: {
@@ -170,16 +193,45 @@
                 }
             },
             makeRequest() {
+                this.webHistory.readFromWebData(this.webData)
                 this.webData.networkAccess()
             },
-            saveRequest() {
+            openDialog() {
+                this.dialog = true
+            },
+            saveHistory() {
+                if (this.webHistory.verifyName(this.historyName)) {
+                    Notify.create({
+                        message: "name不允许和之前的重复",
+                        color: "red-5",
+                        position: "top"
+                    })
+                } else {
+                    const result = this.webHistory.pushToDb(this.historyName)
+                    if (!result) {
+                        Notify.create({
+                            message: "收藏失败",
+                            color: "red-5",
+                            position: "top"
+                        })
+                    } else {
+                        Notify.create({
+                            message: "收藏成功",
+                            color: "secondary-5",
+                            position: "top"
+                        })
+                        this.dialog = false
+                    }
+                }
             }
         },
         components: {
             "my-request-headers": myRequestHeaders,
             "my-request-content": myRequestContent,
             "my-response-headers": myResponseHeaders,
-            "my-response-content": myResponseContent
+            "my-response-content": myResponseContent,
+            "save-icon": saveIcon,
+            "import-icon": importIcon
         },
         computed: {}
     })

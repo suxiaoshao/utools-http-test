@@ -53,7 +53,6 @@ export interface RequestContentData {
     otherContentType: string
     text: string
     files: RequestUploadFile[]
-    json: string
     form: RequestFormData[]
 }
 
@@ -85,13 +84,11 @@ export interface ALLData {
 * history data interface
 * */
 export interface HistoryItem {
+    host: string,
+    method: Method
+    path: string
     requestHeadersData: RequestHeadersData
-    requestContentData: ResponseContentData
-}
-
-export interface AllHistory {
-    head: number
-    historyList: HistoryItem[]
+    requestContentData: RequestContentData
 }
 
 /*

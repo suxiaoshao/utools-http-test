@@ -90,7 +90,7 @@
                 try {
                     return JSON.stringify(JSON.parse(this.responseContentData.text))
                 } catch (e) {
-                    return "{}"
+                    return this.responseContentData.text
                 }
             }
         },

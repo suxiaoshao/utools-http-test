@@ -1,7 +1,7 @@
 import {
     ALLData,
     HeadersObject,
-    HeaderValueObject,
+    HeaderValueObject, HistoryItem,
     RequestContentData,
     RequestHeadersData,
     ResponseContentData, ResponseHeadersData
@@ -10,9 +10,10 @@ import {Method} from "axios";
 import {Notify} from "quasar";
 import {getHeaderListFromHeadersObject, getHeaderValueObject} from "@/util/headers";
 import FormData from "form-data"
+import {deepCopy} from "@/util/util";
 
 
-export default class WebData implements ALLData {
+export class WebData implements ALLData {
     public host: string = "";
     public method: Method = "GET";
     public path: string = "";
@@ -23,7 +24,6 @@ export default class WebData implements ALLData {
         contentType: "",
         text: "",
         files: [],
-        json: "{}",
         form: []
     };
     public requestHeadersData: RequestHeadersData = {
@@ -56,6 +56,26 @@ export default class WebData implements ALLData {
     }
 
     constructor() {
+    }
+
+    //从历史读取
+    readFromWebHistory(historyItem: HistoryItem) {
+        this.host = historyItem.host
+        this.path = historyItem.path
+        this.method = historyItem.method
+        this.requestHeadersData = deepCopy(historyItem.requestHeadersData)
+        this.requestContentData = deepCopy(historyItem.requestContentData)
+        this.responseHeadersData = {
+            headers: [],
+            responseTime: 0,
+            responseStatus: 0
+        }
+        this.responseContentData = {
+            choose: "empty",
+            charset: "utf-8",
+            buffer: new Buffer(0),
+            text: ""
+        }
     }
 
     // 网络访问的主入口
@@ -236,7 +256,7 @@ export default class WebData implements ALLData {
             || this.method === "OPTIONS" || this.requestContentData.choose === "empty") {
             return ""
         } else if (this.requestContentData.choose === "json") {
-            return this.requestContentData.json
+            return this.requestContentData.text
         } else if (this.requestContentData.choose === "text") {
             return this.requestContentData.text
         } else if (this.requestContentData.choose === "form") {

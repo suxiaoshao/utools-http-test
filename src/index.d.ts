@@ -1,6 +1,7 @@
 import {UTools} from "utools-helper/@types/utools"
 import axios from "axios"
-import WebData from "@/util/webData";
+import {WebData} from "@/util/webData";
+import {WebHistory} from "@/util/webHistory";
 import iconv from "iconv-lite"
 import fs from "fs"
 import form from "form-data"
@@ -18,8 +19,8 @@ declare global {
     type utools = UTools;
 }
 declare module 'vue/types/vue' {
-
     interface Vue {
         webData: WebData
+        webHistory: WebHistory
     }
 }

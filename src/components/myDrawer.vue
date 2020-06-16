@@ -69,13 +69,13 @@
                             name: "Home"
                         }
                     },
-                    // {
-                    //     name: "历史记录",
-                    //     icon: "history",
-                    //     location: {
-                    //         name: "history"
-                    //     }
-                    // }
+                    {
+                        name: "历史记录",
+                        icon: "history",
+                        location: {
+                            name: "history"
+                        }
+                    }
                 ],
                 darkState: {
                     isNotDark: true,

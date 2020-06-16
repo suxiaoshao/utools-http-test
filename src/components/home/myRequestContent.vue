@@ -19,7 +19,7 @@
                     <my-request-content-files :content-file-data="requestContentData.files"></my-request-content-files>
                 </q-tab-panel>
                 <q-tab-panel name="json">
-                    <my-text v-model="requestContentData.json" language="json"></my-text>
+                    <my-text v-model="requestContentData.text" language="json"></my-text>
                 </q-tab-panel>
                 <q-tab-panel name="form">
                     <my-request-content-form :form-data="requestContentData.form"></my-request-content-form>
