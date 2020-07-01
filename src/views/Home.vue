@@ -125,7 +125,7 @@
     import myRequestContent from "@/components/home/myRequestContent.vue";
     import myResponseContent from "@/components/home/myResponseContent.vue";
     import myResponseHeaders from "@/components/home/myResponseHeaders.vue";
-    import {WebData} from "@/util/webData";
+    import {WebData} from "@/util/http/webData";
     import {Notify} from "quasar";
     import saveIcon from "@/components/icon/saveIcon.vue";
     import importIcon from "@/components/icon/importIcon.vue";

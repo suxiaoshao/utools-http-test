@@ -1,6 +1,6 @@
 import {HistoryItem, RequestContentData, RequestHeadersData} from "@/util/interface";
 import {deepCopy} from "@/util/util";
-import {WebData} from "@/util/webData";
+import {WebData} from "@/util/http/webData";
 import {Method} from "axios";
 
 export class WebHistory implements HistoryItem {
@@ -31,19 +31,19 @@ export class WebHistory implements HistoryItem {
     }
 
     readFromWebData(webData: WebData) {
-        this.requestContentData = deepCopy(webData.requestContentData)
-        this.requestHeadersData = deepCopy(webData.requestHeadersData)
+        this.requestContentData = deepCopy<RequestContentData>(webData.requestContentData)
+        this.requestHeadersData = deepCopy<RequestHeadersData>(webData.requestHeadersData)
         this.host = webData.host
         this.path = webData.path
         this.method = webData.method
     }
 
     readFromHistoryItem(historyItem: HistoryItem) {
-        this.method = historyItem.method
-        this.path = historyItem.path
         this.host = historyItem.host
-        this.requestHeadersData = deepCopy(historyItem.requestHeadersData)
-        this.requestContentData = deepCopy(historyItem.requestContentData)
+        this.path = historyItem.path
+        this.requestHeadersData = deepCopy<RequestHeadersData>(historyItem.requestHeadersData)
+        this.requestContentData = deepCopy<RequestContentData>(historyItem.requestContentData)
+        this.method = historyItem.method
     }
 }
 

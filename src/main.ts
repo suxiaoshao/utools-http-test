@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './util/router'
 import './quasar'
 import "./styles/app.scss"
-import {WebData} from "@/util/webData";
-import {WebHistory} from "@/util/webHistory";
+import {WebData} from "@/util/http/webData";
+import {WebHistory} from "@/util/http/webHistory";
 
 Vue.config.productionTip = false
 
