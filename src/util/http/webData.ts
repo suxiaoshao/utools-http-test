@@ -80,7 +80,7 @@ export class WebData implements ALLData {
 
   // 网络访问的主入口
   networkAccess() {
-    const url: string = this.host + this.path
+    const url: string = encodeURI(this.host + this.path)
     if (/^http(s)?:\/\/(.+\.)*.+(:\d+)?(\/.*)?$/.test(url)) {
       const headers: HeadersObject = this.getRequestHeadersObject()//设置响应的头部
       const data: string | FormData = this.getRequestData()//设置响应的body

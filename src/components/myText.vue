@@ -48,15 +48,23 @@
           this.$emit("update", this.editor!.getValue())
         })
       } else {
+        this.editor.trigger("anyString", 'editor.action.formatDocument', "");
 
-        //如果是只读
         setTimeout(() => {
-          this.editor!.getAction('editor.action.formatDocument').run().then(() => {
-            this.editor!.updateOptions({
-              readOnly: true,
-            })
-          })
+          this.format()
         }, 100)
+      }
+    },
+    methods: {
+      format() {
+        this.editor!.updateOptions({
+          readOnly: false
+        })
+        this.editor!.getAction('editor.action.formatDocument').run().then(() => {
+          this.editor!.updateOptions({
+            readOnly: true,
+          })
+        })
       }
     },
     model: {
@@ -69,6 +77,9 @@
         handler(val: string) {
           if (this.editor !== null && val !== this.editor.getValue()) {
             this.editor.setValue(val)
+            if (this.readOnly) {
+              this.format()
+            }
           }
         }
       },
