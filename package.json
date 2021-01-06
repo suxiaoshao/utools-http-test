@@ -20,7 +20,7 @@
     "@vue/cli-plugin-router": "^4.4.4",
     "@vue/cli-plugin-typescript": "^4.4.4",
     "@vue/cli-service": "^4.4.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-transform-imports": "1.5.0",
     "form-data": "^3.0.0",
     "iconv-lite": "^0.6.0",
