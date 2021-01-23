@@ -4,11 +4,11 @@
     "author": "sushao",
     "preload": "preload.js",
     "logo": "read.png",
-    "main": "vue/index.html",
+    "main": "react/index.html",
     "homepage": "https://github.com/suxiaoshao/utools-novel-reader",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "development":{
-        "main": "http://localhost:8084/index.html",
+        "main": "http://localhost:8083/index.html",
         "preload": "preload.js",
         "logo": "read.png"
     },

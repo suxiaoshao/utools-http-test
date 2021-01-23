@@ -40,14 +40,14 @@
 
 2. 在response-data页面添加了response的body的Buffer的字节数
 
-> 注:下个版本将加入历史记录  
+> 注:下个版本将加入历史记录
 
 ### 0.0.2
 
 1. 添加了文件上传功能
 
-    在request-content界面使用,name属性是上传时formData的第一个参数，
-    不是文件名。
+   在request-content界面使用,name属性是上传时formData的第一个参数，
+   不是文件名。
 
 2. 添加了返回结果是content-type=image时，直接显示图片的功能，接下来可能会添加其他二进制显示。
 
@@ -84,16 +84,16 @@
     ```javascript
    contentType=`${contentType}; ${contentTypeOther}`
     ```
- 
- 5. headers的优先级比content-type高
- 
- ### response-headers
- 
- 1. 请求结束后可以查看response的headers
- 
- 2. 会自动分析set-cookie，更新cookie
- 
- 
+
+5. headers的优先级比content-type高
+
+### response-headers
+
+1. 请求结束后可以查看response的headers
+
+2. 会自动分析set-cookie，更新cookie
+
+
 ### response-body
 
 1. 支持编码,会解析response的头部，自动得出编码方式，也可以设定

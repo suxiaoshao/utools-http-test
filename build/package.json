@@ -1,17 +1,13 @@
 {
   "name": "build",
-  "version": "0.1.1",
-  "description": "",
-  "main": "preload.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "form-data": "^3.0.0",
-    "iconv-lite": "^0.6.0"
-  },
-  "devDependencies": {}
+    "iconv-lite": "^0.6.2",
+    "s-typeorm": "^1.0.1",
+    "sqlite3": "^5.0.0"
+  }
 }
