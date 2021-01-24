@@ -1,4 +1,4 @@
 export interface OldHeader {
-  name: string;
-  value: string;
+  name: string | undefined;
+  value: string | undefined;
 }

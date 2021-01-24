@@ -1,11 +1,13 @@
 export interface OldCookie {
-  name: string;
-  value: string;
-  domain: string;
-  path: string;
-  creatTime: number;
-  maxAge: {
-    use: boolean;
-    value: number;
-  };
+  name: string | undefined;
+  value: string | undefined;
+  domain: string | undefined;
+  path: string | undefined;
+  creatTime: number | undefined;
+  maxAge:
+    | {
+        use: boolean | undefined;
+        value: number | undefined;
+      }
+    | undefined;
 }

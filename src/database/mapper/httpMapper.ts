@@ -15,6 +15,11 @@ export class HttpMapper {
     return await httpRepository.save(http);
   }
 
+  public static async saveHttps(http: HttpEntity[]): Promise<HttpEntity[]> {
+    const httpRepository = await this.getHttpRepository();
+    return await httpRepository.save(http);
+  }
+
   public static async getTagsByHttpId(httpId: number | undefined): Promise<TagEntity[]> {
     const tagRepository = await this.getHttpRepository();
     return (

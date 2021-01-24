@@ -1,4 +1,4 @@
 export interface OldUploadFile {
-  path: string;
-  name: string;
+  path: string | undefined;
+  name: string | undefined;
 }
