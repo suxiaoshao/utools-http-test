@@ -92,7 +92,7 @@ export default function UrlInput(): JSX.Element {
       />
       <Divider className={style.divider} orientation="vertical" />
       <InputBase
-        placeholder="http url"
+        placeholder="url"
         className={style.input}
         value={httpManager.url}
         onChange={(event) => {

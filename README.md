@@ -2,7 +2,7 @@
 
 ## 联系方式
 
-1. 我的个人博客[sushao'bolg](https://www.sushao.blog)
+1. 我的个人博客[sushao'bolg](https://www.sushao.top)
 
 2. 我的github[sushao](https://github.com/suxiaoshao)
 

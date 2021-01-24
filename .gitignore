@@ -10,6 +10,7 @@
 
 # production
 /build/react
+/build/vue
 
 # misc
 .DS_Store
