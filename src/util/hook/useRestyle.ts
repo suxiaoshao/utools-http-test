@@ -31,7 +31,7 @@ export const useReStyle = makeStyles((theme) =>
     tableContainer: {
       margin: theme.spacing(1),
       height: `calc(100% - ${theme.spacing(1) * 2}px)`,
-      width: `calc(100% - ${theme.spacing(1) * 2}px)`,
+      width: `calc(100% - ${theme.spacing(1) * 2}px) !important`,
     },
     tableInput: {
       width: '100%',

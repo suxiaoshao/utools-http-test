@@ -29,9 +29,7 @@ export function getVersion(): Version {
 }
 
 export function showUpdateInfo(): void {
-  console.log(111);
-  console.log(window.nodeDirname);
-  window.utools.createBrowserWindow('https://vuetifyjs.com/zh-Hans/getting-started/installation/#webpack-5b8988c5', {
+  window.utools.createBrowserWindow('./http/http.html', {
     width: 800,
     height: 600,
     title: '更新说明',

@@ -5,6 +5,7 @@ module.exports = {
   paths: (paths, env) => {
     if (env === 'production') {
       paths.appBuild = path.resolve(paths.appBuild, 'react');
+      paths.publicUrlOrPath = './';
     }
     return paths;
   },

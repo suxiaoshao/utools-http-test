@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './app.scss';
-import { getDataFile } from './util/update/localPath';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Sponsorship from './view/sponsorship';
 import Work from './view/work';
@@ -9,9 +8,6 @@ import CookiePage from './view/cookiePage';
 import HistoryPage from './view/historyPage';
 
 export default function App(): JSX.Element {
-  useEffect(() => {
-    console.log(getDataFile());
-  }, []);
   return (
     <Router>
       <MyThemeProvider>

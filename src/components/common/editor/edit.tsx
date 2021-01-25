@@ -27,7 +27,7 @@ export default function Edit(
       setEdit(
         editor.create(editRef?.current, {
           value: props.code,
-          theme: 'monankai',
+          theme: 'vs-dark',
           automaticLayout: true,
           language: props.language,
           fontSize: 16,
