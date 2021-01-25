@@ -1,7 +1,7 @@
 import React from 'react';
 import { TabPanelDisappear, TabPanelHidden } from '../../../common/tabPanel';
 import { ResponseContext } from '../response';
-import Edit from '../../../../components/common/edit';
+import Edit from '../../../common/editor/edit';
 import { useReqBodyStyle } from '../../request/reqBody/reqBody';
 import ResImage from '../../../../components/work/response/resBody/resImage';
 

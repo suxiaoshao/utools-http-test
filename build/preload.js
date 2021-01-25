@@ -17,5 +17,7 @@ window.nodePath = path;
 
 const typeorm = require('s-typeorm');
 window.typeorm = typeorm;
-const buffer=require("buffer")
+const buffer = require('buffer');
 window.buffer = buffer.Buffer;
+
+window.nodeDirname = __dirname;

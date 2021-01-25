@@ -1,5 +1,8 @@
 import React from 'react';
 import { editor } from 'monaco-editor';
+import monankai from './monankai';
+
+editor.defineTheme('monankai', monankai);
 
 export default function Edit(
   props:
@@ -24,7 +27,7 @@ export default function Edit(
       setEdit(
         editor.create(editRef?.current, {
           value: props.code,
-          theme: 'vs-dark',
+          theme: 'monankai',
           automaticLayout: true,
           language: props.language,
           fontSize: 16,

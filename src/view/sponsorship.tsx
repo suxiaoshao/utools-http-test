@@ -1,24 +1,50 @@
 import React from 'react';
 import MyDrawer from '../components/myDrawer';
-import { Button } from '@material-ui/core';
-import { connect } from '../database/main';
-import { TagEntity } from '../database/entity/tag.entity';
+import alipay from '../assets/alipay.jpg';
+import wepay from '../assets/wepay.jpg';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+import Alipay from '../components/common/icon/alipay';
+import WePay from '../components/common/icon/wepay';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+
+const useStyle = makeStyles(() =>
+  createStyles({
+    main: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+    },
+    img: {
+      maxWidth: '50%',
+      maxHeight: '80%',
+    },
+  }),
+);
 
 export default function Sponsorship(): JSX.Element {
+  const [imgSrc, setImgSrc] = React.useState<string>(alipay);
+  const style = useStyle();
   return (
-    <MyDrawer className="">
-      <Button
-        onClick={async () => {
-          const database = await connect;
-          const userEntityRepository = database.getRepository(TagEntity);
-          const oldUser = new TagEntity();
-          oldUser.tagName = 'sushao';
-          const user = await userEntityRepository.save(oldUser);
-          console.log(user);
+    <MyDrawer className={style.main}>
+      <img src={imgSrc} className={style.img} />
+      <ToggleButtonGroup
+        exclusive
+        value={imgSrc}
+        onChange={(event, value) => {
+          console.log(value);
+          if (value !== null) {
+            setImgSrc(value);
+          }
         }}
       >
-        add
-      </Button>
+        <ToggleButton value={alipay}>
+          <Alipay />
+        </ToggleButton>
+        <ToggleButton value={wepay}>
+          <WePay />
+        </ToggleButton>
+      </ToggleButtonGroup>
     </MyDrawer>
   );
 }

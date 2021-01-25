@@ -4,6 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CookieMapper } from './database/mapper/cookieMapper';
 import { initData } from './database/data/initData';
+import { checkVersion, showUpdateInfo } from './util/update/notify';
 
 if (window.utools === undefined) {
   ReactDOM.render(
@@ -14,16 +15,18 @@ if (window.utools === undefined) {
   );
 } else {
   window.utools.onPluginReady(() => {
-    (async () => {
-      await initData();
-      await CookieMapper.deleteTimeoutAndSession();
-    })();
     ReactDOM.render(
       <React.StrictMode>
         <App />
       </React.StrictMode>,
       document.getElementById('root'),
     );
+    checkVersion();
+    showUpdateInfo();
+    (async () => {
+      await initData();
+      await CookieMapper.deleteTimeoutAndSession();
+    })();
   });
 }
 reportWebVitals();

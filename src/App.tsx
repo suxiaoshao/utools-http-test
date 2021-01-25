@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './app.scss';
-import { getDataFile } from './util/local';
+import { getDataFile } from './util/update/localPath';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Sponsorship from './view/sponsorship';
 import Work from './view/work';

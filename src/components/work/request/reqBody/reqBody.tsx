@@ -2,7 +2,7 @@ import React from 'react';
 import ReqFormFata from './reqFormData';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import XForm from './XForm';
-import Edit from '../../../common/edit';
+import Edit from '../../../common/editor/edit';
 import { TabPanelDisappear } from '../../../common/tabPanel';
 import { RequestContext } from '../request';
 

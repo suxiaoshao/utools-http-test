@@ -1,5 +1,5 @@
 import { getHttpEntityFromHistoryItem, HistoryItem } from './historyItem';
-import { getHttpDir } from '../../util/local';
+import { getHttpDir } from '../../util/update/localPath';
 import { TagMapper } from '../mapper/tagMapper';
 import { TagEntity } from '../entity/tag.entity';
 import { CookieEntity } from '../entity/cookie.entity';

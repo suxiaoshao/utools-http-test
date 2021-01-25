@@ -20,6 +20,7 @@ declare global {
     nodePath: typeof path;
     typeorm: typeof typeorm;
     buffer: typeof Buffer;
+    nodeDirname: string;
   }
 }
 declare global {
