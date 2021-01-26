@@ -5,6 +5,7 @@ const formData = require('form-data');
 const path = require('path');
 const typeorm = require('s-typeorm');
 const buffer = require('buffer');
+const mapper = require('./database/mapper');
 
 axios.defaults.adapter = require('axios/lib/adapters/http');
 axios.defaults.withCredentials = true;
@@ -22,3 +23,5 @@ window.typeorm = typeorm;
 window.buffer = buffer.Buffer;
 
 window.nodeDirname = __dirname;
+
+window.mapper = mapper;

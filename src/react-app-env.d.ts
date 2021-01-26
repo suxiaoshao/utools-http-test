@@ -7,6 +7,7 @@ import form from 'form-data';
 import * as path from 'path';
 import typeorm from 'typeorm';
 import { Buffer } from 'buffer';
+import * as mapper from '../database/mapper';
 
 declare global {
   interface Window {
@@ -21,6 +22,7 @@ declare global {
     typeorm: typeof typeorm;
     buffer: typeof Buffer;
     nodeDirname: string;
+    mapper: typeof mapper;
   }
 }
 declare global {

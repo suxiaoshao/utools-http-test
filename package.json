@@ -31,7 +31,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "format": "prettier --config ./.prettierrc.js --write ./src"
+    "format": "prettier --config ./.prettierrc.js --write ./src",
+    "tsc": " tsc --project database/tsconfig.datebase.json"
   },
   "browserslist": {
     "production": [

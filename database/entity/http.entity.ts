@@ -1,42 +1,43 @@
 import { Method } from 'axios';
 import { RequestEntity } from './request.entity';
 import { TagEntity } from './tag.entity';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@window.typeorm.Entity('http')
+@Entity('http')
 export class HttpEntity {
-  @window.typeorm.PrimaryGeneratedColumn({
+  @PrimaryGeneratedColumn({
     name: 'httpId',
   })
   httpId: number | undefined;
-  @window.typeorm.Column({
+  @Column({
     name: 'url',
     type: 'text',
     nullable: false,
   })
   url: string | undefined;
-  @window.typeorm.Column({
+  @Column({
     name: 'name',
     type: 'text',
     nullable: false,
   })
   name: string | undefined;
-  @window.typeorm.Column({
+  @Column({
     name: 'method',
     type: 'varchar',
     nullable: false,
     length: 20,
   })
   method: Method | undefined;
-  @window.typeorm.OneToOne(() => RequestEntity, {
+  @OneToOne(() => RequestEntity, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  @window.typeorm.JoinColumn({
+  @JoinColumn({
     name: 'requestId',
   })
   request: RequestEntity | undefined;
-  @window.typeorm.ManyToMany(() => TagEntity, (tagEntity) => tagEntity.https)
-  @window.typeorm.JoinTable({
+  @ManyToMany(() => TagEntity, (tagEntity) => tagEntity.https)
+  @JoinTable({
     name: 'httpTag',
   })
   tags: TagEntity[] | undefined;

@@ -1,11 +1,9 @@
 import { Repository } from 'typeorm';
 import { TagEntity } from '../entity/tag.entity';
-import { connect } from '../main';
 
 export class TagMapper {
   private static async getTagRepository(): Promise<Repository<TagEntity>> {
-    const database = await connect;
-    return database.getRepository(TagEntity);
+    return await window.mapper.getTagRepository();
   }
 
   public static async saveTags(tags: TagEntity): Promise<TagEntity> {

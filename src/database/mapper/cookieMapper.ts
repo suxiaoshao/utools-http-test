@@ -1,12 +1,10 @@
 import { Repository } from 'typeorm';
 import { CookieEntity } from '../entity/cookie.entity';
-import { connect } from '../main';
 import { Cookie } from '../../util/http/cookie';
 
 export class CookieMapper {
   private static async getCookieRepository(): Promise<Repository<CookieEntity>> {
-    const database = await connect;
-    return database.getRepository(CookieEntity);
+    return await window.mapper.getCookieRepository();
   }
 
   public static async saveCookies(cookieEntities: CookieEntity[]): Promise<void> {
@@ -86,8 +84,7 @@ export class CookieMapper {
   }
 
   public static async deleteTimeoutAndSession(): Promise<void> {
-    const database = await connect;
-    const cookieRepository = database.getRepository(CookieEntity);
+    const cookieRepository = await this.getCookieRepository();
     await cookieRepository.query(
       `delete 
        from cookie

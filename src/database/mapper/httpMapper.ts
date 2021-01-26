@@ -1,13 +1,11 @@
 import { Repository } from 'typeorm';
-import { connect } from '../main';
 import { HttpEntity } from '../entity/http.entity';
 import { TagEntity } from '../entity/tag.entity';
 import { RequestMapper } from './requestMapper';
 
 export class HttpMapper {
   private static async getHttpRepository(): Promise<Repository<HttpEntity>> {
-    const database = await connect;
-    return database.getRepository(HttpEntity);
+    return await window.mapper.getHttpRepository();
   }
 
   public static async saveHttp(http: HttpEntity): Promise<HttpEntity> {
@@ -15,9 +13,9 @@ export class HttpMapper {
     return await httpRepository.save(http);
   }
 
-  public static async saveHttps(http: HttpEntity[]): Promise<HttpEntity[]> {
+  public static async saveHttps(https: HttpEntity[]): Promise<void> {
     const httpRepository = await this.getHttpRepository();
-    return await httpRepository.save(http);
+    await httpRepository.save(https);
   }
 
   public static async getTagsByHttpId(httpId: number | undefined): Promise<TagEntity[]> {

@@ -39,7 +39,6 @@ export async function initData(): Promise<void> {
     const tags = await TagMapper.saveTags(tagEntity);
     const httpEntities = historyItems.map((value) => getHttpEntityFromHistoryItem(value.data, value._id, [tags]));
     const cookieEntities = getCookieFromHistory(historyItems.map((value) => value.data));
-    await HttpMapper.saveHttps(httpEntities);
-    await CookieMapper.saveCookies(cookieEntities);
+    await Promise.all([HttpMapper.saveHttps(httpEntities), CookieMapper.saveCookies(cookieEntities)]);
   }
 }

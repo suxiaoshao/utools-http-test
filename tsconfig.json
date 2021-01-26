@@ -20,9 +20,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "downlevelIteration": true,
+    "downlevelIteration": true
   },
   "include": [
-    "src"
+    "src",
+    "database"
   ]
 }

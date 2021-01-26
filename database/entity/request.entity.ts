@@ -1,44 +1,45 @@
-import { RequestBodyChoose, RequestTextChoose } from '../../util/http/httpRequest';
+import { RequestBodyChoose, RequestTextChoose } from '../../src/util/http/httpRequest';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@window.typeorm.Entity('request')
+@Entity('request')
 export class RequestEntity {
-  @window.typeorm.PrimaryGeneratedColumn({
+  @PrimaryGeneratedColumn({
     name: 'requestId',
   })
   requestId: number | undefined;
-  @window.typeorm.Column({
+  @Column({
     type: 'varchar',
     length: 50,
     nullable: false,
     name: 'bodyChoose',
   })
   bodyChoose: RequestBodyChoose | undefined;
-  @window.typeorm.Column({
+  @Column({
     type: 'varchar',
     length: 50,
     nullable: false,
     name: 'textChoose',
   })
   textChoose: RequestTextChoose | undefined;
-  @window.typeorm.Column({
+  @Column({
     type: 'text',
     nullable: false,
     name: 'text',
   })
   text: string | undefined;
-  @window.typeorm.Column({
+  @Column({
     type: 'text',
     nullable: false,
     name: 'dataForms',
   })
   dataForms: string | undefined;
-  @window.typeorm.Column({
+  @Column({
     type: 'text',
     nullable: false,
     name: 'xForms',
   })
   xForms: string | undefined;
-  @window.typeorm.Column({
+  @Column({
     type: 'text',
     nullable: false,
     name: 'headers',
