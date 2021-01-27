@@ -1,5 +1,5 @@
 import React from 'react';
-import MySelector from '../../common/mySelector';
+import MySelector from '../common/mySelector';
 import {
   CircularProgress,
   createStyles,
@@ -14,10 +14,10 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { SaveAlt, Send, SwapHoriz } from '@material-ui/icons';
 import { Method } from 'axios';
-import { useForceUpdate } from '../../../util/hook/useForceUpdate';
-import { HttpContext } from '../workPanel';
-import SaveHttp from '../../../components/work/url/saveHttp';
-import { httpArray } from '../../../util/store/httpArray';
+import { useForceUpdate } from '../../util/hook/useForceUpdate';
+import { HttpContext } from './workPanel';
+import SaveHttp from '../common/saveHttp';
+import { httpArray } from '../../util/store/httpArray';
 
 const httpMethod: { text: string; value: Method }[] = ([
   'GET',
@@ -154,8 +154,9 @@ export default function UrlInput(): JSX.Element {
         onSave={(newHttpEntity) => {
           httpManager.changeFormHttpEntity(newHttpEntity);
           setSaveHttpOpen(false);
-          fatherUpdate();
+          httpArray.update();
         }}
+        httpManager={httpManager}
       />
     </Paper>
   );

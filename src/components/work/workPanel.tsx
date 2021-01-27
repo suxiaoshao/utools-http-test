@@ -1,5 +1,5 @@
 import React from 'react';
-import UrlInput from './url/urlInput';
+import UrlInput from './urlInput';
 import { HttpManager } from '../../util/http/httpManager';
 import Request from './request/request';
 import Response from './response/response';

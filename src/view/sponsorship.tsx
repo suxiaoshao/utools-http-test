@@ -32,7 +32,6 @@ export default function Sponsorship(): JSX.Element {
         exclusive
         value={imgSrc}
         onChange={(event, value) => {
-          console.log(value);
           if (value !== null) {
             setImgSrc(value);
           }

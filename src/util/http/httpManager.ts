@@ -15,7 +15,7 @@ export class HttpManager {
   loading: boolean;
   tokenSource: undefined | CancelTokenSource;
 
-  static getNewHttp(): HttpManager {
+  public static getNewHttp(): HttpManager {
     return new HttpManager(
       undefined,
       '',
@@ -25,6 +25,12 @@ export class HttpManager {
       HttpRequest.getNewRequestContent(),
       HttpResponse.getNewResponseContent(),
     );
+  }
+
+  public static fromEntity(httpEntity: HttpEntity): HttpManager {
+    const newHttp = HttpManager.getNewHttp();
+    newHttp.changeFormHttpEntity(httpEntity);
+    return newHttp;
   }
 
   constructor(

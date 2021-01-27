@@ -13,12 +13,12 @@ import {
 import { TransitionProps } from '@material-ui/core/transitions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Close, SaveAlt } from '@material-ui/icons';
-import { HttpContext } from '../workPanel';
-import { httpArray } from '../../../util/store/httpArray';
-import { TagEntity } from '../../../database/entity/tag.entity';
-import TagsForm from '../../../components/common/tag/tagsForm';
-import { HttpMapper } from '../../../database/mapper/httpMapper';
-import { HttpEntity } from '../../../database/entity/http.entity';
+import { httpArray } from '../../util/store/httpArray';
+import { TagEntity } from '../../database/entity/tag.entity';
+import TagsForm from './tag/tagsForm';
+import { HttpMapper } from '../../database/mapper/httpMapper';
+import { HttpEntity } from '../../database/entity/http.entity';
+import { HttpManager } from '../../util/http/httpManager';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -59,10 +59,12 @@ export default function SaveHttp(props: {
   open: boolean;
   onClose(): void;
   onSave(newHttpEntity: HttpEntity): void;
+  httpManager: HttpManager;
 }): JSX.Element {
-  const { httpManager } = React.useContext(HttpContext);
+  const { httpManager } = props;
   const style = useStyles();
   const [selectedTags, setSelectedTags] = React.useState<TagEntity[]>([]);
+  const [name, setName] = React.useState<string>(httpManager.name);
   React.useEffect(() => {
     HttpMapper.getTagsByHttpId(httpManager.httpId).then((value) => {
       setSelectedTags(value);
@@ -78,19 +80,20 @@ export default function SaveHttp(props: {
             </IconButton>
           </Tooltip>
           <Typography variant="h6" className={style.title}>
-            {(httpManager.name ?? httpManager.url) || '暂未命名'}
+            {(name ?? httpManager.url) || '暂未命名'}
           </Typography>
           <Tooltip title={<Typography variant={'body2'}>保存</Typography>}>
             <div>
               <IconButton
                 edge="end"
                 onClick={async () => {
+                  httpManager.name = name;
                   const httpEntity = httpManager.getHttpEntity([...selectedTags]);
                   const newHttp = await HttpMapper.saveHttp(httpEntity);
                   props.onSave(newHttp);
                 }}
                 color="primary"
-                disabled={httpManager.name === ''}
+                disabled={name === ''}
               >
                 <SaveAlt />
               </IconButton>
@@ -102,12 +105,12 @@ export default function SaveHttp(props: {
         <TextField
           className={style.input}
           variant="filled"
-          value={httpManager.name}
+          value={name}
           label={'名字'}
-          error={httpManager.name === ''}
-          helperText={httpManager.name === '' ? 'name 不能为空' : undefined}
+          error={name === ''}
+          helperText={name === '' ? 'name 不能为空' : undefined}
           onChange={(event) => {
-            httpManager.name = event.target.value;
+            setName(event.target.value);
             httpArray.update();
           }}
         />

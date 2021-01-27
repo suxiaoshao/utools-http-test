@@ -37,13 +37,12 @@ export class HttpArray extends Store<HttpManager[]> {
     this.update();
   }
 
-  public addFromHttpEntity(httpEntity: HttpEntity): number {
-    const index = this.data.findIndex((value) => value.httpId === httpEntity.httpId);
+  public addFromHttpManager(httpManager: HttpManager): number {
+    const index = this.data.findIndex((value) => value.httpId === httpManager.httpId);
     if (index !== -1) {
       return index;
     } else {
-      const newHttp = HttpManager.getNewHttp();
-      newHttp.changeFormHttpEntity(httpEntity);
+      const newHttp = httpManager.clone();
       this.setData([...this.data, newHttp]);
       return this.data.length - 1;
     }

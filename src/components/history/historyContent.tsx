@@ -6,6 +6,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import HistoryItem from '../../components/history/historyItem';
 import { httpArray } from '../../util/store/httpArray';
+import { HttpManager } from '../../util/http/httpManager';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -51,7 +52,12 @@ export default function HistoryContent(props: {
       {selectedHttp.length !== 0 ? (
         <List className={style.list}>
           {selectedHttp.map((value, index) => (
-            <HistoryItem onChange={update} http={value} key={value.httpId} last={index === selectedHttp.length - 1} />
+            <HistoryItem
+              onChange={update}
+              http={HttpManager.fromEntity(value)}
+              key={value.httpId}
+              last={index === selectedHttp.length - 1}
+            />
           ))}
         </List>
       ) : undefined}

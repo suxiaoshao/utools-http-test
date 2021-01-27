@@ -7,51 +7,25 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  TextField,
   Typography,
 } from '@material-ui/core';
-import { HttpEntity } from '../../database/entity/http.entity';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { HttpMapper } from '../../database/mapper/httpMapper';
 import { httpArray } from '../../util/store/httpArray';
 import { workIndex } from '../../util/store/workIndex';
 import { useHistory } from 'react-router-dom';
+import SaveHttp from '../common/saveHttp';
+import { HttpManager } from '../../util/http/httpManager';
 
-export default function HistoryItem(props: { http: HttpEntity; last: boolean; onChange(): void }): JSX.Element {
+export default function HistoryItem(props: { http: HttpManager; last: boolean; onChange(): void }): JSX.Element {
   const myHistory = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [name, setName] = React.useState<string | null>(null);
-  const update = React.useCallback(async () => {
-    props.http.name = name || props.http.name;
-    await HttpMapper.saveHttp(props.http);
-    setName(null);
-    props.onChange();
-  }, [name, props]);
+  const [open, setOpen] = React.useState<boolean>(false);
   return (
     <>
       <ListItem>
         <ListItemText
-          primary={
-            name === null ? (
-              props.http.name
-            ) : (
-              <TextField
-                value={name}
-                onChange={(event) => {
-                  setName(event.target.value);
-                }}
-                label="新名字"
-                onKeyUp={async (event) => {
-                  if (event.key === 'Enter') {
-                    await update();
-                  }
-                }}
-                onBlur={async () => {
-                  await update();
-                }}
-              />
-            )
-          }
+          primary={props.http.name}
           secondary={
             <Typography
               color={'textSecondary'}
@@ -80,11 +54,11 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
       >
         <MenuItem
           onClick={() => {
-            setName(props.http.name ?? '');
+            setOpen(true);
             setAnchorEl(null);
           }}
         >
-          重命名
+          修改
         </MenuItem>
         <MenuItem
           onClick={async () => {
@@ -97,7 +71,7 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
         </MenuItem>
         <MenuItem
           onClick={() => {
-            const index = httpArray.addFromHttpEntity(props.http);
+            const index = httpArray.addFromHttpManager(props.http);
             workIndex.setData(index);
             myHistory.push({ pathname: '/' });
             setAnchorEl(null);
@@ -106,6 +80,17 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
           添加至工作区
         </MenuItem>
       </Menu>
+      <SaveHttp
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        onSave={() => {
+          props.onChange();
+          setOpen(false);
+        }}
+        httpManager={props.http}
+      />
       {props.last ? undefined : <Divider />}
     </>
   );
