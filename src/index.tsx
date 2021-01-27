@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { CookieMapper } from './database/mapper/cookieMapper';
 import { initData } from './database/data/initData';
 import { checkVersion } from './util/update/notify';
+import 'fontsource-roboto';
 
 ReactDOM.render(
   <React.StrictMode>

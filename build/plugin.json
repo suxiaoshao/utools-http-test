@@ -5,7 +5,7 @@
     "preload": "preload.js",
     "logo": "read.png",
     "main": "react/index.html",
-    "homepage": "https://github.com/suxiaoshao/utools-novel-reader",
+    "homepage": "https://github.com/suxiaoshao/utools-http-test",
     "version": "0.2.0",
     "development":{
         "main": "http://localhost:8083/index.html",

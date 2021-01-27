@@ -79,7 +79,7 @@ export class CookieMapper {
       `delete 
        from cookie
        where (maxAge IS NOT NULL and (maxAge * 1000 + cookie.createTime) < ${Date.now()})
-          or (expires is not null and expires < '${new Date(Date.now()).toISOString()}');`,
+          or (expires is not null and expires < '${new Date(Date.now()).toISOString()}' and maxAge is null );`,
     );
   }
 
@@ -91,7 +91,7 @@ export class CookieMapper {
        where (maxAge IS NOT NULL and (maxAge * 1000 + cookie.createTime) < ${Date.now()})
           or (expires is not null and expires < '${new Date(
             Date.now(),
-          ).toISOString()}') or(maxAge is null and expires is null);`,
+          ).toISOString()}' and maxAge is null ) or(maxAge is null and expires is null);`,
     );
   }
 }

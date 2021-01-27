@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { createMuiTheme, CssBaseline, MuiThemeProvider, Theme } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/dayjs';
+import { zhCN } from 'date-fns/locale';
+import DateFnsUtils from '@date-io/date-fns';
 
 export function MyThemeProvider(props: { children: React.ReactNode }): JSX.Element {
   // 是否为暗黑主题
@@ -30,7 +31,7 @@ export function MyThemeProvider(props: { children: React.ReactNode }): JSX.Eleme
   return (
     <MuiThemeProvider theme={themeObject}>
       <CssBaseline />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={zhCN}>
         <div className={dark ? 'my-dark' : 'my-light'}>{props.children}</div>
       </MuiPickersUtilsProvider>
     </MuiThemeProvider>

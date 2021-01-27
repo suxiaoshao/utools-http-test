@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import WorkPanel from '../components/work/workPanel';
 import { useHttpArray } from '../util/store/httpArray';
 import { useWorkIndex } from '../util/store/workIndex';
-import { TabPanelHidden } from '../components/common/tabPanel';
+import { TabPanelDisappear } from '../components/common/tabPanel';
 import WorkTab from '../components/work/workTab';
 
 const useStyle = makeStyles(() =>
@@ -53,9 +53,9 @@ export default function Work(): JSX.Element {
         ))}
       </Tabs>
       {httpArray.map((item, index) => (
-        <TabPanelHidden className={style.panel} key={index} index={workIndex} value={index}>
+        <TabPanelDisappear className={style.panel} key={index} index={workIndex} value={index}>
           <WorkPanel http={item} />
-        </TabPanelHidden>
+        </TabPanelDisappear>
       ))}
     </MyDrawer>
   );

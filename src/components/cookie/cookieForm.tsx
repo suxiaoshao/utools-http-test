@@ -150,7 +150,7 @@ export default function CookieForm(props: {
                       label={'expires'}
                       value={cookie?.expires}
                       onChange={(date) => {
-                        cookie.expires = date?.toDate() ?? new Date();
+                        cookie.expires = date ?? new Date();
                       }}
                       className={style.formInput}
                     />
