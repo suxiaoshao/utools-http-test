@@ -2,7 +2,7 @@
       <html>
       <head>
         <meta charset="utf-8"/>
-        <title>更新说明</title>
+        <title>0.2.0 & 0.2.1版本更新说明</title>
         <style>
           html, body { margin: 0; padding: 0; background-color: #ffffff; }
           .markdown-body { box-sizing: border-box; min-width: 200px; max-width: 980px; margin: 0 auto; padding: 45px; }
@@ -13,13 +13,20 @@
       </head>
       <body>
         <article class="markdown-body">
-          <h1 id="020-版本更新说明">0.2.0 版本更新说明</h1>
+          <h1 id="020--021-版本更新说明">0.2.0 &amp; 0.2.1 版本更新说明</h1>
 <h2 id="联系方式">联系方式</h2>
 <ol>
 <li>我的个人博客 <a href="https://www.sushao.top">sushao&#39;bolg</a></li>
 <li>我的github <a href="https://github.com/suxiaoshao">sushao</a></li>
 <li>这个插件的开源地址 <a href="https://github.com/suxiaoshao/utools-http-test">utools-http-test</a></li>
 <li>这是我插件在官方论坛的 <a href="https://yuanliao.info/d/1843">帖子</a> ,这个帖子下回复我会有提醒的</li>
+</ol>
+<h2 id="021-新更新">0.2.1 新更新</h2>
+<ol>
+<li>修复自动删除过期的 cookie 部分的逻辑错误</li>
+<li>修复修改 cookie 页面点击修改时间页面奔溃的 bug</li>
+<li>修复代码页面显示代码阅读或者代码编写时切换标签页插件奔溃的 bug</li>
+<li>支持在 历史记录页面修改记录的名字和标签</li>
 </ol>
 <h2 id="数据库更新">数据库更新</h2>
 <p>本次更新将以往依靠 utools 官方的数据库迁移到了 sqlite数据库,该数据库地址储存在  utools 目录的<code>utools\database\http</code>,下面的 <code>http.db</code> 文件,这个目录也储存了 <code>setting.json</code> 设置文件和 <code>old.json</code> 旧数据文件,如果想要多台机子同步的话,可以手动迁移 <code>utools\databse\http</code> 文件夹下的文件.</p>
@@ -40,12 +47,14 @@
 
 <img src="df24407e967ceafaf0bede3a373158de.png" alt="截图" style="zoom:50%;" />
 
+<img src="c0865904525d9d3d66eb11a7cbb2edcd.png" alt="截图" style="zoom:50%;" />
+
 <h2 id="cookies">cookies</h2>
 <p>新的版本将 cookies 独立出来储存在数据库, 这样多个 http 请求就能共享 cookies,不过当用户每次进入插件时都会删除 cookie 中 max-age 和 expires 为 session的 cookie 记录和 超时的 cookie 记录,但不会删除这两个字段其中一个合法且未超时的 cookie.当两个都存在时,以max-age 为准 (http 规范和多数浏览器遵循的规范).</p>
 <h3 id="cookie-匹配规则">cookie 匹配规则</h3>
 <p>cookie 的匹配主要观察 http url是否和 cookie 的 <code>path</code> ,<code>domain</code> 两个字段是否一致,主要参考 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie">mdn上的说明</a> </p>
 <h3 id="cookies-管理">cookies 管理</h3>
-<p>在 cookies 页面支持 cookie 修改,删除,添加等功能,并且用 domain 属性分隔开</p>
+<p>在 cookies 页面支持 cookie 修改,删除,添加等功能,并且用 dommain 属性分隔开</p>
 <img src="86efd836c7b680a413b590edcdf61d95.png" alt="截图" style="zoom:50%;" />
 
 <img src="77ecb14eb8d23b655e9fc3a11e981f19.png" alt="截图" style="zoom:50%;" />
