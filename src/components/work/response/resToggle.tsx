@@ -1,7 +1,7 @@
 import React from 'react';
 import { useReStyle } from '../../../util/hook/useRestyle';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { ResponseContext } from '../../../components/work/response/response';
+import { ResponseContext } from './response';
 import MySelector from '../../../components/common/mySelector';
 import { ResponseContentType, ResponseTextType } from '../../../util/http/httpResponse';
 

@@ -14,7 +14,7 @@ import { HttpMapper } from '../../database/mapper/httpMapper';
 import { httpArray } from '../../util/store/httpArray';
 import { workIndex } from '../../util/store/workIndex';
 import { useHistory } from 'react-router-dom';
-import SaveHttp from '../common/saveHttp';
+import SaveHttp from '../common/httpSave/saveHttp';
 import { HttpManager } from '../../util/http/httpManager';
 
 export default function HistoryItem(props: { http: HttpManager; last: boolean; onChange(): void }): JSX.Element {

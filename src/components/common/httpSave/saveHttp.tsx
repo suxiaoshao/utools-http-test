@@ -13,12 +13,13 @@ import {
 import { TransitionProps } from '@material-ui/core/transitions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Close, SaveAlt } from '@material-ui/icons';
-import { httpArray } from '../../util/store/httpArray';
-import { TagEntity } from '../../database/entity/tag.entity';
-import TagsForm from './tag/tagsForm';
-import { HttpMapper } from '../../database/mapper/httpMapper';
-import { HttpEntity } from '../../database/entity/http.entity';
-import { HttpManager } from '../../util/http/httpManager';
+import { httpArray } from '../../../util/store/httpArray';
+import { TagEntity } from '../../../database/entity/tag.entity';
+import TagsForm from '../tag/tagsForm';
+import { HttpMapper } from '../../../database/mapper/httpMapper';
+import { HttpEntity } from '../../../database/entity/http.entity';
+import { HttpManager } from '../../../util/http/httpManager';
+import { useSnackbar } from 'notistack';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -65,6 +66,7 @@ export default function SaveHttp(props: {
   const style = useStyles();
   const [selectedTags, setSelectedTags] = React.useState<TagEntity[]>([]);
   const [name, setName] = React.useState<string>(httpManager.name);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   React.useEffect(() => {
     HttpMapper.getTagsByHttpId(httpManager.httpId).then((value) => {
       setSelectedTags(value);
@@ -89,8 +91,26 @@ export default function SaveHttp(props: {
                 onClick={async () => {
                   httpManager.name = name;
                   const httpEntity = httpManager.getHttpEntity([...selectedTags]);
-                  const newHttp = await HttpMapper.saveHttp(httpEntity);
-                  props.onSave(newHttp);
+                  try {
+                    const newHttp = await HttpMapper.saveHttp(httpEntity);
+                    props.onSave(newHttp);
+                  } catch (e) {
+                    enqueueSnackbar('保存失败', {
+                      variant: 'error',
+                      // eslint-disable-next-line react/display-name
+                      action: (key) => (
+                        <IconButton
+                          size="small"
+                          onClick={() => {
+                            closeSnackbar(key);
+                          }}
+                        >
+                          <Close />
+                        </IconButton>
+                      ),
+                      autoHideDuration: 2000,
+                    });
+                  }
                 }}
                 color="primary"
                 disabled={name === ''}

@@ -1,5 +1,5 @@
 import React from 'react';
-import UrlInput from './urlInput';
+import UrlPaper from './url/urlPaper';
 import { HttpManager } from '../../util/http/httpManager';
 import Request from './request/request';
 import Response from './response/response';
@@ -27,7 +27,7 @@ function HttpProvider(props: { children: React.ReactNode; http: HttpManager }): 
 export default function WorkPanel(props: { http: HttpManager }): JSX.Element {
   return (
     <HttpProvider http={props.http}>
-      <UrlInput />
+      <UrlPaper />
       <Request />
       <Response />
     </HttpProvider>

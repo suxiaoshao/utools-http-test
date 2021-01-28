@@ -15,12 +15,16 @@ export default function TagItem(props: {
     mouseY: number;
   } | null>(null);
   const [name, setName] = React.useState<string | null>(null);
+  const inoutRef = React.useRef<HTMLInputElement | null>(null);
   const update = React.useCallback(async () => {
     props.tagEntity.tagName = name || props.tagEntity.tagName;
     await TagMapper.saveTags(props.tagEntity);
     setName(null);
     props.onChange();
   }, [name, props]);
+  React.useEffect(() => {
+    inoutRef.current?.focus();
+  }, [name]);
   return (
     <>
       <Chip
@@ -43,6 +47,7 @@ export default function TagItem(props: {
               }}
               error={name === ''}
               helperText={name === '' ? '新名字不可为空' : undefined}
+              inputRef={inoutRef}
             />
           ) : (
             props.tagEntity.tagName
@@ -70,8 +75,8 @@ export default function TagItem(props: {
       >
         <MenuItem
           onClick={() => {
-            setName(props.tagEntity.tagName ?? '');
             setOpen(null);
+            setName(props.tagEntity.tagName ?? '');
           }}
         >
           重命名

@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStyles, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import empty from '../../../assets/emptyResponse.svg';
 
 export const useNodeStyle = makeStyles((theme) =>
   createStyles({
@@ -23,7 +24,7 @@ export default function NoneRes(): JSX.Element {
   const style = useNodeStyle();
   return (
     <Paper className={style.page}>
-      <img className={style.logo} src={require('../../../assets/emptyResponse.svg')} alt={''} />
+      <img className={style.logo} src={empty} alt={''} />
       <Typography variant="h6">还未发送 http 请求</Typography>
     </Paper>
   );

@@ -58,7 +58,7 @@ export class HttpManager {
     return new HttpManager(this.httpId, this.url, this.name, this.isRequest, this.method, this.request, this.response);
   }
 
-  public async httpSend(): Promise<void> {
+  public async httpSend(): Promise<string | void> {
     const startTime = Date.now();
     this.response.url = this.url;
     this.response.contentType = 'none';
@@ -85,9 +85,11 @@ export class HttpManager {
           this.response.setData({}, this.url, window.buffer.from(e.message), startTime, Date.now());
           this.response.contentType = 'error';
         }
+        return e.message;
       })
-      .finally(() => {
+      .finally((value: void | string) => {
         this.tokenSource = undefined;
+        return value;
       });
   }
 

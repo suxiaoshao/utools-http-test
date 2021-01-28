@@ -34,6 +34,20 @@ function ResponseProvider(props: { children: React.ReactNode }): JSX.Element {
   );
 }
 
+function ResponseFather(props: { children: React.ReactNode }): JSX.Element {
+  const reStyle = useReStyle();
+  const {
+    httpManager: { isRequest },
+  } = React.useContext(HttpContext);
+  return (
+    <ResponseProvider>
+      <TabPanelDisappear className={reStyle.main} index={0} value={Number(isRequest)}>
+        {props.children}
+      </TabPanelDisappear>
+    </ResponseProvider>
+  );
+}
+
 const useStyle = makeStyles((theme) =>
   createStyles({
     backdrop: {
@@ -60,17 +74,16 @@ export default function Response(): JSX.Element {
   const [value, setValue] = React.useState<string>('body');
   const {
     httpManager: {
-      isRequest,
       loading,
       tokenSource,
       response: { contentType },
     },
   } = React.useContext(HttpContext);
-  return (
-    <ResponseProvider>
-      <TabPanelDisappear className={reStyle.main} index={0} value={Number(isRequest)}>
-        {loading && <LinearProgress className={style.linearProgress} />}
-        <Backdrop className={style.backdrop} open={loading}>
+  if (loading) {
+    return (
+      <ResponseFather>
+        <LinearProgress className={style.linearProgress} />
+        <Backdrop className={style.backdrop} open>
           <Button
             color="primary"
             onClick={() => {
@@ -81,32 +94,41 @@ export default function Response(): JSX.Element {
             取消
           </Button>
         </Backdrop>
-        {contentType === 'none' || loading || contentType === 'error' ? (
-          contentType === 'none' ? (
-            <NoneRes />
-          ) : (
-            <ErrorPage />
-          )
-        ) : (
-          <>
-            <ResToggle
-              value={value}
-              onchangeValue={(newValue) => {
-                setValue(newValue);
-              }}
-            />
-            <TabPanelDisappear index={'body'} value={value} className={reStyle.page}>
-              <ResBody />
-            </TabPanelDisappear>
-            <TabPanelDisappear index={'cookies'} value={value} className={reStyle.page}>
-              <ResCookie />
-            </TabPanelDisappear>
-            <TabPanelDisappear index={'headers'} value={value} className={reStyle.page}>
-              <ResHeaders />
-            </TabPanelDisappear>
-          </>
-        )}
-      </TabPanelDisappear>
-    </ResponseProvider>
-  );
+      </ResponseFather>
+    );
+  }
+  switch (contentType) {
+    case 'none':
+      return (
+        <ResponseFather>
+          <NoneRes />
+        </ResponseFather>
+      );
+    case 'error':
+      return (
+        <ResponseFather>
+          <ErrorPage />
+        </ResponseFather>
+      );
+    default:
+      return (
+        <ResponseFather>
+          <ResToggle
+            value={value}
+            onchangeValue={(newValue) => {
+              setValue(newValue);
+            }}
+          />
+          <TabPanelDisappear index={'body'} value={value} className={reStyle.page}>
+            <ResBody />
+          </TabPanelDisappear>
+          <TabPanelDisappear index={'cookies'} value={value} className={reStyle.page}>
+            <ResCookie />
+          </TabPanelDisappear>
+          <TabPanelDisappear index={'headers'} value={value} className={reStyle.page}>
+            <ResHeaders />
+          </TabPanelDisappear>
+        </ResponseFather>
+      );
+  }
 }
