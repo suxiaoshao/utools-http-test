@@ -1,7 +1,7 @@
-import { Method } from 'axios';
 import { RequestEntity } from './request.entity';
 import { TagEntity } from './tag.entity';
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { MyMethod } from '../../src/util/http/httpManager';
 
 @Entity('http')
 export class HttpEntity {
@@ -27,7 +27,7 @@ export class HttpEntity {
     nullable: false,
     length: 20,
   })
-  method: Method | undefined;
+  method: MyMethod | undefined;
   @OneToOne(() => RequestEntity, {
     cascade: true,
     onDelete: 'CASCADE',

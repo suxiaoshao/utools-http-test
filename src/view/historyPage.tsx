@@ -1,11 +1,11 @@
 import React from 'react';
 import MyDrawer from '../components/myDrawer';
-import { Collapse, createStyles } from '@material-ui/core';
+import { createStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import HistoryFilter from '../components/history/historyFilter';
-import TagsForm from '../components/common/tag/tagsForm';
 import { TagEntity } from '../database/entity/tag.entity';
 import HistoryContent from '../components/history/historyContent';
+import { MyMethod } from '../util/http/httpManager';
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -14,7 +14,7 @@ const useStyle = makeStyles(() =>
       flexDirection: 'column',
     },
     content: {
-      height: `calc(100vh - 77px)`,
+      flex: '1 1 0',
     },
   }),
 );
@@ -22,22 +22,19 @@ const useStyle = makeStyles(() =>
 export default function HistoryPage(): JSX.Element {
   const style = useStyle();
   const [searchName, setSearchName] = React.useState<string>('');
-  const [filterOpen, setFilterOpen] = React.useState<boolean>(false);
   const [selectedTags, setSelectedTags] = React.useState<TagEntity[]>([]);
+  const [method, setMethod] = React.useState<MyMethod | undefined>(undefined);
   return (
     <MyDrawer className={style.main}>
       <HistoryFilter
-        filterOpen={filterOpen}
-        onFilterOpenChange={setFilterOpen}
+        tags={selectedTags}
+        onChangeTags={setSelectedTags}
         searchName={searchName}
         onSearchChange={setSearchName}
+        method={method}
+        ocChangeMethod={setMethod}
       />
-      <Collapse in={filterOpen} timeout="auto">
-        <TagsForm className={style.content} selectedTags={selectedTags} onSelectedTasChanges={setSelectedTags} />
-      </Collapse>
-      <Collapse in={!filterOpen} timeout="auto">
-        <HistoryContent searchName={searchName} tags={selectedTags} className={style.content} />
-      </Collapse>
+      <HistoryContent method={method} searchName={searchName} tags={selectedTags} className={style.content} />
     </MyDrawer>
   );
 }

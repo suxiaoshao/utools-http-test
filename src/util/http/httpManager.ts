@@ -1,15 +1,17 @@
-import { AxiosError, AxiosResponse, CancelTokenSource, Method } from 'axios';
+import { AxiosError, AxiosResponse, CancelTokenSource } from 'axios';
 import { HttpResponse } from './httpResponse';
 import { HttpRequest } from './httpRequest';
 import { HttpEntity } from '../../database/entity/http.entity';
 import { TagEntity } from '../../database/entity/tag.entity';
+
+export type MyMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'PATCH';
 
 export class HttpManager {
   httpId: undefined | number;
   url: string;
   name: string;
   isRequest: boolean;
-  method: Method;
+  method: MyMethod;
   request: HttpRequest;
   response: HttpResponse;
   loading: boolean;
@@ -38,7 +40,7 @@ export class HttpManager {
     url: string,
     name: string,
     isRequest: boolean,
-    method: Method,
+    method: MyMethod,
     requestContent: HttpRequest,
     responseContent: HttpResponse,
   ) {

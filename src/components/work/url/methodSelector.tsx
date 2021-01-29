@@ -1,19 +1,19 @@
 import React from 'react';
-import { Method } from 'axios';
 import MySelector from '../../common/mySelector';
 import { HttpContext } from '../workPanel';
 import { useForceUpdate } from '../../../util/hook/useForceUpdate';
 import { useUrlStyles } from './urlPaper';
+import { MyMethod } from '../../../util/http/httpManager';
 
-const httpMethod: { text: string; value: Method }[] = ([
+export const myMethodList: { text: string; value: MyMethod }[] = ([
   'GET',
-  'HEAD',
   'POST',
+  'HEAD',
   'PUT',
   'DELETE',
   'OPTIONS',
   'PATCH',
-] as const).map((value: Method) => {
+] as const).map((value) => {
   return {
     text: value,
     value: value,
@@ -25,13 +25,13 @@ export default function MethodSelector(): JSX.Element {
   const forceUpdate = useForceUpdate();
   const { httpManager } = React.useContext(HttpContext);
   return (
-    <MySelector<Method>
+    <MySelector<MyMethod>
       value={httpManager.method}
       onValueChange={(newValue) => {
         httpManager.method = newValue;
         forceUpdate();
       }}
-      itemList={httpMethod}
+      itemList={myMethodList}
       className={style.iconButton}
     />
   );

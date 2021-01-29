@@ -1,4 +1,3 @@
-import { Method } from 'axios';
 import { OldRequestHeaders } from './oldRequestHeaders';
 import { OldRequestContent } from './oldRequestContent';
 import { HttpEntity } from '../entity/http.entity';
@@ -7,10 +6,11 @@ import { Header } from '../../util/http/header';
 import { RequestXForm } from '../../util/http/requestXForm';
 import { RequestUploadFile } from '../../util/http/requestUploadFile';
 import { TagEntity } from '../entity/tag.entity';
+import { MyMethod } from '../../util/http/httpManager';
 
 export interface HistoryItem {
   host: string | undefined;
-  method: Method | undefined;
+  method: MyMethod | undefined;
   path: string | undefined;
   requestHeadersData: OldRequestHeaders | undefined;
   requestContentData: OldRequestContent | undefined;

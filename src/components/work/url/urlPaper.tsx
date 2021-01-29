@@ -10,7 +10,7 @@ import MethodSelector from './methodSelector';
 
 export const useUrlStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    form: {
       padding: '2px 4px',
       display: 'flex',
       alignItems: 'center',
@@ -52,7 +52,7 @@ export default function UrlPaper(): JSX.Element {
   const style = useUrlStyles();
   const { httpManager } = React.useContext(HttpContext);
   return (
-    <Paper component="form" className={style.root}>
+    <Paper component="form" className={style.form}>
       <MethodSelector />
       <Divider className={style.divider} orientation="vertical" />
       <InputBase

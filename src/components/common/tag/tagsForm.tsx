@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TagEntity } from '../../../database/entity/tag.entity';
 import TagItem from '../../../components/common/tag/tagItem';
 import AddTag from '../../../components/common/tag/addTag';
-import { TagMapper } from '../../../database/mapper/tagMapper';
 import { AddCircle, ArrowBack, ArrowForward } from '@material-ui/icons';
+import { useUpdateAllTags } from '../../../util/hook/useUpdateAllTags';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -36,22 +36,7 @@ export default function TagsForm(props: {
   className?: string;
 }): JSX.Element {
   const style = useStyles();
-  const [allTags, setAllTags] = React.useState<TagEntity[]>([]);
-  const update = React.useCallback(() => {
-    TagMapper.getAllTags().then((value) => {
-      setAllTags(value);
-    });
-  }, []);
-  React.useEffect(() => {
-    update();
-  }, [update]);
-  React.useEffect(() => {
-    const newSelectedTags = props.selectedTags.filter((value) =>
-      allTags.some((value1) => value1.tagId === value.tagId),
-    );
-    props.onSelectedTasChanges(newSelectedTags);
-    // eslint-disable-next-line
-  }, [allTags]);
+  const { allTags, update } = useUpdateAllTags(props.selectedTags, props.onSelectedTasChanges);
   const unselectedTags = React.useMemo<TagEntity[]>(() => {
     return allTags.filter((value) => !props.selectedTags.some((value1) => value1.tagId === value.tagId));
   }, [allTags, props.selectedTags]);

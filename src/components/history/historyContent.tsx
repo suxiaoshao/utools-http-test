@@ -3,19 +3,14 @@ import { TagEntity } from '../../database/entity/tag.entity';
 import { HttpEntity } from '../../database/entity/http.entity';
 import { HttpMapper } from '../../database/mapper/httpMapper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { List } from '@material-ui/core';
 import HistoryItem from '../../components/history/historyItem';
 import { httpArray } from '../../util/store/httpArray';
-import { HttpManager } from '../../util/http/httpManager';
+import { MyMethod } from '../../util/http/httpManager';
 
-const useStyle = makeStyles((theme) =>
+const useStyle = makeStyles(() =>
   createStyles({
     main: {
       overflow: 'auto',
-      padding: theme.spacing(1),
-    },
-    list: {
-      backgroundColor: theme.palette.background.paper,
     },
   }),
 );
@@ -24,6 +19,7 @@ export default function HistoryContent(props: {
   className?: string;
   searchName: string;
   tags: TagEntity[];
+  method: MyMethod | undefined;
 }): JSX.Element {
   const style = useStyle();
   const [allHttp, setAllHttp] = React.useState<HttpEntity[]>([]);
@@ -39,28 +35,27 @@ export default function HistoryContent(props: {
     });
   }, []);
   const selectedHttp = React.useMemo<HttpEntity[]>(() => {
+    // 筛选名字
     let filterHttp = allHttp.filter((value) => value.name && new RegExp(props.searchName).test(value.name));
+
+    // 筛选标签
     if (props.tags.length !== 0) {
       filterHttp = filterHttp.filter((http) =>
         props.tags.every((tag) => http.tags?.find((value) => value.tagId === tag.tagId)),
       );
     }
+
+    // 筛选方法
+    if (props.method !== undefined) {
+      filterHttp = filterHttp.filter((http) => http.method === props.method);
+    }
     return filterHttp;
-  }, [allHttp, props.searchName, props.tags]);
+  }, [allHttp, props.method, props.searchName, props.tags]);
   return (
     <div className={`${props.className} ${style.main}`}>
-      {selectedHttp.length !== 0 ? (
-        <List className={style.list}>
-          {selectedHttp.map((value, index) => (
-            <HistoryItem
-              onChange={update}
-              http={HttpManager.fromEntity(value)}
-              key={value.httpId}
-              last={index === selectedHttp.length - 1}
-            />
-          ))}
-        </List>
-      ) : undefined}
+      {selectedHttp.map((value, index) => (
+        <HistoryItem onChange={update} http={value} key={value.httpId} last={index === selectedHttp.length - 1} />
+      ))}
     </div>
   );
 }

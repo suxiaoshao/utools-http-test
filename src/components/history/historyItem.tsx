@@ -1,85 +1,128 @@
 import React from 'react';
 import {
-  Divider,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Chip,
+  createStyles,
   IconButton,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Menu,
-  MenuItem,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Delete, Edit, Reply } from '@material-ui/icons';
 import { HttpMapper } from '../../database/mapper/httpMapper';
 import { httpArray } from '../../util/store/httpArray';
 import { workIndex } from '../../util/store/workIndex';
 import { useHistory } from 'react-router-dom';
 import SaveHttp from '../common/httpSave/saveHttp';
+import { makeStyles } from '@material-ui/core/styles';
+import { brown, green, grey, lightBlue, orange, purple, red } from '@material-ui/core/colors';
+import { HttpEntity } from '../../database/entity/http.entity';
 import { HttpManager } from '../../util/http/httpManager';
 
-export default function HistoryItem(props: { http: HttpManager; last: boolean; onChange(): void }): JSX.Element {
+const useStyle = makeStyles((theme) =>
+  createStyles({
+    DELETE: {
+      backgroundColor: red[400],
+    },
+    POST: {
+      backgroundColor: orange[400],
+    },
+    GET: {
+      backgroundColor: green[400],
+    },
+    PUT: {
+      backgroundColor: lightBlue[400],
+    },
+    HEAD: {
+      backgroundColor: grey[400],
+    },
+    OPTIONS: {
+      backgroundColor: brown[400],
+    },
+    PATCH: {
+      backgroundColor: purple[400],
+    },
+    deleteButton: {
+      marginLeft: 'auto',
+    },
+    card: {
+      margin: `0 ${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(2)}px`,
+    },
+    cardHeader: {
+      '& .MuiCardHeader-content': {
+        maxWidth: `calc(100% - ${56}px)`,
+      },
+    },
+    tag: {
+      margin: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+    },
+  }),
+);
+
+export default function HistoryItem(props: { http: HttpEntity; last: boolean; onChange(): void }): JSX.Element {
   const myHistory = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const style = useStyle();
   const [open, setOpen] = React.useState<boolean>(false);
   return (
     <>
-      <ListItem>
-        <ListItemText
-          primary={props.http.name}
-          secondary={
-            <Typography
-              color={'textSecondary'}
-              variant={'body2'}
-              noWrap
-            >{`${props.http.method} ${props.http.url}`}</Typography>
+      <Card className={style.card}>
+        <CardHeader
+          avatar={
+            <Avatar className={style[props.http.method ?? 'GET']}>{(props.http.method ?? 'GET').slice(0, 3)}</Avatar>
           }
+          title={props.http.name}
+          subheader={`${props.http.url}`}
+          subheaderTypographyProps={{ noWrap: true }}
+          className={style.cardHeader}
         />
-        <ListItemSecondaryAction>
-          <IconButton
-            onClick={(event) => {
-              setAnchorEl(event.currentTarget);
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={() => {
-          setAnchorEl(null);
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            setOpen(true);
-            setAnchorEl(null);
-          }}
-        >
-          修改
-        </MenuItem>
-        <MenuItem
-          onClick={async () => {
-            await HttpMapper.deleteHttp(props.http.httpId ?? -1);
-            props.onChange();
-            setAnchorEl(null);
-          }}
-        >
-          删除
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            const index = httpArray.addFromHttpManager(props.http);
-            workIndex.setData(index);
-            myHistory.push({ pathname: '/' });
-            setAnchorEl(null);
-          }}
-        >
-          添加至工作区
-        </MenuItem>
-      </Menu>
+        <CardContent>
+          {props.http.tags?.length ? (
+            props.http.tags?.map((value) => (
+              <Chip color={'primary'} className={style.tag} key={value.tagId} label={value.tagName} />
+            ))
+          ) : (
+            <Typography variant={'body2'} color={'textSecondary'}>
+              该 http 请求没有标签
+            </Typography>
+          )}
+        </CardContent>
+        <CardActions disableSpacing>
+          <Tooltip title={<Typography variant={'body2'}>添加至工作区</Typography>}>
+            <IconButton
+              onClick={() => {
+                const index = httpArray.addFromHttpManager(HttpManager.fromEntity(props.http));
+                workIndex.setData(index);
+                myHistory.push({ pathname: '/' });
+              }}
+            >
+              <Reply />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={<Typography variant={'body2'}>修改</Typography>}>
+            <IconButton
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              <Edit />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={<Typography variant={'body2'}>删除</Typography>}>
+            <IconButton
+              className={style.deleteButton}
+              onClick={async () => {
+                await HttpMapper.deleteHttp(props.http.httpId ?? -1);
+                props.onChange();
+              }}
+            >
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </CardActions>
+      </Card>
       <SaveHttp
         open={open}
         onClose={() => {
@@ -89,9 +132,8 @@ export default function HistoryItem(props: { http: HttpManager; last: boolean; o
           props.onChange();
           setOpen(false);
         }}
-        httpManager={props.http}
+        httpManager={HttpManager.fromEntity(props.http)}
       />
-      {props.last ? undefined : <Divider />}
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Method } from 'axios';
 import { RequestEntity } from './request.entity';
 import { TagEntity } from './tag.entity';
+import { MyMethod } from '../../util/http/httpManager';
 
 @window.typeorm.Entity('http')
 export class HttpEntity {
@@ -26,7 +27,7 @@ export class HttpEntity {
     nullable: false,
     length: 20,
   })
-  method: Method | undefined;
+  method: MyMethod | undefined;
   @window.typeorm.OneToOne(() => RequestEntity, {
     cascade: true,
     onDelete: 'CASCADE',
