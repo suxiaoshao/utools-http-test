@@ -69,7 +69,7 @@ export default function HistoryFilter(props: {
             props.onSearchChange(event.target.value);
           }}
           className={classes.input}
-          placeholder="筛选 http 名"
+          placeholder="匹配 http 名字和 url"
         />
       </form>
       <Divider variant="middle" />

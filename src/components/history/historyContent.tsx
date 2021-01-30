@@ -35,8 +35,19 @@ export default function HistoryContent(props: {
     });
   }, []);
   const selectedHttp = React.useMemo<HttpEntity[]>(() => {
-    // 筛选名字
-    let filterHttp = allHttp.filter((value) => value.name && new RegExp(props.searchName).test(value.name));
+    let filterHttp: HttpEntity[] = [...allHttp];
+
+    // 筛选名字和 url
+    if (props.searchName !== '') {
+      filterHttp = filterHttp.filter((value) => {
+        //筛选名字
+        if (value.name !== undefined && value.name.includes(props.searchName)) {
+          return true;
+        }
+        //筛选 url
+        return value.url !== undefined && value.url.includes(props.searchName);
+      });
+    }
 
     // 筛选标签
     if (props.tags.length !== 0) {
