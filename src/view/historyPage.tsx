@@ -34,7 +34,7 @@ export default function HistoryPage(): JSX.Element {
         method={method}
         ocChangeMethod={setMethod}
       />
-      <HistoryContent method={method} searchName={searchName} tags={selectedTags} className={style.content} />
+      <HistoryContent method={method} searchName={searchName} selectedTags={selectedTags} className={style.content} />
     </MyDrawer>
   );
 }

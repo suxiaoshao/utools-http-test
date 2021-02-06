@@ -12,15 +12,14 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Delete, Edit, Reply } from '@material-ui/icons';
-import { HttpMapper } from '../../database/mapper/httpMapper';
 import { httpArray } from '../../util/store/httpArray';
 import { workIndex } from '../../util/store/workIndex';
 import { useHistory } from 'react-router-dom';
 import SaveHttp from '../common/httpSave/saveHttp';
 import { makeStyles } from '@material-ui/core/styles';
 import { brown, green, grey, lightBlue, orange, purple, red } from '@material-ui/core/colors';
-import { HttpEntity } from '../../database/entity/http.entity';
 import { HttpManager } from '../../util/http/httpManager';
+import { HttpEntity } from '../../database/entity/http.entity';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -114,7 +113,7 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
             <IconButton
               className={style.deleteButton}
               onClick={async () => {
-                await HttpMapper.deleteHttp(props.http.httpId ?? -1);
+                props.http.delete();
                 props.onChange();
               }}
             >

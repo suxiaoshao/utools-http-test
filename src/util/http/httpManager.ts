@@ -7,7 +7,7 @@ import { TagEntity } from '../../database/entity/tag.entity';
 export type MyMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'PATCH';
 
 export class HttpManager {
-  httpId: undefined | number;
+  httpId: null | number;
   url: string;
   name: string;
   isRequest: boolean;
@@ -19,7 +19,7 @@ export class HttpManager {
 
   public static getNewHttp(): HttpManager {
     return new HttpManager(
-      undefined,
+      null,
       '',
       '',
       true,
@@ -36,7 +36,7 @@ export class HttpManager {
   }
 
   constructor(
-    httpId: number | undefined,
+    httpId: number | null,
     url: string,
     name: string,
     isRequest: boolean,
@@ -96,21 +96,15 @@ export class HttpManager {
   }
 
   public getHttpEntity(tags: TagEntity[]): HttpEntity {
-    const httpEntity = new HttpEntity();
-    httpEntity.httpId = this.httpId;
-    httpEntity.url = this.url;
-    httpEntity.method = this.method;
-    httpEntity.name = this.name;
-    httpEntity.request = this.request.getRequestEntity();
-    httpEntity.tags = tags;
-    return httpEntity;
+    const requestEntity = this.request.getRequestEntity();
+    return new HttpEntity(this.httpId, this.url, this.name, this.method, requestEntity, tags);
   }
 
   public changeFormHttpEntity(httpEntity: HttpEntity): void {
     this.httpId = httpEntity.httpId;
-    this.name = httpEntity.name ?? this.name;
-    this.method = httpEntity.method ?? this.method;
-    this.url = httpEntity.url ?? this.url;
+    this.name = httpEntity.name;
+    this.method = httpEntity.method;
+    this.url = httpEntity.url;
     if (httpEntity.request !== undefined) {
       this.request.changeFormRequestEntity(httpEntity.request);
     }

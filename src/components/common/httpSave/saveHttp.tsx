@@ -14,12 +14,12 @@ import { TransitionProps } from '@material-ui/core/transitions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Close, SaveAlt } from '@material-ui/icons';
 import { httpArray } from '../../../util/store/httpArray';
-import { TagEntity } from '../../../database/entity/tag.entity';
 import TagsForm from '../tag/tagsForm';
-import { HttpMapper } from '../../../database/mapper/httpMapper';
 import { HttpEntity } from '../../../database/entity/http.entity';
 import { HttpManager } from '../../../util/http/httpManager';
 import { useSnackbar } from 'notistack';
+import { useSqlData } from '../../../util/store/sqlStore';
+import { TagEntity } from '../../../database/entity/tag.entity';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -64,14 +64,13 @@ export default function SaveHttp(props: {
 }): JSX.Element {
   const { httpManager } = props;
   const style = useStyles();
+  const [sqlData] = useSqlData();
   const [selectedTags, setSelectedTags] = React.useState<TagEntity[]>([]);
   const [name, setName] = React.useState<string>(httpManager.name);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   React.useEffect(() => {
-    HttpMapper.getTagsByHttpId(httpManager.httpId).then((value) => {
-      setSelectedTags(value);
-    });
-  }, [props.open, httpManager.httpId]);
+    setSelectedTags(sqlData.https.find((value) => value.httpId === httpManager.httpId)?.tags ?? []);
+  }, [props.open, httpManager.httpId, sqlData.https]);
   return (
     <Dialog fullScreen open={props.open} onClose={props.onClose} TransitionComponent={Transition}>
       <AppBar className={style.appBar} color="inherit">
@@ -92,8 +91,8 @@ export default function SaveHttp(props: {
                   httpManager.name = name;
                   const httpEntity = httpManager.getHttpEntity([...selectedTags]);
                   try {
-                    const newHttp = await HttpMapper.saveHttp(httpEntity);
-                    props.onSave(newHttp);
+                    await httpEntity.save();
+                    props.onSave(httpEntity);
                   } catch (e) {
                     enqueueSnackbar('保存失败', {
                       variant: 'error',

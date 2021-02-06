@@ -1,12 +1,12 @@
 import React from 'react';
 import MyDrawer from '../components/myDrawer';
-import { CookieMapper } from '../database/mapper/cookieMapper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CookieCard from '../components/cookie/cookieCard';
 import { Cookie } from '../util/http/cookie';
 import CookieForm from '../components/cookie/cookieForm';
 import { Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import { useSqlData } from '../util/store/sqlStore';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -26,20 +26,18 @@ const useStyle = makeStyles((theme) =>
 
 export default function CookiePage(): JSX.Element {
   const style = useStyle();
-  const [domains, setDomains] = React.useState<string[]>([]);
-  const [activeCookie, setActiveCookie] = React.useState<Cookie | null>(null);
-  const update = React.useCallback(() => {
-    CookieMapper.getDomainList().then((value) => {
-      setDomains(value);
+  const [sqlData] = useSqlData();
+  const domains = React.useMemo<string[]>(() => {
+    const filterData = sqlData.cookies.map((value) => {
+      return value.domain;
     });
-  }, []);
-  React.useEffect(() => {
-    update();
-  }, [update]);
+    return [...new Set(filterData)];
+  }, [sqlData.cookies]);
+  const [activeCookie, setActiveCookie] = React.useState<Cookie | null>(null);
   return (
     <MyDrawer className={style.main}>
       {domains.map((value) => (
-        <CookieCard domain={value} key={value} onUpdate={update} />
+        <CookieCard domain={value} key={value} />
       ))}
       <CookieForm
         activeCookie={activeCookie}
@@ -47,7 +45,6 @@ export default function CookiePage(): JSX.Element {
           setActiveCookie(newCookie);
         }}
         onSaveCookie={() => {
-          update();
           setActiveCookie(null);
         }}
       />

@@ -29,7 +29,7 @@ export class HttpArray extends Store<HttpManager[]> {
   public change(httpEntities: HttpEntity[]): void {
     this.data.forEach((httpManager) => {
       httpEntities.forEach((httpEntity) => {
-        if (httpManager.httpId !== undefined && httpEntity.httpId === httpManager.httpId) {
+        if (httpManager.httpId !== null && httpEntity.httpId === httpManager.httpId) {
           httpManager.changeFormHttpEntity(httpEntity);
         }
       });
@@ -46,6 +46,23 @@ export class HttpArray extends Store<HttpManager[]> {
       this.setData([...this.data, newHttp]);
       return this.data.length - 1;
     }
+  }
+
+  /**
+   * @description 每次更新后修改数据
+   * @param {HttpEntity[]} httpEntities 数据库中保存的 http 数据
+   * */
+  public asyncBySqlUpdate(httpEntities: HttpEntity[]): void {
+    this.data
+      .filter(
+        (httpManager) =>
+          httpManager.httpId !== null && !httpEntities.some((httpEntity) => httpEntity.httpId === httpManager.httpId),
+      )
+      .forEach((value) => {
+        value.httpId = null;
+        value.request.requestId = null;
+      });
+    this.update();
   }
 }
 

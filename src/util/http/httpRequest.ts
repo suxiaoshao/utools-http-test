@@ -2,8 +2,8 @@ import { RequestXForm, XFormProps } from './requestXForm';
 import { RequestUploadFile, UploadFileProps } from './requestUploadFile';
 import { Header, HeaderProps, OtherHeader } from './header';
 import Form from 'form-data';
-import { CookieMapper } from '../../database/mapper/cookieMapper';
 import { RequestEntity } from '../../database/entity/request.entity';
+import { sqlStore } from '../store/sqlStore';
 
 export type RequestBodyChoose = 'none' | 'text' | 'form-data' | 'x-www-form-urlencoded';
 export type RequestTextChoose = 'json' | 'html' | 'xml' | 'javascript' | 'plain';
@@ -19,10 +19,10 @@ export class HttpRequest {
   dataForms: RequestUploadFile[];
   xForms: RequestXForm[];
   headers: Header[];
-  requestId: number | undefined;
+  requestId: number | null;
 
   constructor(
-    requestId: number | undefined,
+    requestId: number | null,
     bodyChoose: RequestBodyChoose,
     textChoose: RequestTextChoose,
     text: string,
@@ -41,7 +41,7 @@ export class HttpRequest {
 
   static getNewRequestContent(): HttpRequest {
     return new HttpRequest(
-      undefined,
+      null,
       'none',
       'plain',
       '',
@@ -87,10 +87,10 @@ export class HttpRequest {
         }
         break;
       case 'x-www-form-urlencoded':
-        contentTypeHeader.value = 'application/x-www-form-urlencoded';
+        contentTypeHeader.value = 'application/x-www-from-urlencoded';
         break;
       case 'form-data':
-        contentTypeHeader.value = 'multipart/form-data; boundary=<calculated when response is sent>';
+        contentTypeHeader.value = 'multipart/from-data; boundary=<calculated when response is sent>';
         break;
       case 'none':
         break;
@@ -108,7 +108,7 @@ export class HttpRequest {
     if (contentTypeHeader !== undefined) {
       otherHeaders.push(contentTypeHeader);
     }
-    const cookieString = await CookieMapper.getCookieStrByUrl(url);
+    const cookieString = sqlStore.getCookieByUrl(url);
     if (cookieString !== '') {
       otherHeaders.push(
         new OtherHeader(
@@ -178,15 +178,15 @@ export class HttpRequest {
   }
 
   public getRequestEntity(): RequestEntity {
-    const requestEntity = new RequestEntity();
-    requestEntity.requestId = this.requestId;
-    requestEntity.bodyChoose = this.bodyChoose;
-    requestEntity.textChoose = this.textChoose;
-    requestEntity.text = this.text;
-    requestEntity.dataForms = JSON.stringify(this.dataForms);
-    requestEntity.xForms = JSON.stringify(this.xForms);
-    requestEntity.headers = JSON.stringify(this.headers);
-    return requestEntity;
+    return new RequestEntity(
+      this.requestId,
+      this.bodyChoose,
+      this.textChoose,
+      this.text,
+      JSON.stringify(this.dataForms),
+      JSON.stringify(this.xForms),
+      JSON.stringify(this.headers),
+    );
   }
 
   public changeFormRequestEntity(requestEntity: RequestEntity): void {

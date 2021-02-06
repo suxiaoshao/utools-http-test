@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, createStyles, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { TagEntity } from '../../../database/entity/tag.entity';
 import TagItem from '../../../components/common/tag/tagItem';
 import AddTag from '../../../components/common/tag/addTag';
 import { AddCircle, ArrowBack, ArrowForward } from '@material-ui/icons';
-import { useUpdateAllTags } from '../../../util/hook/useUpdateAllTags';
+import { TagEntity } from '../../../database/entity/tag.entity';
+import { useAllTags } from '../../../util/hook/useAllTags';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -36,7 +36,7 @@ export default function TagsForm(props: {
   className?: string;
 }): JSX.Element {
   const style = useStyles();
-  const { allTags, update } = useUpdateAllTags(props.selectedTags, props.onSelectedTasChanges);
+  const allTags = useAllTags();
   const unselectedTags = React.useMemo<TagEntity[]>(() => {
     return allTags.filter((value) => !props.selectedTags.some((value1) => value1.tagId === value.tagId));
   }, [allTags, props.selectedTags]);
@@ -66,7 +66,6 @@ export default function TagsForm(props: {
               className={style.tag}
               key={value.tagId}
               tagEntity={value}
-              onChange={update}
               onClick={() => {
                 const newSelectedTags = props.selectedTags.filter((value1) => value1.tagId !== value.tagId);
                 props.onSelectedTasChanges(newSelectedTags);
@@ -101,14 +100,13 @@ export default function TagsForm(props: {
                 const newSelectedTags = [...props.selectedTags, value];
                 props.onSelectedTasChanges(newSelectedTags);
               }}
-              onChange={update}
               tagEntity={value}
               key={value.tagId}
               icon={<AddCircle />}
             />
           ))}
         </CardContent>
-        <AddTag onAdd={update} />
+        <AddTag />
       </Card>
     </div>
   );

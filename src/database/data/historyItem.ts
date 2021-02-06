@@ -17,37 +17,40 @@ export interface HistoryItem {
 }
 
 export function getHttpEntityFromHistoryItem(historyItem: HistoryItem, name: string, tags: TagEntity[]): HttpEntity {
-  const httpEntity = new HttpEntity();
-  httpEntity.url = (historyItem.host ?? '') + (historyItem.path ?? '');
-  httpEntity.method = historyItem.method ?? 'GET';
-  httpEntity.name = name;
-  httpEntity.request = getRequestEntityFromHistory(historyItem.requestHeadersData, historyItem.requestContentData);
-  httpEntity.tags = tags;
-  return httpEntity;
+  return new HttpEntity(
+    null,
+    (historyItem.host ?? '') + (historyItem.path ?? ''),
+    name,
+    historyItem.method ?? 'GET',
+    getRequestEntityFromHistory(historyItem.requestHeadersData, historyItem.requestContentData),
+    tags,
+  );
 }
 
 export function getRequestEntityFromHistory(
   headersData: OldRequestHeaders | undefined,
   contentData: OldRequestContent | undefined,
 ): RequestEntity {
-  const requestEntity = new RequestEntity();
-  requestEntity.headers = JSON.stringify(
-    headersData?.headers?.map<Header>((value) => ({
-      value: value.value ?? '',
-      key: value.name ?? '',
-    })),
-  );
-  requestEntity.xForms = JSON.stringify(
-    contentData?.form?.map<RequestXForm>((value) => new RequestXForm(value.name ?? '', value.value ?? '')),
-  );
-  requestEntity.text = contentData?.text ?? '';
-  requestEntity.dataForms = JSON.stringify(
-    contentData?.files?.map<RequestUploadFile>(
-      (value) => new RequestUploadFile(value.name ?? '', true, '', value.path ?? ''),
+  const requestEntity = new RequestEntity(
+    null,
+    'none',
+    'plain',
+    contentData?.text ?? '',
+    JSON.stringify(
+      contentData?.files?.map<RequestUploadFile>(
+        (value) => new RequestUploadFile(value.name ?? '', true, '', value.path ?? ''),
+      ),
+    ),
+    JSON.stringify(
+      contentData?.form?.map<RequestXForm>((value) => new RequestXForm(value.name ?? '', value.value ?? '')),
+    ),
+    JSON.stringify(
+      headersData?.headers?.map<Header>((value) => ({
+        value: value.value ?? '',
+        key: value.name ?? '',
+      })),
     ),
   );
-  requestEntity.bodyChoose = 'none';
-  requestEntity.textChoose = 'plain';
   switch (contentData?.choose) {
     case 'json':
       requestEntity.bodyChoose = 'text';

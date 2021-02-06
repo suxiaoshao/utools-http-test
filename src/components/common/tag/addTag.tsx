@@ -3,7 +3,6 @@ import { CardActions, createStyles, IconButton, TextField } from '@material-ui/c
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { TagEntity } from '../../../database/entity/tag.entity';
-import { TagMapper } from '../../../database/mapper/tagMapper';
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -16,7 +15,7 @@ const useStyle = makeStyles(() =>
   }),
 );
 
-export default function AddTag(props: { onAdd(): void }): JSX.Element {
+export default function AddTag(): JSX.Element {
   const style = useStyle();
   const [name, setName] = React.useState<string>('');
   return (
@@ -34,11 +33,9 @@ export default function AddTag(props: { onAdd(): void }): JSX.Element {
       <IconButton
         color="primary"
         onClick={async () => {
-          const tagEntity = new TagEntity();
-          tagEntity.tagName = name;
-          await TagMapper.saveTags(tagEntity);
+          const tagEntity = new TagEntity(null, name);
+          tagEntity.save();
           setName('');
-          props.onAdd();
         }}
         disabled={name === ''}
       >

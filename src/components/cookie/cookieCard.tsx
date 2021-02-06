@@ -12,8 +12,11 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { Add, DeleteForever, ExpandMore } from '@material-ui/icons';
 import { Cookie } from '../../util/http/cookie';
-import { CookieMapper } from '../../database/mapper/cookieMapper';
 import CookieForm from '../../components/cookie/cookieForm';
+import { useSqlData } from '../../util/store/sqlStore';
+import { CookieEntity } from '../../database/entity/cookie.entity';
+import { sqlWorker } from '../../database/mapper/sql.main';
+import { SqlRunMessage } from '../../database/mapper/sql.interface';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -37,26 +40,24 @@ const useStyle = makeStyles((theme) =>
   }),
 );
 
-export default function CookieCard(props: { domain: string; onUpdate(): void }): JSX.Element {
+export default function CookieCard(props: { domain: string }): JSX.Element {
   const style = useStyle();
-  const [cookies, setCookies] = React.useState<Cookie[]>([]);
+  const [sqlData] = useSqlData();
+  const cookies = React.useMemo<CookieEntity[]>(() => {
+    return sqlData.cookies.filter((value) => value.domain === props.domain);
+  }, [props.domain, sqlData]);
   const [activeCookie, setActiveCookie] = React.useState<Cookie | null>(null);
-  const updateCookies = React.useCallback(() => {
-    CookieMapper.getCookieByDomain(props.domain).then((value) => {
-      setCookies(value);
-    });
-  }, [props.domain]);
-  React.useEffect(() => {
-    updateCookies();
-  }, [updateCookies]);
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMore />}>
         <IconButton
           className={style.iconButton}
           onClick={async () => {
-            await CookieMapper.deleteByDomain(props.domain);
-            props.onUpdate();
+            const message: SqlRunMessage = {
+              code: 2,
+              sql: `delete from cookie where domain='${props.domain}'`,
+            };
+            sqlWorker.postMessage(message);
           }}
         >
           <DeleteForever />
@@ -76,12 +77,10 @@ export default function CookieCard(props: { domain: string; onUpdate(): void }):
             key={value.name}
             label={value.name}
             onDelete={async () => {
-              await CookieMapper.deleteCookie([value.getCookieEntity()]);
-              updateCookies();
-              props.onUpdate();
+              value.delete();
             }}
             onClick={() => {
-              setActiveCookie(value.clone());
+              setActiveCookie(value.toCookie());
             }}
           />
         ))}
@@ -100,8 +99,6 @@ export default function CookieCard(props: { domain: string; onUpdate(): void }):
           setActiveCookie(newCookie);
         }}
         onSaveCookie={() => {
-          updateCookies();
-          props.onUpdate();
           setActiveCookie(null);
         }}
       />

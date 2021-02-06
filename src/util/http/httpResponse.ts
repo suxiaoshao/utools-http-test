@@ -1,7 +1,6 @@
 import { Header } from './header';
 import { Buffer } from 'buffer';
 import { Cookie } from './cookie';
-import { CookieMapper } from '../../database/mapper/cookieMapper';
 
 export type ResponseContentType = 'text' | 'image' | 'none' | 'error';
 export type ResponseTextType = 'plain' | 'json' | 'xml' | 'html' | 'css' | 'javascript';
@@ -71,9 +70,9 @@ export class HttpResponse {
     this.startTime = startTime;
     this.setCharset();
     this.setChoose();
-    CookieMapper.saveCookies(this.getCookies().map((value) => value.getCookieEntity())).catch((e) => {
-      console.log(e);
-    });
+    this.getCookies()
+      .map((value) => value.getCookieEntity())
+      .forEach((value) => value.save());
   }
 
   private setCharset(): void {

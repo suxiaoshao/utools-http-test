@@ -1,11 +1,9 @@
 import React from 'react';
 import { Chip, Menu, MenuItem, TextField } from '@material-ui/core';
 import { TagEntity } from '../../../database/entity/tag.entity';
-import { TagMapper } from '../../../database/mapper/tagMapper';
 
 export default function TagItem(props: {
   tagEntity: TagEntity;
-  onChange(): void;
   onClick(): void;
   icon?: React.ReactElement;
   className?: string;
@@ -18,9 +16,8 @@ export default function TagItem(props: {
   const inoutRef = React.useRef<HTMLInputElement | null>(null);
   const update = React.useCallback(async () => {
     props.tagEntity.tagName = name || props.tagEntity.tagName;
-    await TagMapper.saveTags(props.tagEntity);
+    await props.tagEntity.update();
     setName(null);
-    props.onChange();
   }, [name, props]);
   React.useEffect(() => {
     inoutRef.current?.focus();
@@ -83,8 +80,7 @@ export default function TagItem(props: {
         </MenuItem>
         <MenuItem
           onClick={async () => {
-            await TagMapper.deleteTags([props.tagEntity]);
-            props.onChange();
+            await props.tagEntity.delete();
             setOpen(null);
           }}
         >

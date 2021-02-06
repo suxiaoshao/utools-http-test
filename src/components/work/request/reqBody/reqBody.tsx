@@ -36,12 +36,12 @@ export default function ReqBody(): JSX.Element {
   const { request, fatherUpdate } = React.useContext(RequestContext);
   return (
     <>
-      <TabPanelDisappear className={bodyStyle.tableContainer} index={'form-data'} value={request.bodyChoose}>
+      <TabPanelDisappear className={bodyStyle.tableContainer} index={'from-data'} value={request.bodyChoose}>
         <ReqFormFata />
       </TabPanelDisappear>
       <TabPanelDisappear
         className={bodyStyle.tableContainer}
-        index={'x-www-form-urlencoded'}
+        index={'x-www-from-urlencoded'}
         value={request.bodyChoose}
       >
         <XForm />

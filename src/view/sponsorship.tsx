@@ -6,6 +6,7 @@ import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import Alipay from '../components/common/icon/alipay';
 import WePay from '../components/common/icon/wepay';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -27,7 +28,7 @@ export default function Sponsorship(): JSX.Element {
   const style = useStyle();
   return (
     <MyDrawer className={style.main}>
-      <img src={imgSrc} className={style.img} />
+      <img src={imgSrc} className={style.img} alt={'二维码'} />
       <ToggleButtonGroup
         exclusive
         value={imgSrc}
@@ -43,6 +44,13 @@ export default function Sponsorship(): JSX.Element {
         <ToggleButton value={wepay}>
           <WePay />
         </ToggleButton>
+        <Button
+          onClick={() => {
+            // console.log(TagEntity.getAllTag());
+          }}
+        >
+          蚕食
+        </Button>
       </ToggleButtonGroup>
     </MyDrawer>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Chip, createStyles, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useAllTags } from '../../util/hook/useAllTags';
 import { TagEntity } from '../../database/entity/tag.entity';
-import { useUpdateAllTags } from '../../util/hook/useUpdateAllTags';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -21,33 +21,23 @@ const useStyle = makeStyles((theme) =>
   }),
 );
 
-interface FlagTag {
-  ifSelected: boolean;
-}
-
 export default function HistoryTags(props: {
   selectedTags: TagEntity[];
   onSelectedTasChanges(newSelectedTags: TagEntity[]): void;
 }): JSX.Element {
   const classes = useStyle();
-  const { allTags } = useUpdateAllTags(props.selectedTags, props.onSelectedTasChanges);
-  const flagAllTags = React.useMemo<(TagEntity & FlagTag)[]>(() => {
-    return allTags.map<TagEntity & FlagTag>((value) => ({
-      ...value,
-      ifSelected: props.selectedTags.some((value1) => value1.tagId === value.tagId),
-    }));
-  }, [allTags, props.selectedTags]);
+  const allTags = useAllTags();
   return (
     <div className={classes.main}>
       <Typography gutterBottom variant="body1">
         筛选标签
       </Typography>
       <div className={classes.tags}>
-        {flagAllTags.map((value) => (
+        {allTags.map((value) => (
           <Chip
             className={classes.tag}
             onClick={() => {
-              if (value.ifSelected) {
+              if (props.selectedTags.some((value1) => value1.tagId === value.tagId)) {
                 const newSelectedTags = props.selectedTags.filter((value1) => value1.tagId !== value.tagId);
                 props.onSelectedTasChanges(newSelectedTags);
               } else {
@@ -57,7 +47,7 @@ export default function HistoryTags(props: {
             }}
             key={value.tagId}
             label={value.tagName}
-            color={value.ifSelected ? 'primary' : undefined}
+            color={props.selectedTags.some((value1) => value1.tagId === value.tagId) ? 'primary' : undefined}
           />
         ))}
       </div>

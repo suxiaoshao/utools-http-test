@@ -1,11 +1,10 @@
 import React from 'react';
 import { TagEntity } from '../../database/entity/tag.entity';
-import { HttpEntity } from '../../database/entity/http.entity';
-import { HttpMapper } from '../../database/mapper/httpMapper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import HistoryItem from '../../components/history/historyItem';
-import { httpArray } from '../../util/store/httpArray';
 import { MyMethod } from '../../util/http/httpManager';
+import { HttpEntity } from '../../database/entity/http.entity';
+import { useSqlData } from '../../util/store/sqlStore';
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -18,24 +17,13 @@ const useStyle = makeStyles(() =>
 export default function HistoryContent(props: {
   className?: string;
   searchName: string;
-  tags: TagEntity[];
+  selectedTags: TagEntity[];
   method: MyMethod | undefined;
 }): JSX.Element {
   const style = useStyle();
-  const [allHttp, setAllHttp] = React.useState<HttpEntity[]>([]);
-  const update = React.useCallback(() => {
-    HttpMapper.getAllHttp().then((value) => {
-      httpArray.change(value);
-      setAllHttp(value);
-    });
-  }, []);
-  React.useEffect(() => {
-    HttpMapper.getAllHttp().then((value) => {
-      setAllHttp(value);
-    });
-  }, []);
+  const [sqlData] = useSqlData();
   const selectedHttp = React.useMemo<HttpEntity[]>(() => {
-    let filterHttp: HttpEntity[] = [...allHttp];
+    let filterHttp: HttpEntity[] = [...sqlData.https];
 
     // 筛选名字和 url
     if (props.searchName !== '') {
@@ -50,9 +38,9 @@ export default function HistoryContent(props: {
     }
 
     // 筛选标签
-    if (props.tags.length !== 0) {
+    if (props.selectedTags.length !== 0) {
       filterHttp = filterHttp.filter((http) =>
-        props.tags.every((tag) => http.tags?.find((value) => value.tagId === tag.tagId)),
+        props.selectedTags.every((tag) => http.tags?.find((value) => value.tagId === tag.tagId)),
       );
     }
 
@@ -61,11 +49,18 @@ export default function HistoryContent(props: {
       filterHttp = filterHttp.filter((http) => http.method === props.method);
     }
     return filterHttp;
-  }, [allHttp, props.method, props.searchName, props.tags]);
+  }, [sqlData.https, props.method, props.searchName, props.selectedTags]);
   return (
     <div className={`${props.className} ${style.main}`}>
       {selectedHttp.map((value, index) => (
-        <HistoryItem onChange={update} http={value} key={value.httpId} last={index === selectedHttp.length - 1} />
+        <HistoryItem
+          onChange={() => {
+            console.log(111);
+          }}
+          http={value}
+          key={value.httpId}
+          last={index === selectedHttp.length - 1}
+        />
       ))}
     </div>
   );

@@ -9,7 +9,7 @@ asynckit@^0.4.0:
 
 axios@^0.21.1:
   version "0.21.1"
-  resolved "https://registry.npm.taobao.org/axios/download/axios-0.21.1.tgz?cache=0&sync_timestamp=1608609215811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxios%2Fdownload%2Faxios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  resolved "https://registry.npm.taobao.org/axios/download/axios-0.21.1.tgz?cache=0&sync_timestamp=1608609188013&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faxios%2Fdownload%2Faxios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
   integrity sha1-IlY0gZYvTWvemnbVFu8OXTwJsrg=
   dependencies:
     follow-redirects "^1.10.0"
@@ -27,9 +27,9 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 follow-redirects@^1.10.0:
-  version "1.13.1"
-  resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.13.1.tgz?cache=0&sync_timestamp=1607916886138&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
-  integrity sha1-X2m4Ezds7k/QR0o6uoNd8Eq3Y7c=
+  version "1.13.2"
+  resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.13.2.tgz?cache=0&sync_timestamp=1611606737937&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffollow-redirects%2Fdownload%2Ffollow-redirects-1.13.2.tgz#dd73c8effc12728ba5cf4259d760ea5fb83e3147"
+  integrity sha1-3XPI7/wScoulz0JZ12DqX7g+MUc=
 
 form-data@^3.0.0:
   version "3.0.0"
@@ -42,34 +42,24 @@ form-data@^3.0.0:
 
 iconv-lite@^0.6.2:
   version "0.6.2"
-  resolved "https://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.6.2.tgz?cache=0&sync_timestamp=1594184250387&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ficonv-lite%2Fdownload%2Ficonv-lite-0.6.2.tgz#ce13d1875b0c3a674bd6a04b7f76b01b1b6ded01"
+  resolved "https://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.6.2.tgz#ce13d1875b0c3a674bd6a04b7f76b01b1b6ded01"
   integrity sha1-zhPRh1sMOmdL1qBLf3awGxtt7QE=
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
 
 mime-db@1.45.0:
   version "1.45.0"
-  resolved "https://registry.npm.taobao.org/mime-db/download/mime-db-1.45.0.tgz?cache=0&sync_timestamp=1600831210195&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmime-db%2Fdownload%2Fmime-db-1.45.0.tgz#cceeda21ccd7c3a745eba2decd55d4b73e7879ea"
+  resolved "https://registry.npm.taobao.org/mime-db/download/mime-db-1.45.0.tgz?cache=0&sync_timestamp=1600831150274&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmime-db%2Fdownload%2Fmime-db-1.45.0.tgz#cceeda21ccd7c3a745eba2decd55d4b73e7879ea"
   integrity sha1-zO7aIczXw6dF66LezVXUtz54eeo=
 
 mime-types@^2.1.12:
   version "2.1.28"
-  resolved "https://registry.npm.taobao.org/mime-types/download/mime-types-2.1.28.tgz?cache=0&sync_timestamp=1609559840102&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmime-types%2Fdownload%2Fmime-types-2.1.28.tgz#1160c4757eab2c5363888e005273ecf79d2a0ecd"
+  resolved "https://registry.npm.taobao.org/mime-types/download/mime-types-2.1.28.tgz?cache=0&sync_timestamp=1609559952590&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmime-types%2Fdownload%2Fmime-types-2.1.28.tgz#1160c4757eab2c5363888e005273ecf79d2a0ecd"
   integrity sha1-EWDEdX6rLFNjiI4AUnPs950qDs0=
   dependencies:
     mime-db "1.45.0"
-
-s-typeorm@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/s-typeorm/download/s-typeorm-1.0.1.tgz#66341c875f1fc6d9ff403388006ff58f0bacdb76"
-  integrity sha1-ZjQch18fxtn/QDOIAG/1jwus23Y=
 
 "safer-buffer@>= 2.1.2 < 3.0.0":
   version "2.1.2"
   resolved "https://registry.npm.taobao.org/safer-buffer/download/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha1-RPoWGwGHuVSd2Eu5GAL5vYOFzWo=
-
-sql.js@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npm.taobao.org/sql.js/download/sql.js-0.5.0.tgz#f880dea18280a840e41df2209dc967422dfa8d81"
-  integrity sha1-+IDeoYKAqEDkHfIgnclnQi36jYE=

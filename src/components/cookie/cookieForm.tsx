@@ -13,7 +13,6 @@ import {
 import { Cookie } from '../../util/http/cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import { DateTimePicker } from '@material-ui/pickers';
-import { CookieMapper } from '../../database/mapper/cookieMapper';
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -189,7 +188,7 @@ export default function CookieForm(props: {
               color={'primary'}
               disabled={!cookie.check()}
               onClick={async () => {
-                await CookieMapper.saveCookies([cookie?.getCookieEntity()]);
+                cookie?.getCookieEntity().save();
                 props.onSaveCookie();
               }}
             >

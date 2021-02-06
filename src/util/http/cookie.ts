@@ -99,15 +99,7 @@ export class Cookie {
   }
 
   public getCookieEntity(): CookieEntity {
-    const cookieEntity = new CookieEntity();
-    cookieEntity.createTime = this.creatTime;
-    cookieEntity.expires = this.expires;
-    cookieEntity.domain = this.domain;
-    cookieEntity.value = this.value;
-    cookieEntity.name = this.name;
-    cookieEntity.path = this.path;
-    cookieEntity.maxAge = this.maxAge;
-    return cookieEntity;
+    return new CookieEntity(this.domain, this.path, this.name, this.value, this.creatTime, this.maxAge, this.expires);
   }
 
   public clone(): Cookie {
