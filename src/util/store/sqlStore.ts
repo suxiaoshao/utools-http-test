@@ -38,7 +38,8 @@ export class SqlStore extends Store<SqlData> {
     const https = readFromQueryResult<HttpProp>(results[1]).map((value) =>
       HttpEntity.from(
         value,
-        requests.find((value1) => value1.requestId === value.requestId) ?? HttpRequest.getNewRequestContent().getRequestEntity(),
+        requests.find((value1) => value1.requestId === value.requestId) ??
+          HttpRequest.getNewRequestContent().getRequestEntity(),
         httpTags
           .filter((value1) => value1.httpHttpId === value.httpId)
           .map((value1) => tags.find((value2) => value1.tagTagId === value2.tagId))
@@ -54,7 +55,6 @@ export class SqlStore extends Store<SqlData> {
       loading: false,
     });
     httpArray.asyncBySqlUpdate(this.getData().https);
-    console.log(this.getData());
   }
 
   public getCookieByUrl(url: string): string {

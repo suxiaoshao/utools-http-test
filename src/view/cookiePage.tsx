@@ -7,6 +7,7 @@ import CookieForm from '../components/cookie/cookieForm';
 import { Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { useSqlData } from '../util/store/sqlStore';
+import LoadingPage from '../components/common/loadingPage';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -36,6 +37,7 @@ export default function CookiePage(): JSX.Element {
   const [activeCookie, setActiveCookie] = React.useState<Cookie | null>(null);
   return (
     <MyDrawer className={style.main}>
+      <LoadingPage />
       {domains.map((value) => (
         <CookieCard domain={value} key={value} />
       ))}

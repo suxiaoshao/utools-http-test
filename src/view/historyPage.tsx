@@ -6,12 +6,14 @@ import HistoryFilter from '../components/history/historyFilter';
 import { TagEntity } from '../database/entity/tag.entity';
 import HistoryContent from '../components/history/historyContent';
 import { MyMethod } from '../util/http/httpManager';
+import LoadingPage from '../components/common/loadingPage';
 
 const useStyle = makeStyles(() =>
   createStyles({
     main: {
       display: 'flex',
       flexDirection: 'column',
+      position: 'relative',
     },
     content: {
       flex: '1 1 0',
@@ -26,6 +28,7 @@ export default function HistoryPage(): JSX.Element {
   const [method, setMethod] = React.useState<MyMethod | undefined>(undefined);
   return (
     <MyDrawer className={style.main}>
+      <LoadingPage />
       <HistoryFilter
         tags={selectedTags}
         onChangeTags={setSelectedTags}

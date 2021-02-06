@@ -20,6 +20,7 @@ import { HttpManager } from '../../../util/http/httpManager';
 import { useSnackbar } from 'notistack';
 import { useSqlData } from '../../../util/store/sqlStore';
 import { TagEntity } from '../../../database/entity/tag.entity';
+import LoadingPage from '../loadingPage';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) =>
       flexDirection: 'column',
       alignItems: 'center',
       backgroundColor: theme.palette.background.default,
+      position: 'relative',
     },
     input: {
       width: '40%',
@@ -121,6 +123,7 @@ export default function SaveHttp(props: {
         </Toolbar>
       </AppBar>
       <div className={style.main}>
+        <LoadingPage />
         <TextField
           className={style.input}
           variant="filled"
