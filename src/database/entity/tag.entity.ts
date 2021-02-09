@@ -1,6 +1,4 @@
-import { SqlRunMessage } from '../mapper/sql.interface';
-import { sqlWorker } from '../mapper/sql.main';
-import { sqlStore } from '../../util/store/sqlStore';
+import { execSql, execSqlAndReturn, readFromQueryResult } from '../mapper/util';
 
 export interface TagProp {
   tagId: number;
@@ -20,28 +18,19 @@ export class TagEntity {
     return new TagEntity(tagProp.tagId, tagProp.tagName);
   }
 
-  public save(): void {
-    const message: SqlRunMessage = {
-      code: 2,
-      sql: `insert into tag(tagName) values ('${this.tagName}')`,
-    };
-    sqlWorker.postMessage(message);
+  public async save(): Promise<void> {
+    const results = await execSqlAndReturn(
+      `insert into tag(tagName) values ('${this.tagName}');select max(tagId) as count from tag;`,
+    );
+    const [{ count }] = readFromQueryResult<{ count: number }>(results[0]);
+    this.tagId = count;
   }
 
   public update(): void {
-    const message: SqlRunMessage = {
-      code: 2,
-      sql: `update tag set tagName='${this.tagName}' where tagId=${this.tagId};`,
-    };
-    sqlWorker.postMessage(message);
+    execSql(`update tag set tagName='${this.tagName}' where tagId=${this.tagId};`);
   }
 
   public delete(): void {
-    sqlStore.deleteHttpTagByTagId(this.tagId ?? -1);
-    const message: SqlRunMessage = {
-      code: 2,
-      sql: `delete from tag where tagId=${this.tagId};`,
-    };
-    sqlWorker.postMessage(message);
+    execSql(`delete from tag where tagId=${this.tagId};`);
   }
 }

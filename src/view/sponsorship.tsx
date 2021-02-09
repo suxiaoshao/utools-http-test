@@ -6,7 +6,6 @@ import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import Alipay from '../components/common/icon/alipay';
 import WePay from '../components/common/icon/wepay';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
 
 const useStyle = makeStyles(() =>
   createStyles({
@@ -22,13 +21,22 @@ const useStyle = makeStyles(() =>
     },
   }),
 );
-
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 支持页面
+ * */
 export default function Sponsorship(): JSX.Element {
+  /**
+   * 显示的二维码图片
+   * */
   const [imgSrc, setImgSrc] = React.useState<string>(alipay);
   const style = useStyle();
   return (
     <MyDrawer className={style.main}>
       <img src={imgSrc} className={style.img} alt={'二维码'} />
+      {/* 切换二维码按钮 */}
       <ToggleButtonGroup
         exclusive
         value={imgSrc}
@@ -44,13 +52,6 @@ export default function Sponsorship(): JSX.Element {
         <ToggleButton value={wepay}>
           <WePay />
         </ToggleButton>
-        <Button
-          onClick={() => {
-            // console.log(TagEntity.getAllTag());
-          }}
-        >
-          蚕食
-        </Button>
       </ToggleButtonGroup>
     </MyDrawer>
   );

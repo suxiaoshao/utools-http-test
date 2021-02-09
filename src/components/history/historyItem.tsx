@@ -61,22 +61,53 @@ const useStyle = makeStyles((theme) =>
   }),
 );
 
-export default function HistoryItem(props: { http: HttpEntity; last: boolean; onChange(): void }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 每个历史组件的 prop
+ * */
+export interface HistoryItemProp {
+  /**
+   * 要显示的历史数据库数据
+   * */
+  http: HttpEntity;
+}
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 二秘阁历史记录的组件
+ * */
+export default function HistoryItem(props: HistoryItemProp): JSX.Element {
+  /**
+   * react-dom-router 的跳转函数
+   * */
   const myHistory = useHistory();
   const style = useStyle();
-  const [open, setOpen] = React.useState<boolean>(false);
+  /**
+   * 是否打开修改页面
+   * */
+  const [modifyOpen, setModifyOpen] = React.useState<boolean>(false);
   return (
     <>
       <Card className={style.card}>
         <CardHeader
           avatar={
+            /**
+             * 显示 http 方法
+             * */
             <Avatar className={style[props.http.method ?? 'GET']}>{(props.http.method ?? 'GET').slice(0, 3)}</Avatar>
           }
+          /** http 保存名 */
           title={props.http.name}
+          /** url */
           subheader={`${props.http.url}`}
           subheaderTypographyProps={{ noWrap: true }}
           className={style.cardHeader}
         />
+        {/* http 保存的标签 */}
         <CardContent>
           {props.http.tags?.length ? (
             props.http.tags?.map((value) => (
@@ -89,6 +120,7 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
           )}
         </CardContent>
         <CardActions disableSpacing>
+          {/* 添加至工作区 */}
           <Tooltip title={<Typography variant={'body2'}>添加至工作区</Typography>}>
             <IconButton
               onClick={() => {
@@ -100,21 +132,22 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
               <Reply />
             </IconButton>
           </Tooltip>
+          {/* 打开修改窗口 */}
           <Tooltip title={<Typography variant={'body2'}>修改</Typography>}>
             <IconButton
               onClick={() => {
-                setOpen(true);
+                setModifyOpen(true);
               }}
             >
               <Edit />
             </IconButton>
           </Tooltip>
+          {/* 删除该 http历史 */}
           <Tooltip title={<Typography variant={'body2'}>删除</Typography>}>
             <IconButton
               className={style.deleteButton}
               onClick={async () => {
                 props.http.delete();
-                props.onChange();
               }}
             >
               <Delete />
@@ -123,13 +156,12 @@ export default function HistoryItem(props: { http: HttpEntity; last: boolean; on
         </CardActions>
       </Card>
       <SaveHttp
-        open={open}
+        open={modifyOpen}
         onClose={() => {
-          setOpen(false);
+          setModifyOpen(false);
         }}
         onSave={() => {
-          props.onChange();
-          setOpen(false);
+          setModifyOpen(false);
         }}
         httpManager={HttpManager.fromEntity(props.http)}
       />

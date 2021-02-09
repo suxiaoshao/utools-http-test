@@ -7,12 +7,18 @@ import UpdateTable from '../../../../components/work/request/updateTable';
 import { useForceUpdate } from '../../../../util/hook/useForceUpdate';
 import { RequestContext } from '../request';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description x-www-form-urlencoded 数据输入表格
+ * */
 export default function XForm(): JSX.Element {
   const bodyStyle = useReqBodyStyle();
   const {
     request: { xForms },
   } = React.useContext(RequestContext);
-  const [setKeyFlag, setValueFlag, keyRef, valueRef] = useTableAdd([xForms.length]);
+  const { setKeyFlag, setValueFlag, keyRef, valueRef } = useTableAdd([xForms.length]);
   const forceUpdate = useForceUpdate();
   return (
     <TableContainer className={bodyStyle.tabPanel} component={Paper}>

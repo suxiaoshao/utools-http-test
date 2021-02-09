@@ -12,8 +12,20 @@ import NoneRes from '../../../components/work/response/noneRes';
 import ResCookie from '../../../components/work/response/resCookie';
 import ErrorPage from '../../../components/work/response/errorPage';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description response 数据的上下文
+ * */
 export const ResponseContext = React.createContext<{
+  /**
+   * http 的 response 数据
+   * */
   response: HttpResponse;
+  /**
+   * 更新
+   * */
   fatherUpdate: NoneFunc;
 }>({
   response: HttpResponse.getNewResponseContent(),
@@ -22,7 +34,18 @@ export const ResponseContext = React.createContext<{
   },
 });
 
-function ResponseProvider(props: { children: React.ReactNode }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description response 注入器组件
+ * */
+function ResponseProvider(props: {
+  /**
+   * 子组件
+   * */
+  children: React.ReactNode;
+}): JSX.Element {
   const {
     httpManager: { response },
   } = React.useContext(HttpContext);
@@ -34,7 +57,18 @@ function ResponseProvider(props: { children: React.ReactNode }): JSX.Element {
   );
 }
 
-function ResponseFather(props: { children: React.ReactNode }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 用于包裹 response 部分的组件
+ * */
+function ResponseFather(props: {
+  /**
+   * 子组件
+   * */
+  children: React.ReactNode;
+}): JSX.Element {
   const reStyle = useReStyle();
   const {
     httpManager: { isRequest },
@@ -68,9 +102,18 @@ const useStyle = makeStyles((theme) =>
   }),
 );
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description response 组件
+ * */
 export default function Response(): JSX.Element {
   const reStyle = useReStyle();
   const style = useStyle();
+  /**
+   * 激活部分标记
+   * */
   const [value, setValue] = React.useState<string>('body');
   const {
     httpManager: {
@@ -79,6 +122,9 @@ export default function Response(): JSX.Element {
       response: { contentType },
     },
   } = React.useContext(HttpContext);
+  /**
+   * 如果 http manager 在 loading,显示 loading 页面
+   * */
   if (loading) {
     return (
       <ResponseFather>
@@ -99,18 +145,27 @@ export default function Response(): JSX.Element {
   }
   switch (contentType) {
     case 'none':
+      /**
+       * 显示空页面
+       * */
       return (
         <ResponseFather>
           <NoneRes />
         </ResponseFather>
       );
     case 'error':
+      /**
+       * 显示错误页面
+       * */
       return (
         <ResponseFather>
           <ErrorPage />
         </ResponseFather>
       );
     default:
+      /**
+       * 显示成功页面
+       * */
       return (
         <ResponseFather>
           <ResToggle

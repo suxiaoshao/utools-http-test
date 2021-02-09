@@ -8,6 +8,12 @@ import HistoryContent from '../components/history/historyContent';
 import { MyMethod } from '../util/http/httpManager';
 import LoadingPage from '../components/common/loadingPage';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 获取样式
+ * */
 const useStyle = makeStyles(() =>
   createStyles({
     main: {
@@ -20,15 +26,30 @@ const useStyle = makeStyles(() =>
     },
   }),
 );
-
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 历史记录页面
+ * */
 export default function HistoryPage(): JSX.Element {
   const style = useStyle();
+  /**
+   * 搜索名
+   * */
   const [searchName, setSearchName] = React.useState<string>('');
+  /**
+   * 被选择的标签
+   * */
   const [selectedTags, setSelectedTags] = React.useState<TagEntity[]>([]);
+  /**
+   * 选择的方法
+   * */
   const [method, setMethod] = React.useState<MyMethod | undefined>(undefined);
   return (
     <MyDrawer className={style.main}>
       <LoadingPage />
+      {/* 筛选表单 */}
       <HistoryFilter
         tags={selectedTags}
         onChangeTags={setSelectedTags}
@@ -37,6 +58,7 @@ export default function HistoryPage(): JSX.Element {
         method={method}
         ocChangeMethod={setMethod}
       />
+      {/* 被筛选后的内容 */}
       <HistoryContent method={method} searchName={searchName} selectedTags={selectedTags} className={style.content} />
     </MyDrawer>
   );

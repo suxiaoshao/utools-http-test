@@ -1,6 +1,11 @@
 import { Database } from 'sql.js';
-
-export function initDatabase(sqlDataBase: Database): void {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 数据库建表
+ * */
+export function initDatabaseTable(sqlDataBase: Database): void {
   const sql = `create table if not exists cookie
                (
                    domain     text,

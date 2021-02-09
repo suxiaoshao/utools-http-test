@@ -34,12 +34,25 @@ const useStyle = makeStyles(() =>
   }),
 );
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 工作区
+ * */
 export default function Work(): JSX.Element {
+  /**
+   * 被激活的 http 请求下标
+   * */
   const [workIndex] = useWorkIndex();
   const style = useStyle();
+  /**
+   * 全部的 http 请求
+   * */
   const [httpArray] = useHttpArray();
   return (
     <MyDrawer className={style.main}>
+      {/* 选项卡 */}
       <Tabs
         className={style.tabs}
         value={workIndex}
@@ -52,6 +65,7 @@ export default function Work(): JSX.Element {
           <WorkTab index={index} httpManager={item} key={index} />
         ))}
       </Tabs>
+      {/* 全部的 http 请求页面 */}
       {httpArray.map((item, index) => (
         <TabPanelDisappear className={style.panel} key={index} index={workIndex} value={index}>
           <WorkPanel http={item} />

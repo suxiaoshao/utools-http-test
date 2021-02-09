@@ -17,7 +17,12 @@ const textItemList = (['plain', 'json', 'xml', 'html', 'css', 'javascript'] as c
     text: value,
   };
 });
-
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description response 的页面切换按钮
+ * */
 export default function ResToggle(props: { value: string; onchangeValue(newValue: string): void }): JSX.Element {
   const style = useReStyle();
   const { response, fatherUpdate } = React.useContext(ResponseContext);

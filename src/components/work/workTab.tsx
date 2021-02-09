@@ -21,10 +21,39 @@ const useStyle = makeStyles(() =>
   }),
 );
 
-export default function WorkTab(props: { index: number; httpManager: HttpManager }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description workTab 的 prop
+ * */
+export interface WorkTabProp {
+  /**
+   * 这个 tab 指向的 http 请求在 httpArray 中的下标
+   * */
+  index: number;
+  /**
+   * 这个 tab 的http 请求
+   * */
+  httpManager: HttpManager;
+}
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description work 组件的 tab,封装了右键点击
+ * */
+export default function WorkTab(props: WorkTabProp): JSX.Element {
   const style = useStyle();
+  /**
+   * 设置激活的 http 请求的下标
+   * */
   const [, setWorkIndex] = useWorkIndex();
-  const [state, setState] = React.useState<{
+  /**
+   * menu 出现的位置, 为 null 则不显示
+   * */
+  const [menuPosition, setMenuPosition] = React.useState<{
     mouseX: number;
     mouseY: number;
   } | null>(null);
@@ -33,7 +62,7 @@ export default function WorkTab(props: { index: number; httpManager: HttpManager
       <Tab
         onContextMenu={(event) => {
           event.preventDefault();
-          setState({
+          setMenuPosition({
             mouseX: event.clientX - 2,
             mouseY: event.clientY - 4,
           });
@@ -47,17 +76,17 @@ export default function WorkTab(props: { index: number; httpManager: HttpManager
       />
       <Menu
         keepMounted
-        open={state !== null}
+        open={menuPosition !== null}
         onClose={() => {
-          setState(null);
+          setMenuPosition(null);
         }}
         anchorReference="anchorPosition"
-        anchorPosition={state !== null ? { top: state.mouseY, left: state.mouseX } : undefined}
+        anchorPosition={menuPosition !== null ? { top: menuPosition.mouseY, left: menuPosition.mouseX } : undefined}
       >
         <MenuItem
           onClick={() => {
             workIndex.setData(httpArray.addHttpManager());
-            setState(null);
+            setMenuPosition(null);
           }}
         >
           <ListItemIcon>
@@ -72,7 +101,7 @@ export default function WorkTab(props: { index: number; httpManager: HttpManager
               if (httpLength < workIndex.getData()) {
                 workIndex.setData(httpLength);
               }
-              setState(null);
+              setMenuPosition(null);
             }}
           >
             <ListItemIcon>

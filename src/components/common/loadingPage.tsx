@@ -24,6 +24,12 @@ const useStyle = makeStyles((theme) =>
   }),
 );
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description loading 组件,如果 sqlData 的 loading 为 true 则引用了这个组建的父组件会被这个 loading 组件覆盖
+ * */
 export default function LoadingPage(): JSX.Element {
   const [sqlData] = useSqlData();
   const classes = useStyle();

@@ -3,6 +3,12 @@ import { InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableHea
 import { useReStyle } from '../../../util/hook/useRestyle';
 import { ResponseContext } from './response';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 显示头部表格
+ * */
 export default function ResHeaders(): JSX.Element {
   const style = useReStyle();
   const {

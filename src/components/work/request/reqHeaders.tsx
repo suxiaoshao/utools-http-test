@@ -19,15 +19,27 @@ import { useReStyle } from '../../../util/hook/useRestyle';
 import { RequestContext } from './request';
 import { HttpContext } from '../workPanel';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 修改 request 部分的头部
+ * */
 export default function ReqHeaders(): JSX.Element {
   const style = useReStyle();
   const { request } = React.useContext(RequestContext);
   const {
     httpManager: { url },
   } = React.useContext(HttpContext);
+  /**
+   * 由其他属性推断出来的头部,可被覆盖
+   * */
   const [otherHeaders, setOtherHeaders] = React.useState<OtherHeader[]>([]);
-  const [setKeyFlag, setValueFlag, keyRef, valueRef] = useTableAdd([request.headers.length]);
+  const { setKeyFlag, setValueFlag, keyRef, valueRef } = useTableAdd([request.headers.length]);
   const forceUpdate = useForceUpdate();
+  /**
+   * url,request 更新时更新其他头部
+   * */
   React.useEffect(() => {
     request.getOtherHeaders(url).then((value) => {
       setOtherHeaders(value);
@@ -36,6 +48,7 @@ export default function ReqHeaders(): JSX.Element {
   return (
     <TableContainer className={style.tableContainer} component={Paper}>
       <Table stickyHeader size="small" className={style.table}>
+        {/* 表头 */}
         <TableHead>
           <TableRow>
             <TableCell padding="checkbox" />

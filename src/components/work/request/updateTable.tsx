@@ -4,9 +4,24 @@ import { Delete } from '@material-ui/icons';
 import { useForceUpdate } from '../../../util/hook/useForceUpdate';
 import { useReStyle } from '../../../util/hook/useRestyle';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 添加数据的表格的数据部分
+ * */
 export default function UpdateTable(props: {
+  /**
+   * 键值对数据列表
+   * */
   mapList: { value: string; key: string }[];
+  /**
+   * 最后一个 key input 的引用
+   * */
   keyRef: MutableRefObject<HTMLInputElement | null>;
+  /**
+   * 最后一个 value input 的引用
+   * */
   valueRef: MutableRefObject<HTMLInputElement | null>;
 }): JSX.Element {
   const style = useReStyle();

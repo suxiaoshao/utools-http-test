@@ -2,7 +2,23 @@ import { Button, ButtonProps, createStyles, Menu, MenuItem } from '@material-ui/
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-export type ItemListProp<T> = { value: T; text: React.ReactNode };
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 单个选择器
+ * */
+export interface ItemListProp<T> {
+  /**
+   * 这个选项的值
+   * */
+  value: T;
+  /**
+   * 显示在选项里的文字或 html
+   * */
+  text: React.ReactNode;
+}
+
 const useStyle = makeStyles(() =>
   createStyles({
     button: {
@@ -11,20 +27,40 @@ const useStyle = makeStyles(() =>
   }),
 );
 
-export type MySelectorProp<T extends number | string | undefined | null> = {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 选择器组建的 prop
+ * */
+export interface MySelectorProp<T extends number | string | undefined | null> {
+  /**
+   * 被选择的值
+   * */
   value: T;
-  onValueChange(newValue: T): void;
+  /**
+   * 值和显示文字的对照列表
+   * */
   itemList: ItemListProp<T>[];
-} & ButtonProps;
+
+  /**
+   * 修改值的触发方法
+   * */
+  onValueChange(newValue: T): void;
+}
 
 function MySelector<T extends number | string | undefined | null>(
-  props: MySelectorProp<T>,
+  props: MySelectorProp<T> & ButtonProps,
   ref?: ((instance: HTMLButtonElement | null) => void) | React.RefObject<HTMLButtonElement> | null | undefined,
 ): JSX.Element {
   const style = useStyle();
+  /**
+   * 点击时间的触发组件,如果取消的话为 null
+   * */
   const [menuEl, setMenuEl] = React.useState<HTMLButtonElement | null>(null);
   return (
     <>
+      {/* 触发菜单的按钮*/}
       <Button
         {...props}
         className={`${style.button} ${props.className}`}
@@ -35,6 +71,7 @@ function MySelector<T extends number | string | undefined | null>(
       >
         {props.itemList.find((value) => value.value === props.value)?.text ?? '不是合法的值'}
       </Button>
+      {/* 菜单,menuEl 不为 bull 时显示 */}
       <Menu
         open={Boolean(menuEl)}
         anchorEl={menuEl}
@@ -43,6 +80,9 @@ function MySelector<T extends number | string | undefined | null>(
         }}
       >
         {props.itemList.map((item) => (
+          /**
+           * 点击触发修改方法并关闭菜单
+           * */
           <MenuItem
             selected={item.value == props.value}
             key={item.value}

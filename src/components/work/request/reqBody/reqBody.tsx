@@ -31,17 +31,23 @@ export const useReqBodyStyle = makeStyles((theme) =>
   }),
 );
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description request body 部分
+ * */
 export default function ReqBody(): JSX.Element {
   const bodyStyle = useReqBodyStyle();
   const { request, fatherUpdate } = React.useContext(RequestContext);
   return (
     <>
-      <TabPanelDisappear className={bodyStyle.tableContainer} index={'from-data'} value={request.bodyChoose}>
+      <TabPanelDisappear className={bodyStyle.tableContainer} index={'form-data'} value={request.bodyChoose}>
         <ReqFormFata />
       </TabPanelDisappear>
       <TabPanelDisappear
         className={bodyStyle.tableContainer}
-        index={'x-www-from-urlencoded'}
+        index={'x-www-form-urlencoded'}
         value={request.bodyChoose}
       >
         <XForm />

@@ -35,82 +35,96 @@ const useStyle = makeStyles(() =>
     },
   }),
 );
-
-export default function CookieForm(props: {
-  activeCookie: Cookie | null;
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description cookieForm 的 prop
+ * */
+export interface CookieFormProp {
+  /**
+   * 需要修改保存的 cookie
+   * */
+  formCookie: Cookie | null;
+  /**
+   * formCookie 修改时触发的方法
+   * */
   onChangeCookie(newCookie: Cookie | null): void;
-  onSaveCookie(): void;
-}): JSX.Element {
-  const [cookie, setCookie] = React.useState<Cookie | null>(null);
+}
+
+export default function CookieForm(props: CookieFormProp): JSX.Element {
   const style = useStyle();
-  React.useEffect(() => {
-    setCookie(props.activeCookie);
-  }, [props.activeCookie]);
+  const { formCookie } = props;
   return (
     <>
-      {cookie !== null && (
+      {formCookie !== null && (
         <Dialog open={true}>
           <DialogTitle>修改/添加 cookie</DialogTitle>
           <DialogContent>
             <form className={style.form}>
+              {/* name */}
               <TextField
                 label={'name'}
-                value={cookie?.name}
+                value={props.formCookie?.name}
                 onChange={(event) => {
-                  cookie.name = event.target.value;
-                  setCookie(cookie.clone());
+                  formCookie.name = event.target.value;
+                  props.onChangeCookie(formCookie.clone());
                 }}
-                error={cookie.name === ''}
-                helperText={cookie.name === '' ? 'name 不能为空' : undefined}
+                error={formCookie.name === ''}
+                helperText={formCookie.name === '' ? 'name 不能为空' : undefined}
               />
+              {/* value */}
               <TextField
                 label={'value'}
-                value={cookie?.value}
+                value={formCookie.value}
                 onChange={(event) => {
-                  cookie.value = event.target.value;
-                  setCookie(cookie.clone());
+                  formCookie.value = event.target.value;
+                  props.onChangeCookie(formCookie.clone());
                 }}
-                error={cookie.value === ''}
-                helperText={cookie.value === '' ? 'value 不能为空' : undefined}
+                error={formCookie.value === ''}
+                helperText={formCookie.value === '' ? 'value 不能为空' : undefined}
               />
+              {/* domain */}
               <TextField
                 label={'domain'}
-                value={cookie?.domain}
+                value={formCookie?.domain}
                 onChange={(event) => {
-                  cookie.domain = event.target.value;
-                  setCookie(cookie.clone());
+                  formCookie.domain = event.target.value;
+                  props.onChangeCookie(formCookie.clone());
                 }}
-                error={cookie.domain === ''}
-                helperText={cookie.domain === '' ? 'domain 不能为空' : undefined}
+                error={formCookie.domain === ''}
+                helperText={formCookie.domain === '' ? 'domain 不能为空' : undefined}
               />
+              {/* path */}
               <TextField
                 label={'path'}
-                value={cookie?.path}
+                value={props.formCookie?.path}
                 onChange={(event) => {
-                  cookie.path = event.target.value;
-                  setCookie(cookie.clone());
+                  formCookie.path = event.target.value;
+                  props.onChangeCookie(formCookie.clone());
                 }}
-                error={cookie.path.match(/^\//) === null}
-                helperText={cookie.path.match(/^\//) === null ? `path 需要以 '/' 开头` : undefined}
+                error={formCookie.path.match(/^\//) === null}
+                helperText={formCookie.path.match(/^\//) === null ? `path 需要以 '/' 开头` : undefined}
               />
+              {/* maxAge 为 null 时不显示修改 maxAge 的表单 */}
               <div className={style.formTime}>
-                {cookie.maxAge !== null ? (
+                {formCookie.maxAge !== null ? (
                   <>
                     <Switch
                       className={style.formSwitch}
                       checked={true}
                       onChange={() => {
-                        cookie.maxAge = null;
-                        setCookie(cookie.clone());
+                        formCookie.maxAge = null;
+                        props.onChangeCookie(formCookie.clone());
                       }}
                     />
                     <TextField
                       type={'number'}
                       label={'max-age'}
-                      value={cookie?.maxAge}
+                      value={props.formCookie?.maxAge}
                       onChange={(event) => {
-                        cookie.maxAge = parseInt(event.target.value);
-                        setCookie(cookie.clone());
+                        formCookie.maxAge = parseInt(event.target.value);
+                        props.onChangeCookie(formCookie.clone());
                       }}
                       className={style.formInput}
                     />
@@ -124,8 +138,8 @@ export default function CookieForm(props: {
                         <Switch
                           checked={false}
                           onChange={() => {
-                            cookie.maxAge = 0;
-                            setCookie(cookie.clone());
+                            formCookie.maxAge = 0;
+                            props.onChangeCookie(formCookie.clone());
                           }}
                         />
                       }
@@ -134,24 +148,29 @@ export default function CookieForm(props: {
                   </>
                 )}
               </div>
+              {/* expires 为 null 时不显示修改 expires 的表单 */}
               <div className={style.formTime}>
-                {cookie.expires !== null ? (
+                {formCookie.expires !== null ? (
                   <>
                     <Switch
                       className={style.formSwitch}
                       checked={true}
                       onChange={() => {
-                        cookie.expires = null;
-                        setCookie(cookie.clone());
+                        formCookie.expires = null;
+                        props.onChangeCookie(formCookie.clone());
                       }}
                     />
                     <DateTimePicker
                       label={'expires'}
-                      value={cookie?.expires}
+                      value={props.formCookie?.expires}
                       onChange={(date) => {
-                        cookie.expires = date ?? new Date();
+                        formCookie.expires = date ?? new Date();
+                        props.onChangeCookie(formCookie.clone());
                       }}
                       className={style.formInput}
+                      format="yyyy/MM/dd HH:mm"
+                      ampm={false}
+                      disablePast
                     />
                   </>
                 ) : (
@@ -163,8 +182,8 @@ export default function CookieForm(props: {
                         <Switch
                           checked={false}
                           onChange={() => {
-                            cookie.expires = new Date();
-                            setCookie(cookie.clone());
+                            formCookie.expires = new Date();
+                            props.onChangeCookie(formCookie.clone());
                           }}
                         />
                       }
@@ -176,6 +195,7 @@ export default function CookieForm(props: {
             </form>
           </DialogContent>
           <DialogActions>
+            {/* 取消不保存 */}
             <Button
               color={'secondary'}
               onClick={() => {
@@ -184,12 +204,13 @@ export default function CookieForm(props: {
             >
               取消
             </Button>
+            {/* 保存后关闭表单 */}
             <Button
               color={'primary'}
-              disabled={!cookie.check()}
+              disabled={!formCookie.check()}
               onClick={async () => {
-                cookie?.getCookieEntity().save();
-                props.onSaveCookie();
+                formCookie?.getCookieEntity().save();
+                props.onChangeCookie(null);
               }}
             >
               保存

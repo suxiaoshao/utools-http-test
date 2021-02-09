@@ -14,14 +14,46 @@ const useStyle = makeStyles(() =>
   }),
 );
 
-export default function HistoryContent(props: {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description historyContent 组件的 prop
+ * */
+export interface HistoryContentProp {
+  /**
+   * 组件的类名
+   * */
   className?: string;
+  /**
+   * 搜索关键字,为空时全匹配
+   * */
   searchName: string;
+  /**
+   * 被选中的标签,为空时全匹配
+   * */
   selectedTags: TagEntity[];
+  /**
+   * 匹配的方法 ,为 undefined 时全匹配
+   * */
   method: MyMethod | undefined;
-}): JSX.Element {
+}
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description historyContent 组件
+ * */
+export default function HistoryContent(props: HistoryContentProp): JSX.Element {
   const style = useStyle();
+  /**
+   * 数据库数据
+   * */
   const [sqlData] = useSqlData();
+  /**
+   * 被筛选出来的 http 历史
+   * */
   const selectedHttp = React.useMemo<HttpEntity[]>(() => {
     let filterHttp: HttpEntity[] = [...sqlData.https];
 
@@ -52,15 +84,8 @@ export default function HistoryContent(props: {
   }, [sqlData.https, props.method, props.searchName, props.selectedTags]);
   return (
     <div className={`${props.className} ${style.main}`}>
-      {selectedHttp.map((value, index) => (
-        <HistoryItem
-          onChange={() => {
-            console.log(111);
-          }}
-          http={value}
-          key={value.httpId}
-          last={index === selectedHttp.length - 1}
-        />
+      {selectedHttp.map((value) => (
+        <HistoryItem http={value} key={value.httpId} />
       ))}
     </div>
   );

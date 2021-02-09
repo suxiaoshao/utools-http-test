@@ -20,6 +20,13 @@ export const useNodeStyle = makeStyles((theme) =>
     },
   }),
 );
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 还未发送数据时显示的空页面
+ * */
 export default function NoneRes(): JSX.Element {
   const style = useNodeStyle();
   return (

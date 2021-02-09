@@ -4,6 +4,12 @@ import { useNodeStyle } from './noneRes';
 import { ResponseContext } from './response';
 import MyError from '../../common/icon/myError';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 错误页面
+ * */
 export default function ErrorPage(): JSX.Element {
   const style = useNodeStyle();
   const { response } = React.useContext(ResponseContext);

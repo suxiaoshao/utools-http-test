@@ -31,14 +31,41 @@ const useStyle = makeStyles((theme: Theme) => {
   });
 });
 
-interface MyDrawerProps {
-  children: React.ReactNode;
-  className: string;
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 侧边栏路由按钮的 prop
+ * */
+export interface MyRouterListItemProp {
+  /**
+   * 按钮 icon
+   * */
+  icon: JSX.Element;
+  /**
+   * 显示的文字
+   * */
+  text: string;
+  /**
+   * 按钮指向的路径
+   * */
+  path: string;
 }
-
-function MyRouterList(props: { icon: JSX.Element; text: string; path: string }) {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 侧边栏按钮
+ * */
+function MyRouterListItem(props: MyRouterListItemProp) {
   const style = useStyle();
+  /**
+   * 路由信息
+   * */
   const myLocation = useLocation();
+  /**
+   * 跳转
+   * */
   const myHistory = useHistory();
   return (
     <ListItem
@@ -54,16 +81,37 @@ function MyRouterList(props: { icon: JSX.Element; text: string; path: string }) 
     </ListItem>
   );
 }
-
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 侧边栏组件的 prop
+ * */
+interface MyDrawerProps {
+  /**
+   * 子组件
+   * */
+  children: React.ReactNode;
+  /**
+   * 类名
+   * */
+  className: string;
+}
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 侧边栏组件
+ * */
 export default function MyDrawer(props: MyDrawerProps): JSX.Element {
   const style = useStyle();
   return (
     <div className={style.page}>
       <List className={style.myDrawer}>
-        <MyRouterList path="/" icon={<NetworkCheck />} text={'工作区'} />
-        <MyRouterList icon={<History />} text={'历史记录'} path={'/history'} />
-        <MyRouterList icon={<AvTimer />} text={'cookies'} path={'/cookies'} />
-        <MyRouterList icon={<MonetizationOn />} text={'支持作者'} path={'/sponsorship'} />
+        <MyRouterListItem path="/" icon={<NetworkCheck />} text={'工作区'} />
+        <MyRouterListItem icon={<History />} text={'历史记录'} path={'/history'} />
+        <MyRouterListItem icon={<AvTimer />} text={'cookies'} path={'/cookies'} />
+        <MyRouterListItem icon={<MonetizationOn />} text={'支持作者'} path={'/sponsorship'} />
       </List>
       <main className={`${props.className} ${style.main}`}>{props.children}</main>
     </div>

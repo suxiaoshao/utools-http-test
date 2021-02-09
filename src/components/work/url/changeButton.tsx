@@ -4,6 +4,12 @@ import { SwapHoriz } from '@material-ui/icons';
 import { HttpContext } from '../workPanel';
 import { useUrlStyles } from './urlPaper';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 修改 response/request 页面的按钮
+ * */
 export default function ChangeButton(): JSX.Element {
   const { httpManager, fatherUpdate } = React.useContext(HttpContext);
   const style = useUrlStyles();

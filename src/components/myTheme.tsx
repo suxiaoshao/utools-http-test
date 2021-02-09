@@ -5,10 +5,32 @@ import { zhCN } from 'date-fns/locale';
 import DateFnsUtils from '@date-io/date-fns';
 import { SnackbarProvider } from 'notistack';
 
-export function MyThemeProvider(props: { children: React.ReactNode }): JSX.Element {
-  // 是否为暗黑主题
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 主题组件的 prop
+ * */
+interface MyThemeProp {
+  /**
+   * 子组件
+   * */
+  children: React.ReactNode;
+}
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 主题组件
+ * */
+export function MyThemeProvider(props: MyThemeProp): JSX.Element {
+  /**
+   * 判断在 utools 是否是黑色
+   * */
   const [dark] = useState<boolean>(window.utools.isDarkColors());
-  //主题对象
+  /**
+   * 主题对象
+   * */
   const themeObject = useMemo<Theme>(() => {
     return createMuiTheme({
       palette: dark
@@ -32,7 +54,9 @@ export function MyThemeProvider(props: { children: React.ReactNode }): JSX.Eleme
   return (
     <MuiThemeProvider theme={themeObject}>
       <CssBaseline />
+      {/* 时间组件 */}
       <MuiPickersUtilsProvider utils={DateFnsUtils} locale={zhCN}>
+        {/* 消息条组件 */}
         <SnackbarProvider maxSnack={5}>
           <div className={dark ? 'my-dark' : 'my-light'}>{props.children}</div>
         </SnackbarProvider>

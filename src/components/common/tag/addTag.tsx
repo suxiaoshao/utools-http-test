@@ -14,7 +14,12 @@ const useStyle = makeStyles(() =>
     },
   }),
 );
-
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 用于添加一个 tag
+ * */
 export default function AddTag(): JSX.Element {
   const style = useStyle();
   const [name, setName] = React.useState<string>('');
@@ -34,7 +39,7 @@ export default function AddTag(): JSX.Element {
         color="primary"
         onClick={async () => {
           const tagEntity = new TagEntity(null, name);
-          tagEntity.save();
+          await tagEntity.save();
           setName('');
         }}
         disabled={name === ''}

@@ -1,5 +1,4 @@
-import { SqlRunMessage } from '../mapper/sql.interface';
-import { sqlWorker } from '../mapper/sql.main';
+import { execSql } from '../mapper/util';
 
 export interface HttpTagProp {
   httpHttpId: number;
@@ -20,19 +19,11 @@ export class HttpTagEntity {
   }
 
   public delete(): void {
-    const message: SqlRunMessage = {
-      code: 2,
-      sql: `delete from httpTag where tagTagId=${this.tagTagId} and httpHttpId=${this.tagTagId};`,
-    };
-    sqlWorker.postMessage(message);
+    execSql(`delete from httpTag where tagTagId=${this.tagTagId} and httpHttpId=${this.tagTagId};`);
   }
 
   public save(): void {
-    const message: SqlRunMessage = {
-      code: 2,
-      sql: `insert into httpTag(httpHttpId, tagTagId)
-            VALUES (${this.httpHttpId}, ${this.tagTagId});`,
-    };
-    sqlWorker.postMessage(message);
+    execSql(`insert into httpTag(httpHttpId, tagTagId)
+            VALUES (${this.httpHttpId}, ${this.tagTagId});`);
   }
 }

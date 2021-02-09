@@ -1,3 +1,10 @@
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 返回 http 的数据库文件地址,如果没有创建并返回
+ * @return {string} http 插件的数据库地址
+ * */
 export function getDataFile(): string {
   const path = getHttpDir();
   const filePath = window.nodePath.resolve(path, 'http.db');
@@ -7,6 +14,13 @@ export function getDataFile(): string {
   return filePath;
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 获取 http 插件的数据地址,如果没有这个地址创建并返回
+ * @return {string} http数据地址
+ * */
 export function getHttpDir(): string {
   const fatherPath = window.nodePath.resolve(window.utools.getPath('userData'), 'database');
   if (!window.nodeFs.existsSync(fatherPath)) {
@@ -17,19 +31,4 @@ export function getHttpDir(): string {
     window.nodeFs.mkdirSync(path);
   }
   return path;
-}
-
-export function getDataList(): string[] {
-  return [];
-}
-
-export function getDataFileBuffer(): Uint8Array {
-  const fileName = getDataFile();
-  const buf = window.nodeFs.readFileSync(fileName);
-  const ab = new ArrayBuffer(buf.length);
-  const view = new Uint8Array(ab);
-  for (let i = 0; i < buf.length; ++i) {
-    view[i] = buf[i];
-  }
-  return view;
 }

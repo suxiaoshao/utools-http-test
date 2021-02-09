@@ -15,6 +15,12 @@ const useStyle = makeStyles(() =>
     },
   }),
 );
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 显示图片
+ * */
 export default function ResImage(): JSX.Element {
   const {
     response: { buffer },

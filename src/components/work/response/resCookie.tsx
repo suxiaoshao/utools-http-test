@@ -3,6 +3,12 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { ResponseContext } from './response';
 import { useReStyle } from '../../../util/hook/useRestyle';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 显示 response 的 cookies 的数据表格
+ * */
 export default function ResCookie(): JSX.Element {
   const { response } = React.useContext(ResponseContext);
   const style = useReStyle();

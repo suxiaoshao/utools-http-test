@@ -21,17 +21,24 @@ import { useTableAdd } from '../../../../util/hook/useTableAdd';
 import { useReStyle } from '../../../../util/hook/useRestyle';
 import { RequestContext } from '../request';
 
-export default function ReqFormFata(): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description form-data 表格, 用于输入 form-data 数据
+ * */
+export default function ReqFormData(): JSX.Element {
   const bodyStyle = useReqBodyStyle();
   const forceUpdate = useForceUpdate();
   const reStyle = useReStyle();
   const {
     request: { dataForms },
   } = React.useContext(RequestContext);
-  const [setKeyFlag, setValueFlag, keyRef, valueRef] = useTableAdd([dataForms.length]);
+  const { setKeyFlag, setValueFlag, keyRef, valueRef } = useTableAdd([dataForms.length]);
   return (
     <TableContainer className={bodyStyle.tabPanel} component={Paper}>
       <Table stickyHeader size={'small'}>
+        {/* 表头 */}
         <TableHead>
           <TableRow>
             <TableCell padding="none">

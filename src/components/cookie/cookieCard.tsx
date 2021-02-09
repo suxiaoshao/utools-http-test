@@ -15,8 +15,7 @@ import { Cookie } from '../../util/http/cookie';
 import CookieForm from '../../components/cookie/cookieForm';
 import { useSqlData } from '../../util/store/sqlStore';
 import { CookieEntity } from '../../database/entity/cookie.entity';
-import { sqlWorker } from '../../database/mapper/sql.main';
-import { SqlRunMessage } from '../../database/mapper/sql.interface';
+import { execSql } from '../../database/mapper/util';
 
 const useStyle = makeStyles((theme) =>
   createStyles({
@@ -40,31 +39,59 @@ const useStyle = makeStyles((theme) =>
   }),
 );
 
-export default function CookieCard(props: { domain: string }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description cookieCard prop
+ * */
+export interface CookieCardProp {
+  /**
+   * 这个 cookie 集合的domain
+   * */
+  domain: string;
+}
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description cookieCard 组件
+ * */
+export default function CookieCard(props: CookieCardProp): JSX.Element {
   const style = useStyle();
+  /**
+   * 所有数据库信息
+   * */
   const [sqlData] = useSqlData();
+  /**
+   * 获取所有 domain 为 props.domain 的 cookie
+   * */
   const cookies = React.useMemo<CookieEntity[]>(() => {
     return sqlData.cookies.filter((value) => value.domain === props.domain);
   }, [props.domain, sqlData]);
-  const [activeCookie, setActiveCookie] = React.useState<Cookie | null>(null);
+  /**
+   * 表单 cookie 数据
+   * */
+  const [formCookie, setFormCookie] = React.useState<Cookie | null>(null);
   return (
     <Accordion>
+      {/* domain cookie 详情 */}
       <AccordionSummary expandIcon={<ExpandMore />}>
+        {/* 删除这个 domain 的所有 cookie */}
         <IconButton
           className={style.iconButton}
           onClick={async () => {
-            const message: SqlRunMessage = {
-              code: 2,
-              sql: `delete from cookie where domain='${props.domain}'`,
-            };
-            sqlWorker.postMessage(message);
+            execSql(`delete from cookie where domain='${props.domain}'`);
           }}
         >
           <DeleteForever />
         </IconButton>
+        {/* domain 名字 */}
         <div className={style.column}>
           <Typography className={style.heading}>{props.domain}</Typography>
         </div>
+        {/* 这个domain 有几个 cookie */}
         <div className={style.column}>
           <Typography className={style.secondaryHeading}>{`${cookies.length} cookies`}</Typography>
         </div>
@@ -80,26 +107,24 @@ export default function CookieCard(props: { domain: string }): JSX.Element {
               value.delete();
             }}
             onClick={() => {
-              setActiveCookie(value.toCookie());
+              setFormCookie(value.toCookie());
             }}
           />
         ))}
+        {/* 给这个 domain 添加 cookie */}
         <IconButton
           color="primary"
           onClick={() => {
-            setActiveCookie(new Cookie('', '', props.domain, '/', Date.now(), null, null));
+            setFormCookie(new Cookie('', '', props.domain, '/', Date.now(), null, null));
           }}
         >
           <Add />
         </IconButton>
       </AccordionDetails>
       <CookieForm
-        activeCookie={activeCookie}
+        formCookie={formCookie}
         onChangeCookie={(newCookie) => {
-          setActiveCookie(newCookie);
-        }}
-        onSaveCookie={() => {
-          setActiveCookie(null);
+          setFormCookie(newCookie);
         }}
       />
     </Accordion>

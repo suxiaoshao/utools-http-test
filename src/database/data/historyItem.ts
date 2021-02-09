@@ -8,14 +8,60 @@ import { RequestUploadFile } from '../../util/http/requestUploadFile';
 import { TagEntity } from '../entity/tag.entity';
 import { MyMethod } from '../../util/http/httpManager';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @interface
+ * @description 保存再 utools 中的数据
+ * */
 export interface HistoryItem {
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description url 的 host 部分
+   * */
   host: string | undefined;
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description http 方法
+   * */
   method: MyMethod | undefined;
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description url 的 path 部分
+   * */
   path: string | undefined;
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description request 的头部和 cookies 部分
+   * */
   requestHeadersData: OldRequestHeaders | undefined;
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description request 的 data部分
+   * */
   requestContentData: OldRequestContent | undefined;
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 从 HistoryItem 中获取 HttpEntity
+ * @param historyItem {HistoryItem} utools.db 中的 data 部分
+ * @param name utools.db 中的 _id 部分
+ * @param tags httpEntity 的标签
+ * */
 export function getHttpEntityFromHistoryItem(historyItem: HistoryItem, name: string, tags: TagEntity[]): HttpEntity {
   return new HttpEntity(
     null,
@@ -27,6 +73,15 @@ export function getHttpEntityFromHistoryItem(historyItem: HistoryItem, name: str
   );
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 从 HistoryItem 中的 requestHeadersData,requestContentData
+ * 两个部分获取 RequestEntity
+ * @param headersData 头部和 cookies信息
+ * @param contentData request data 部分信息
+ * */
 export function getRequestEntityFromHistory(
   headersData: OldRequestHeaders | undefined,
   contentData: OldRequestContent | undefined,

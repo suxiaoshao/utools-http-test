@@ -87,10 +87,10 @@ export class HttpRequest {
         }
         break;
       case 'x-www-form-urlencoded':
-        contentTypeHeader.value = 'application/x-www-from-urlencoded';
+        contentTypeHeader.value = 'application/x-www-form-urlencoded';
         break;
       case 'form-data':
-        contentTypeHeader.value = 'multipart/from-data; boundary=<calculated when response is sent>';
+        contentTypeHeader.value = 'multipart/form-data; boundary=<calculated when response is sent>';
         break;
       case 'none':
         break;

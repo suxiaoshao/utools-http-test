@@ -15,19 +15,56 @@ import { useTableAdd } from '../../../util/hook/useTableAdd';
 import { useReStyle } from '../../../util/hook/useRestyle';
 import { HttpContext } from '../workPanel';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 获取基本 url 后缀
+ * */
+function getBaseSuffixUrl(oldUrl: string, paramsList: { value: string; key: string }[]): string {
+  let suffixUrl = '';
+  if (!oldUrl.includes('?')) {
+    suffixUrl += '?';
+  }
+  if (paramsList.length !== 0 && oldUrl[oldUrl.length - 1] !== '&') {
+    suffixUrl += '&';
+  }
+  return suffixUrl;
+}
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description params 组件,用于修改 url 链接上 params 的值
+ * */
 export default function Params(): JSX.Element {
   const style = useReStyle();
   const { httpManager, fatherUpdate } = React.useContext(HttpContext);
-  const [setKeyFlag, setValueFlag, keyRef, valueRef] = useTableAdd([httpManager.url]);
-  const paramsList = React.useMemo<{ value: string; key: string }[]>(() => {
+  const { setKeyFlag, setValueFlag, keyRef, valueRef } = useTableAdd([httpManager.url]);
+  /**
+   * 获取 params 的键值对列表
+   * */
+  const paramsList = React.useMemo<
+    {
+      /**
+       * params 的值
+       * */
+      value: string;
+      /**
+       * params 的键
+       * */
+      key: string;
+    }[]
+  >(() => {
     const newUrl = httpManager.url
       .split('?')[1]
       ?.match(/(?<key>[^=&]*)=(?<value>[^=&]*)&?/g)
       ?.map((value) => {
         const data = value.match(/(?<key>[^=&]*)=(?<value>[^=&]*)&?/);
         return {
-          value: String(data?.groups?.value),
-          key: String(data?.groups?.key),
+          value: data?.groups?.value as string,
+          key: data?.groups?.key as string,
         };
       });
     if (newUrl === undefined) {
@@ -36,7 +73,13 @@ export default function Params(): JSX.Element {
     return newUrl;
   }, [httpManager.url]);
 
+  /**
+   * 从 paramsList 的变化中更新 url
+   * */
   function setUrlFromParamsList(newParamsList: { value: string; key: string }[]) {
+    /**
+     * paramsList 长度为零的话,只保留 url ? 之前字符串
+     * */
     if (newParamsList.length === 0) {
       httpManager.url = httpManager.url.split('?')[0];
       fatherUpdate();
@@ -55,6 +98,7 @@ export default function Params(): JSX.Element {
   return (
     <TableContainer component={Paper} className={style.tableContainer}>
       <Table stickyHeader size="small" className={style.table}>
+        {/* 表头 */}
         <TableHead>
           <TableRow>
             <TableCell padding="checkbox" />
@@ -104,6 +148,7 @@ export default function Params(): JSX.Element {
               </TableCell>
             </TableRow>
           ))}
+          {/* 添加 params 部分 */}
           <TableRow>
             <TableCell padding="checkbox" />
             <TableCell>
@@ -113,16 +158,10 @@ export default function Params(): JSX.Element {
                 value={''}
                 onChange={(event) => {
                   if (event.target.value !== '') {
-                    let url = '';
-                    if (!httpManager.url.includes('?')) {
-                      url += '?';
-                    }
-                    if (paramsList.length !== 0) {
-                      url += '&';
-                    }
-                    url += `${event.target.value}=`;
+                    let suffixUrl = getBaseSuffixUrl(httpManager.url, paramsList);
+                    suffixUrl += `${event.target.value}=`;
                     setKeyFlag();
-                    httpManager.url += url;
+                    httpManager.url += suffixUrl;
                     fatherUpdate();
                   }
                 }}
@@ -135,16 +174,10 @@ export default function Params(): JSX.Element {
                 value={''}
                 onChange={(event) => {
                   if (event.target.value !== '') {
-                    let url = '';
-                    if (!httpManager.url.includes('?')) {
-                      url += '?';
-                    }
-                    if (paramsList.length !== 0) {
-                      url += '&';
-                    }
-                    url += `=${event.target.value}`;
+                    let suffixUrl = getBaseSuffixUrl(httpManager.url, paramsList);
+                    suffixUrl += `=${event.target.value}`;
                     setValueFlag();
-                    httpManager.url += url;
+                    httpManager.url += suffixUrl;
                     fatherUpdate();
                   }
                 }}

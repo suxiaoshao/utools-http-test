@@ -19,7 +19,12 @@ export const myMethodList: { text: string; value: MyMethod }[] = ([
     value: value,
   };
 });
-
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 切换 http 方法的组件
+ * */
 export default function MethodSelector(): JSX.Element {
   const style = useUrlStyles();
   const forceUpdate = useForceUpdate();

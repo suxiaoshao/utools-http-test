@@ -5,8 +5,20 @@ import Request from './request/request';
 import Response from './response/response';
 import { NoneFunc, useForceUpdate } from '../../util/hook/useForceUpdate';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description http 管理对象上下文
+ * */
 export const HttpContext = React.createContext<{
+  /**
+   * http 请求管理对象
+   * */
   httpManager: HttpManager;
+  /**
+   * 更新主动更新 provider
+   * */
   fatherUpdate: NoneFunc;
 }>({
   httpManager: HttpManager.getNewHttp(),
@@ -15,7 +27,22 @@ export const HttpContext = React.createContext<{
   },
 });
 
-function HttpProvider(props: { children: React.ReactNode; http: HttpManager }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description http 管理对象注入器组件
+ * */
+function HttpProvider(props: {
+  /**
+   * 子组件
+   * */
+  children: React.ReactNode;
+  /**
+   * http 管理对象
+   * */
+  http: HttpManager;
+}): JSX.Element {
   const forceUpdate = useForceUpdate();
   return (
     <HttpContext.Provider value={{ httpManager: props.http, fatherUpdate: forceUpdate }}>
@@ -24,7 +51,18 @@ function HttpProvider(props: { children: React.ReactNode; http: HttpManager }): 
   );
 }
 
-export default function WorkPanel(props: { http: HttpManager }): JSX.Element {
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description http 工作选项卡
+ * */
+export default function WorkPanel(props: {
+  /**
+   * http 管理对象
+   * */
+  http: HttpManager;
+}): JSX.Element {
   return (
     <HttpProvider http={props.http}>
       <UrlPaper />

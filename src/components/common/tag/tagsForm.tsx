@@ -30,22 +30,57 @@ const useStyles = makeStyles((theme) =>
     },
   }),
 );
-export default function TagsForm(props: {
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description tagsForm 的 prop
+ * */
+export interface TagsFormProp {
+  /**
+   * 被选择的 tags
+   * */
   selectedTags: TagEntity[];
-  onSelectedTasChanges(newSelectedTags: TagEntity[]): void;
+  /**
+   * 组件的类名
+   * */
   className?: string;
-}): JSX.Element {
+
+  /**
+   * 触发被选择 tags 更新的方法
+   * */
+  onSelectedTasChanges(newSelectedTags: TagEntity[]): void;
+}
+
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description tags 选择表单组件
+ * */
+export default function TagsForm(props: TagsFormProp): JSX.Element {
   const style = useStyles();
+  /**
+   * 所有的 tags
+   * */
   const allTags = useAllTags();
+  /**
+   * 没选择的 tags
+   * */
   const unselectedTags = React.useMemo<TagEntity[]>(() => {
     return allTags.filter((value) => !props.selectedTags.some((value1) => value1.tagId === value.tagId));
   }, [allTags, props.selectedTags]);
   return (
     <div className={`${style.main} ${props.className}`}>
+      {/* 已被选择的标签 */}
       <Card className={style.tags}>
         <CardHeader
           title="已被选择的标签"
           action={
+            /**
+             * 清除所有选择的标签
+             * */
             <Tooltip title={<Typography variant={'body2'}>全部清除</Typography>}>
               <div>
                 <IconButton
@@ -74,10 +109,14 @@ export default function TagsForm(props: {
           ))}
         </CardContent>
       </Card>
+      {/* 未被选择的标签 */}
       <Card className={style.tags}>
         <CardHeader
           title="未被选择的标签"
           action={
+            /**
+             * 全部选中
+             * */
             <Tooltip title={<Typography variant={'body2'}>全部选中</Typography>}>
               <div>
                 <IconButton
