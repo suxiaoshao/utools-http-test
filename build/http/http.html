@@ -2,18 +2,18 @@
       <html>
       <head>
         <meta charset="utf-8"/>
-        <title>0.2.0 & 0.2.1版本更新说明</title>
+        <title>0.2.2版本更新说明</title>
         <style>
           html, body { margin: 0; padding: 0; background-color: #ffffff; }
           .markdown-body { box-sizing: border-box; min-width: 200px; max-width: 980px; margin: 0 auto; padding: 45px; }
           @media (max-width: 767px) { .markdown-body { padding: 15px; } }
           
         </style>
-        <link rel="stylesheet" href="./github-markdown.css">
+        <link rel="stylesheet" href='github-markdown.css'>
       </head>
       <body>
         <article class="markdown-body">
-          <h1 id="020--021-版本更新说明">0.2.0 &amp; 0.2.1 版本更新说明</h1>
+          <h1 id="022-版本更新说明">0.2.2 版本更新说明</h1>
 <h2 id="联系方式">联系方式</h2>
 <ol>
 <li>我的个人博客 <a href="https://www.sushao.top">sushao&#39;bolg</a></li>
@@ -21,54 +21,21 @@
 <li>这个插件的开源地址 <a href="https://github.com/suxiaoshao/utools-http-test">utools-http-test</a></li>
 <li>这是我插件在官方论坛的 <a href="https://yuanliao.info/d/1843">帖子</a> ,这个帖子下回复我会有提醒的</li>
 </ol>
-<h2 id="021-新更新">0.2.1 新更新</h2>
-<ol>
-<li>修复自动删除过期的 cookie 部分的逻辑错误</li>
-<li>修复修改 cookie 页面点击修改时间页面奔溃的 bug</li>
-<li>修复代码页面显示代码阅读或者代码编写时切换标签页插件奔溃的 bug</li>
-<li>支持在 历史记录页面修改记录的名字和标签</li>
-</ol>
 <h2 id="数据库更新">数据库更新</h2>
-<p>本次更新将以往依靠 utools 官方的数据库迁移到了 sqlite数据库,该数据库地址储存在  utools 目录的<code>utools\database\http</code>,下面的 <code>http.db</code> 文件,这个目录也储存了 <code>setting.json</code> 设置文件和 <code>old.json</code> 旧数据文件,如果想要多台机子同步的话,可以手动迁移 <code>utools\databse\http</code> 文件夹下的文件.</p>
-<h3 id="数据迁移">数据迁移</h3>
-<p>本版本不会删除之前的记录,反而把之前的数据记录在上文提到的 <code>old.json</code> 供用户查看,当用户第一次使用版本时会将旧数据迁移至新数据库,而不用担心用户数据消失</p>
-<h2 id="历史记录">历史记录</h2>
-<h3 id="http-标签">http 标签</h3>
-<p>新的数据库的支持下, <code>http测试插件</code> 实现了给 http 历史记录添加标签的功能,在 http 保存页,即可管理 标签,右键点击标签支持删除,重命名标签</p>
-<img src="e2baa5ae45d8a869e4041576174defbb.png" alt="截图" style="zoom:50%;" />
+<p>之前因为数据库和插件渲染 js 线程是一个,读取数据库时间太久,现在数据库运行放到 <code>web worker</code>  中运行,和渲染的 js 可以同步运行,这样避免了插件卡死.</p>
+<img src='10bbe2de2ed2cfa0f007bfb80cf52dac.png' alt="截图" style="zoom:50%;" />
 
-<h3 id="http-名字">http 名字</h3>
-<p>现在可以拥有多个同名的 http 历史了,再也不用向以前一样设置不同名的历史记录,而且再次储存已经被存储的记录时,会直接修改旧纪录不会新建一个历史</p>
-<img src="2f261306c8300d725460d928ffa0547f.png" alt="截图" style="zoom:50%;" />
+<br/>
 
-<h3 id="http-历史搜索">http 历史搜索</h3>
-<p>新的历史记录查看支持搜索和标签搜索,如下图所示</p>
-<img src="30479b2e04dd39f0d24ee79e7de7be09.png" alt="截图" style="zoom:50%;" />
+<h2 id="历史记录改进">历史记录改进</h2>
+<p>历史记录现在可以查看更多信息,包括 tag, http 方法, url, 名字</p>
+<img src='e45c5001dcbd95f046b7c5f8a55c439d.png' alt="截图" style="zoom:50%;" />
 
-<img src="df24407e967ceafaf0bede3a373158de.png" alt="截图" style="zoom:50%;" />
+<p>筛选功能也获得了改进,搜索时支持名字, url</p>
+<img src='37900a2c17976ac4cf8e5135d0f52280.png' alt="截图" style="zoom:50%;" />
 
-<img src="c0865904525d9d3d66eb11a7cbb2edcd.png" alt="截图" style="zoom:50%;" />
-
-<h2 id="cookies">cookies</h2>
-<p>新的版本将 cookies 独立出来储存在数据库, 这样多个 http 请求就能共享 cookies,不过当用户每次进入插件时都会删除 cookie 中 max-age 和 expires 为 session的 cookie 记录和 超时的 cookie 记录,但不会删除这两个字段其中一个合法且未超时的 cookie.当两个都存在时,以max-age 为准 (http 规范和多数浏览器遵循的规范).</p>
-<h3 id="cookie-匹配规则">cookie 匹配规则</h3>
-<p>cookie 的匹配主要观察 http url是否和 cookie 的 <code>path</code> ,<code>domain</code> 两个字段是否一致,主要参考 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie">mdn上的说明</a> </p>
-<h3 id="cookies-管理">cookies 管理</h3>
-<p>在 cookies 页面支持 cookie 修改,删除,添加等功能,并且用 dommain 属性分隔开</p>
-<img src="86efd836c7b680a413b590edcdf61d95.png" alt="截图" style="zoom:50%;" />
-
-<img src="77ecb14eb8d23b655e9fc3a11e981f19.png" alt="截图" style="zoom:50%;" />
-
-<h2 id="多标签页">多标签页</h2>
-<p>本次更新添加了多标签页功能,支持多个标签页进行多个 http 请求,右键点击标签页就可管理标签页了,如下图</p>
-<img src="afb7e137ab55bcb1452f1ed6310d2282.png" alt="截图" style="zoom:50%;" />
-
-<h2 id="支持作者">支持作者</h2>
-<p>本次更新添加了支持作者页面,可以通过支付宝或者微信支持鼓励作者,请作者喝一杯茶. </p>
-<blockquote>
-<p>注意: 支持作者并非强制或者购买,不支持作者也可享受本插件的所有功能</p>
-</blockquote>
-<img src="50a264af177b71bdb53ebe2c641736ca.png" alt="截图" style="zoom:50%;" />
+<p>还支持方法匹配</p>
+<img src='c7a292abe0ca00899b695ca3c743c78f.png' alt="截图" style="zoom:50%;" />
 
         </article>
       </body>

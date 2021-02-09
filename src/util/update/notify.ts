@@ -1,8 +1,8 @@
 import { getHttpDir } from './localPath';
 
-export type Version = undefined | '0.2.0' | '0.2.1';
+export type Version = undefined | '0.2.0' | '0.2.1' | '0.2.2';
 
-const currentVersion: Version = '0.2.1';
+const currentVersion: Version = '0.2.2';
 
 export interface Setting {
   version: Version;
