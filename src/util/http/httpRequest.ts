@@ -12,8 +12,20 @@ export interface HeaderObject {
   [key: string]: string;
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description http 的 request 部分
+ * */
 export class HttpRequest {
+  /**
+   * body 选择
+   * */
   bodyChoose: RequestBodyChoose;
+  /**
+   * body 为 text 时,text 类型选择
+   * */
   textChoose: RequestTextChoose;
   text: string;
   dataForms: RequestUploadFile[];
@@ -39,6 +51,12 @@ export class HttpRequest {
     this.headers = headers;
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 获取一个新的 http request
+   * */
   static getNewRequestContent(): HttpRequest {
     return new HttpRequest(
       null,
@@ -59,6 +77,12 @@ export class HttpRequest {
     );
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 获取从其他值中获取的 header
+   * */
   private getOtherContentType(): OtherHeader | undefined {
     const contentTypeHeader = new OtherHeader(
       'Content-Type',
@@ -121,6 +145,12 @@ export class HttpRequest {
     return otherHeaders;
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 根据 bodyChoose,textChoose 获取 http body 部分数据
+   * */
   public getData(): undefined | URLSearchParams | string | Form {
     switch (this.bodyChoose) {
       case 'none':
@@ -152,6 +182,12 @@ export class HttpRequest {
     }
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 获取 http 数据和 header
+   * */
   public async getHeaderAndData(
     url: string,
   ): Promise<{

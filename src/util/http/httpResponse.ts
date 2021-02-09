@@ -9,8 +9,17 @@ export interface AxiosHeaderObject {
   [key: string]: string | string[];
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description http response 部分
+ * */
 export class HttpResponse {
   contentType: ResponseContentType;
+  /**
+   * 编码方式
+   * */
   charset: string;
   buffer: Buffer;
   headers: Header[];
@@ -46,6 +55,12 @@ export class HttpResponse {
     return new HttpResponse('none', 'utf-8', window.buffer.alloc(0), [], -1, -1, 'plain', '', -1);
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 从 axios 返回的数据中获取 response 的数据
+   * */
   public setData(
     headerObject: AxiosHeaderObject,
     url: string,
@@ -75,6 +90,9 @@ export class HttpResponse {
       .forEach((value) => value.save());
   }
 
+  /**
+   * 设置编码方式
+   * */
   private setCharset(): void {
     const value = this.headers
       .find((value) => value.key === 'content-type' || value.key === 'Content-Type')
@@ -82,6 +100,9 @@ export class HttpResponse {
     this.charset = value ?? 'utf-8';
   }
 
+  /**
+   * 设置 bodyChoose,textChoose
+   * */
   private setChoose(): void {
     this.contentType = 'text';
     this.textType = 'plain';
@@ -108,12 +129,18 @@ export class HttpResponse {
     }
   }
 
+  /**
+   * 获取 cookie 数据
+   * */
   public getCookies(): Cookie[] {
     return this.headers
       .filter((value) => value.key === 'set-cookie')
       .map((value) => Cookie.getNewCookies(value.value, this.url, this.startTime));
   }
 
+  /**
+   * 获取返回的代码
+   * */
   public getCode(): string {
     if (this.textType === 'json') {
       try {

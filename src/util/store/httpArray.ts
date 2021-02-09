@@ -2,30 +2,54 @@ import { Store } from './classStore';
 import { HttpManager } from '../http/httpManager';
 import { HttpEntity } from '../../database/entity/http.entity';
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description httpManager 列表
+ * */
 export class HttpArray extends Store<HttpManager[]> {
   constructor() {
     super([HttpManager.getNewHttp()]);
   }
 
+  /**
+   * 添加
+   * @return {number} httpManager 的总数
+   * */
   public addHttpManager(): number {
     this.setData([...this.data, HttpManager.getNewHttp()]);
     return this.data.length - 1;
   }
 
+  /**
+   * 删除
+   * @param index {number} 需要删除的 httpManager 的下标
+   * @return {number} httpManager 的总数
+   * */
   public deleteHttpManager(index: number): number {
     this.data.splice(index, 1);
     this.update();
     return this.data.length - 1;
   }
 
+  /**
+   * 是否能删除
+   * */
   public isDeleteHttpManager(): boolean {
     return this.data.length > 1;
   }
 
+  /**
+   * 更新数据
+   * */
   public update(): void {
     this.setData([...this.data]);
   }
 
+  /**
+   * 从数据库变化中修改数据,主要是删除已经被数据库删除的 httpManager 的 httpId
+   * */
   public change(httpEntities: HttpEntity[]): void {
     this.data.forEach((httpManager) => {
       httpEntities.forEach((httpEntity) => {
@@ -37,6 +61,9 @@ export class HttpArray extends Store<HttpManager[]> {
     this.update();
   }
 
+  /**
+   * 从数据库 http 抽象中添加数据,如果存在,则直接让这个数据激活
+   * */
   public addFromHttpManager(httpManager: HttpManager): number {
     const index = this.data.findIndex((value) => value.httpId === httpManager.httpId);
     if (index !== -1) {

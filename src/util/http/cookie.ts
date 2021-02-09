@@ -5,8 +5,17 @@ export class Cookie {
   value: string;
   domain: string;
   path: string;
-  creatTime: number;
+  /**
+   * cookie 创建时间
+   * */
+  createTime: number;
+  /**
+   * 此项为 null 时说明没有定义
+   * */
   maxAge: number | null;
+  /**
+   * 此项为 null 说明没定义
+   * */
   expires: Date | null;
 
   constructor(
@@ -18,7 +27,7 @@ export class Cookie {
     maxAge: number | null,
     expires: Date | null,
   ) {
-    this.creatTime = createTime;
+    this.createTime = createTime;
     this.expires = expires;
     this.domain = domain;
     this.value = value;
@@ -27,6 +36,12 @@ export class Cookie {
     this.path = path;
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 从 set-cookie 的 http 头部和 url ,createTime 来创造一个新的 cookie
+   * */
   static getNewCookies(setCookieContent: string, url: string, createTime: number): Cookie {
     const cookieKV = setCookieContent
       .split(/; ?/)
@@ -76,36 +91,32 @@ export class Cookie {
     return new Cookie(name, value, domain, path, createTime, maxAge, expires);
   }
 
-  static getCookieByCookieEntity(cookieEntity: CookieEntity): Cookie | undefined {
-    if (
-      cookieEntity.domain !== undefined &&
-      cookieEntity.value !== undefined &&
-      cookieEntity.path !== undefined &&
-      cookieEntity.name !== undefined &&
-      cookieEntity.expires !== undefined &&
-      cookieEntity.maxAge !== undefined &&
-      cookieEntity.createTime !== undefined
-    ) {
-      return new Cookie(
-        cookieEntity.name,
-        cookieEntity.value,
-        cookieEntity.domain,
-        cookieEntity.path,
-        cookieEntity.createTime,
-        cookieEntity.maxAge,
-        cookieEntity.expires,
-      );
-    }
-  }
-
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 获取 cookie 数据库抽象数据
+   * */
   public getCookieEntity(): CookieEntity {
-    return new CookieEntity(this.domain, this.path, this.name, this.value, this.creatTime, this.maxAge, this.expires);
+    return new CookieEntity(this.domain, this.path, this.name, this.value, this.createTime, this.maxAge, this.expires);
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 克隆一个新的 cookie 对象
+   * */
   public clone(): Cookie {
-    return new Cookie(this.name, this.value, this.domain, this.path, this.creatTime, this.maxAge, this.expires);
+    return new Cookie(this.name, this.value, this.domain, this.path, this.createTime, this.maxAge, this.expires);
   }
 
+  /**
+   * @author sushao
+   * @version 0.2.2
+   * @since 0.2.2
+   * @description 验证 cookie 是否合法
+   * */
   public check(): boolean {
     return this.domain !== '' && this.name !== '' && this.path.match(/^\//) !== null && this.value !== '';
   }

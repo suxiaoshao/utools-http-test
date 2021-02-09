@@ -1,5 +1,8 @@
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 
+/**
+ * request 和 response 的共同样式
+ * */
 export const useReStyle = makeStyles((theme) =>
   createStyles({
     main: {

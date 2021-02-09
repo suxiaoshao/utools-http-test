@@ -1,4 +1,5 @@
 import { execSql, execSqlAndReturn, readFromQueryResult } from '../mapper/util';
+import { sqlStore } from '../../util/store/sqlStore';
 
 export interface TagProp {
   tagId: number;
@@ -31,6 +32,7 @@ export class TagEntity {
   }
 
   public delete(): void {
+    sqlStore.deleteHttpTagByTagId(this.tagId ?? -1);
     execSql(`delete from tag where tagId=${this.tagId};`);
   }
 }

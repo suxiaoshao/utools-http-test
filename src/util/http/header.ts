@@ -3,6 +3,12 @@ export interface HeaderProps {
   value: string;
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description request header 数据
+ * */
 export class Header implements HeaderProps {
   key: string;
   value: string;
@@ -17,6 +23,12 @@ export class Header implements HeaderProps {
   }
 }
 
+/**
+ * @author sushao
+ * @version 0.2.2
+ * @since 0.2.2
+ * @description 有其他 http 属性中获取的 header
+ * */
 export class OtherHeader extends Header {
   isDelete: boolean;
 
