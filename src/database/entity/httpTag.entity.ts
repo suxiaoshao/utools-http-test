@@ -19,7 +19,7 @@ export class HttpTagEntity {
   }
 
   public delete(): void {
-    execSql(`delete from httpTag where tagTagId=${this.tagTagId} and httpHttpId=${this.tagTagId};`);
+    execSql(`delete from httpTag where tagTagId=${this.tagTagId} and httpHttpId=${this.httpHttpId};`);
   }
 
   public save(): void {
