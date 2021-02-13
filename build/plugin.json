@@ -6,7 +6,7 @@
     "logo": "read.png",
     "main": "react/index.html",
     "homepage": "https://github.com/suxiaoshao/utools-http-test",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "development":{
         "main": "http://localhost:8083/index.html",
         "preload": "preload.js",
