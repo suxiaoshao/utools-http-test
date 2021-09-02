@@ -97,7 +97,7 @@ export class HttpResponse {
     const value = this.headers
       .find((value) => value.key === 'content-type' || value.key === 'Content-Type')
       ?.value?.match(/charset=(?<name>[^;]+)(;|$)/)?.groups?.name;
-    this.charset = value ?? 'utf-8';
+    this.charset = value ?? 'utf8';
   }
 
   /**
@@ -142,13 +142,15 @@ export class HttpResponse {
    * 获取返回的代码
    * */
   public getCode(): string {
+    const decoder = new TextDecoder(this.charset);
+    const data = decoder.decode(this.buffer);
     if (this.textType === 'json') {
       try {
-        return JSON.stringify(JSON.parse(window.iconv.decode(this.buffer, this.charset)));
+        return JSON.stringify(JSON.parse(data));
       } catch {
-        return window.iconv.decode(this.buffer, this.charset);
+        return data;
       }
     }
-    return window.iconv.decode(this.buffer, this.charset);
+    return data;
   }
 }
