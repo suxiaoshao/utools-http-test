@@ -1,26 +1,22 @@
 {
-    "pluginName": "http测试",
-    "description": "轻量级http测试工具",
-    "author": "sushao",
+  "pluginName": "http测试",
+  "description": "轻量级http测试工具",
+  "author": "sushao",
+  "preload": "preload.js",
+  "logo": "read.png",
+  "main": "react/index.html",
+  "homepage": "https://github.com/suxiaoshao/utools-http-test",
+  "version": "0.2.3",
+  "development": {
+    "main": "http://localhost:8083/index.html",
     "preload": "preload.js",
-    "logo": "read.png",
-    "main": "react/index.html",
-    "homepage": "https://github.com/suxiaoshao/utools-http-test",
-    "version": "0.2.3",
-    "development":{
-        "main": "http://localhost:8083/index.html",
-        "preload": "preload.js",
-        "logo": "read.png"
-    },
-    "features": [
-        {
-            "code": "http",
-            "explain": "进入http测试",
-            "cmds": [
-                "http",
-                "测试",
-                "test"
-            ]
-        }
-    ]
+    "logo": "read.png"
+  },
+  "features": [
+    {
+      "code": "http",
+      "explain": "进入http测试",
+      "cmds": ["http", "测试", "test"]
+    }
+  ]
 }

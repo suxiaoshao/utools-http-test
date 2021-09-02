@@ -40,18 +40,18 @@ export class SqlStore extends Store<SqlData> {
    * 从 sqlWorker 中获取的数据读取
    * */
   public readData(results: QueryResults[]): void {
-    const cookies = readFromQueryResult<CookieProp>(
-      results.find((value) => value.columns[0] === 'domain'),
-    ).map((value) => CookieEntity.from(value));
-    const requests = readFromQueryResult<RequestProp>(
-      results.find((value) => value.columns[0] === 'requestId'),
-    ).map((value) => RequestEntity.from(value));
+    const cookies = readFromQueryResult<CookieProp>(results.find((value) => value.columns[0] === 'domain')).map(
+      (value) => CookieEntity.from(value),
+    );
+    const requests = readFromQueryResult<RequestProp>(results.find((value) => value.columns[0] === 'requestId')).map(
+      (value) => RequestEntity.from(value),
+    );
     const tags = readFromQueryResult<TagProp>(results.find((value) => value.columns[0] === 'tagId')).map((value) =>
       TagEntity.from(value),
     );
-    const httpTags = readFromQueryResult<HttpTagProp>(
-      results.find((value) => value.columns[0] === 'httpHttpId'),
-    ).map((value) => HttpTagEntity.from(value));
+    const httpTags = readFromQueryResult<HttpTagProp>(results.find((value) => value.columns[0] === 'httpHttpId')).map(
+      (value) => HttpTagEntity.from(value),
+    );
     const https = readFromQueryResult<HttpProp>(results.find((value) => value.columns[0] === 'httpId')).map((value) =>
       HttpEntity.from(
         value,

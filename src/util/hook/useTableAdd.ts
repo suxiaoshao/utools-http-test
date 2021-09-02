@@ -7,9 +7,7 @@ import { NoneFunc } from './useForceUpdate';
  * @since 0.2.2
  * @description 表格添加一行的 hooks,实现输入最后一行自动添加一行并把焦点转移到添加的那行
  * */
-export function useTableAdd(
-  deps: React.DependencyList,
-): {
+export function useTableAdd(deps: React.DependencyList): {
   /**
    * 修改 key 的 flag ,使需要更改时,让 keyInput 成为焦点
    * */

@@ -4,7 +4,7 @@ import { updateByCookieTimeout, updateByCookieTimeoutAndSession, updateData } fr
 import { saveToFile } from './save';
 import { initDatabaseTable } from './initDatabaseTable';
 
-const sqlWorker = (self as unknown) as Worker;
+const sqlWorker = self as unknown as Worker;
 let sqlDataBase: Database;
 sqlWorker.onmessage = (ev: MessageEvent<SqlMessage>) => {
   switch (ev.data.code) {
@@ -40,4 +40,4 @@ sqlWorker.onmessage = (ev: MessageEvent<SqlMessage>) => {
   saveToFile(sqlDataBase, sqlWorker);
 };
 
-export default (null as unknown) as typeof Worker;
+export default null as unknown as typeof Worker;

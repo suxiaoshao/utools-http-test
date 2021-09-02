@@ -5,12 +5,9 @@ import { RequestBodyChoose, RequestTextChoose } from '../../../util/http/httpReq
 import { useReStyle } from '../../../util/hook/useRestyle';
 import { RequestContext } from './request';
 
-const bodyItemList: ItemListProp<RequestBodyChoose>[] = ([
-  'none',
-  'text',
-  'form-data',
-  'x-www-form-urlencoded',
-] as const).map<ItemListProp<RequestBodyChoose>>((value) => {
+const bodyItemList: ItemListProp<RequestBodyChoose>[] = (
+  ['none', 'text', 'form-data', 'x-www-form-urlencoded'] as const
+).map<ItemListProp<RequestBodyChoose>>((value) => {
   return {
     text: value,
     value: value,

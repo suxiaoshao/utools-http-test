@@ -51,12 +51,4 @@ export function atNewVersion(): void {
     version: currentVersion,
   };
   window.nodeFs.writeFileSync(settingFile, JSON.stringify(setting));
-  window.utools.createBrowserWindow('./http/http.html', {
-    width: 800,
-    height: 600,
-    title: '更新说明',
-    transparent: false,
-    frame: true,
-    alwaysOnTop: true,
-  });
 }

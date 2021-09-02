@@ -188,9 +188,7 @@ export class HttpRequest {
    * @since 0.2.2
    * @description 获取 http 数据和 header
    * */
-  public async getHeaderAndData(
-    url: string,
-  ): Promise<{
+  public async getHeaderAndData(url: string): Promise<{
     headers: HeaderObject;
     data: undefined | URLSearchParams | string | Form;
   }> {
@@ -230,9 +228,9 @@ export class HttpRequest {
     this.bodyChoose = requestEntity.bodyChoose ?? this.bodyChoose;
     this.textChoose = requestEntity.textChoose ?? this.textChoose;
     this.text = requestEntity.text ?? this.text;
-    this.dataForms = (JSON.parse(
-      requestEntity.dataForms ?? JSON.stringify(this.dataForms),
-    ) as UploadFileProps[]).map((value) => RequestUploadFile.formUploadFileProps(value));
+    this.dataForms = (JSON.parse(requestEntity.dataForms ?? JSON.stringify(this.dataForms)) as UploadFileProps[]).map(
+      (value) => RequestUploadFile.formUploadFileProps(value),
+    );
     this.xForms = (JSON.parse(requestEntity.xForms ?? JSON.stringify(this.xForms)) as XFormProps[]).map((value) =>
       RequestXForm.formXFormProps(value),
     );

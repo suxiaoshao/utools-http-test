@@ -61,7 +61,8 @@ export class RequestEntity {
         `update request set bodyChoose='${this.bodyChoose}',textChoose='${this.textChoose}',text='${this.text}',dataForms='${this.dataForms}',xForms='${this.xForms}',headers='${this.headers}'where requestId=${this.requestId};`,
       );
     } else {
-      const results = await execSqlAndReturn(`insert into request(bodyChoose, textChoose, text, dataForms, xForms, headers)
+      const results =
+        await execSqlAndReturn(`insert into request(bodyChoose, textChoose, text, dataForms, xForms, headers)
              VALUES ('${this.bodyChoose}', '${this.textChoose}', '${this.text}', '${this.dataForms}', '${this.xForms}', '${this.headers}');
              select max(requestId) as count from request;`);
       const [{ count }] = readFromQueryResult<{ count: number }>(results[0]);

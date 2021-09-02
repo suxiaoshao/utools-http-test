@@ -5,15 +5,9 @@ import { useForceUpdate } from '../../../util/hook/useForceUpdate';
 import { useUrlStyles } from './urlPaper';
 import { MyMethod } from '../../../util/http/httpManager';
 
-export const myMethodList: { text: string; value: MyMethod }[] = ([
-  'GET',
-  'POST',
-  'HEAD',
-  'PUT',
-  'DELETE',
-  'OPTIONS',
-  'PATCH',
-] as const).map((value) => {
+export const myMethodList: { text: string; value: MyMethod }[] = (
+  ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'] as const
+).map((value) => {
   return {
     text: value,
     value: value,
