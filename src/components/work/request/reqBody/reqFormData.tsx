@@ -13,12 +13,12 @@ import {
   TableRow,
   Tooltip,
 } from '@material-ui/core';
-import { RequestUploadFile } from '../../../../util/http/requestUploadFile';
+import { RequestUploadFile } from '../../../../utils/http/requestUploadFile';
 import { Delete, Error, InsertDriveFile, Refresh } from '@material-ui/icons';
-import { useForceUpdate } from '../../../../util/hook/useForceUpdate';
+import { useForceUpdate } from '../../../../utils/hooks/useForceUpdate';
 import MySelector from '../../../../components/common/mySelector';
-import { useTableAdd } from '../../../../util/hook/useTableAdd';
-import { useReStyle } from '../../../../util/hook/useRestyle';
+import { useTableAdd } from '../../../../utils/hooks/useTableAdd';
+import { useReStyle } from '../../../../utils/hooks/useRestyle';
 import { RequestContext } from '../request';
 
 /**

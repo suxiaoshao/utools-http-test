@@ -4,10 +4,10 @@ import Params from './params';
 import ReqHeaders from './reqHeaders';
 import ReqBody from './reqBody/reqBody';
 import { TabPanelDisappear } from '../../common/tabPanel';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 import { HttpContext } from '../workPanel';
-import { HttpRequest } from '../../../util/http/httpRequest';
-import { NoneFunc, useForceUpdate } from '../../../util/hook/useForceUpdate';
+import { HttpRequest } from '../../../utils/http/httpRequest';
+import { NoneFunc, useForceUpdate } from '../../../utils/hooks/useForceUpdate';
 
 /**
  * @author sushao

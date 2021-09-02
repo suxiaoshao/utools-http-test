@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { initDataFromUtoolsDB } from './database/data/initDataFromUtoolsDB';
-import { checkVersion } from './util/update/notify';
+import { checkVersion } from './utils/update/notify';
 import 'fontsource-roboto';
 import { SqlInitMessage } from './database/mapper/sql.interface';
-import { getDataFile } from './util/update/localPath';
+import { getDataFile } from './utils/update/localPath';
 import { sqlWorker } from './database/mapper/sql.main';
 
 ReactDOM.render(
@@ -36,9 +35,6 @@ if (window.utools === undefined) {
       date: window.nodeFs.readFileSync(getDataFile()),
     };
     sqlWorker.postMessage(message);
-    (async () => {
-      await initDataFromUtoolsDB();
-    })();
   });
 }
 reportWebVitals();

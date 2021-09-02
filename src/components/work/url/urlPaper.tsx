@@ -2,7 +2,7 @@ import React from 'react';
 import { createStyles, Divider, InputBase, Paper, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { HttpContext } from '../workPanel';
-import { httpArray } from '../../../util/store/httpArray';
+import { httpArray } from '../../../utils/store/httpArray';
 import SaveButton from './saveButton';
 import SendButton from './sendButton';
 import ChangeButton from './changeButton';

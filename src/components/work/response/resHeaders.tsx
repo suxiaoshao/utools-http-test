@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 import { ResponseContext } from './response';
 
 /**

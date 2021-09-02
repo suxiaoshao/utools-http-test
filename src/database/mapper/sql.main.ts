@@ -1,7 +1,7 @@
 import SqlWorker from './worker/sql.worker';
 import { ReturnMassage, ReturnResultsMessage } from './sql.interface';
-import { sqlStore } from '../../util/store/sqlStore';
-import { getDataFile } from '../../util/update/localPath';
+import { sqlStore } from '../../utils/store/sqlStore';
+import { getDataFile } from '../../utils/update/localPath';
 import { Subject } from 'rxjs';
 
 /**

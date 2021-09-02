@@ -1,11 +1,11 @@
 import React from 'react';
 import { TabPanelDisappear } from '../../common/tabPanel';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 import ResToggle from '../../../components/work/response/resToggle';
 import ResHeaders from '../../../components/work/response/resHeaders';
 import { HttpContext } from '../workPanel';
-import { HttpResponse } from '../../../util/http/httpResponse';
-import { NoneFunc, useForceUpdate } from '../../../util/hook/useForceUpdate';
+import { HttpResponse } from '../../../utils/http/httpResponse';
+import { NoneFunc, useForceUpdate } from '../../../utils/hooks/useForceUpdate';
 import { Backdrop, Button, createStyles, LinearProgress, makeStyles } from '@material-ui/core';
 import ResBody from '../../../components/work/response/resBody/resBody';
 import NoneRes from '../../../components/work/response/noneRes';

@@ -12,13 +12,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Delete, Edit, Reply } from '@material-ui/icons';
-import { httpArray } from '../../util/store/httpArray';
-import { workIndex } from '../../util/store/workIndex';
+import { httpArray } from '../../utils/store/httpArray';
+import { workIndex } from '../../utils/store/workIndex';
 import { useHistory } from 'react-router-dom';
 import SaveHttp from '../common/httpSave/saveHttp';
 import { makeStyles } from '@material-ui/core/styles';
 import { brown, green, grey, lightBlue, orange, purple, red } from '@material-ui/core/colors';
-import { HttpManager } from '../../util/http/httpManager';
+import { HttpManager } from '../../utils/http/httpManager';
 import { HttpEntity } from '../../database/entity/http.entity';
 
 const useStyle = makeStyles((theme) =>

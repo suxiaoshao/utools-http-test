@@ -1,8 +1,8 @@
 import React from 'react';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import MySelector, { ItemListProp } from '../../common/mySelector';
-import { RequestBodyChoose, RequestTextChoose } from '../../../util/http/httpRequest';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { RequestBodyChoose, RequestTextChoose } from '../../../utils/http/httpRequest';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 import { RequestContext } from './request';
 
 const bodyItemList: ItemListProp<RequestBodyChoose>[] = (

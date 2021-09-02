@@ -3,7 +3,7 @@ import { HttpContext } from '../workPanel';
 import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import { SaveAlt } from '@material-ui/icons';
 import SaveHttp from '../../common/httpSave/saveHttp';
-import { httpArray } from '../../../util/store/httpArray';
+import { httpArray } from '../../../utils/store/httpArray';
 import { useUrlStyles } from './urlPaper';
 
 /**

@@ -1,4 +1,4 @@
-import { RequestBodyChoose, RequestTextChoose } from '../../util/http/httpRequest';
+import { RequestBodyChoose, RequestTextChoose } from '../../utils/http/httpRequest';
 import { execSql, execSqlAndReturn, readFromQueryResult } from '../mapper/util';
 
 export interface RequestProp {

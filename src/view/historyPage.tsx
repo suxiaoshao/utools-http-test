@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import HistoryFilter from '../components/history/historyFilter';
 import { TagEntity } from '../database/entity/tag.entity';
 import HistoryContent from '../components/history/historyContent';
-import { MyMethod } from '../util/http/httpManager';
+import { MyMethod } from '../utils/http/httpManager';
 import LoadingPage from '../components/common/loadingPage';
 
 /**

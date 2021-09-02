@@ -2,9 +2,9 @@ import React from 'react';
 import { TagEntity } from '../../database/entity/tag.entity';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import HistoryItem from '../../components/history/historyItem';
-import { MyMethod } from '../../util/http/httpManager';
+import { MyMethod } from '../../utils/http/httpManager';
 import { HttpEntity } from '../../database/entity/http.entity';
-import { useSqlData } from '../../util/store/sqlStore';
+import { useSqlData } from '../../utils/store/sqlStore';
 
 const useStyle = makeStyles(() =>
   createStyles({

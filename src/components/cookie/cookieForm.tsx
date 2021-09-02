@@ -10,7 +10,7 @@ import {
   Switch,
   TextField,
 } from '@material-ui/core';
-import { Cookie } from '../../util/http/cookie';
+import { Cookie } from '../../utils/http/cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import { DateTimePicker } from '@material-ui/pickers';
 
@@ -164,7 +164,7 @@ export default function CookieForm(props: CookieFormProp): JSX.Element {
                       label={'expires'}
                       value={props.formCookie?.expires}
                       onChange={(date) => {
-                        formCookie.expires = date ?? new Date();
+                        formCookie.expires = date?.toDate() ?? new Date();
                         props.onChangeCookie(formCookie.clone());
                       }}
                       className={style.formInput}

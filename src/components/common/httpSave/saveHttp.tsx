@@ -15,9 +15,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Close, SaveAlt } from '@material-ui/icons';
 import TagsForm from '../tag/tagsForm';
 import { HttpEntity } from '../../../database/entity/http.entity';
-import { HttpManager } from '../../../util/http/httpManager';
+import { HttpManager } from '../../../utils/http/httpManager';
 import { useSnackbar } from 'notistack';
-import { useSqlData } from '../../../util/store/sqlStore';
+import { useSqlData } from '../../../utils/store/sqlStore';
 import { TagEntity } from '../../../database/entity/tag.entity';
 import LoadingPage from '../loadingPage';
 

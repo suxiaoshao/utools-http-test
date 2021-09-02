@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStyles, ListItemIcon, ListItemText, Menu, MenuItem, Tab } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { HttpManager } from '../../util/http/httpManager';
-import { useWorkIndex, workIndex } from '../../util/store/workIndex';
-import { httpArray } from '../../util/store/httpArray';
+import { HttpManager } from '../../utils/http/httpManager';
+import { useWorkIndex, workIndex } from '../../utils/store/workIndex';
+import { httpArray } from '../../utils/store/httpArray';
 import { Add, Delete } from '@material-ui/icons';
 
 const useStyle = makeStyles(() =>

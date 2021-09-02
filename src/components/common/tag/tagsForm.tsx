@@ -5,7 +5,7 @@ import TagItem from '../../../components/common/tag/tagItem';
 import AddTag from '../../../components/common/tag/addTag';
 import { AddCircle, ArrowBack, ArrowForward } from '@material-ui/icons';
 import { TagEntity } from '../../../database/entity/tag.entity';
-import { useAllTags } from '../../../util/hook/useAllTags';
+import { useAllTags } from '../../../utils/hooks/useAllTags';
 
 const useStyles = makeStyles((theme) =>
   createStyles({

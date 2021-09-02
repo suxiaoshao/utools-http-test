@@ -3,7 +3,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { ButtonProps, Divider, InputBase, Paper, Tooltip, Typography } from '@material-ui/core';
 import { TagEntity } from '../../database/entity/tag.entity';
 import MySelector, { ItemListProp, MySelectorProp } from '../common/mySelector';
-import { MyMethod } from '../../util/http/httpManager';
+import { MyMethod } from '../../utils/http/httpManager';
 import { myMethodList } from '../work/url/methodSelector';
 import HistoryTags from './historyTags';
 

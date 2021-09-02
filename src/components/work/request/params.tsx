@@ -11,8 +11,8 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import { useTableAdd } from '../../../util/hook/useTableAdd';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { useTableAdd } from '../../../utils/hooks/useTableAdd';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 import { HttpContext } from '../workPanel';
 
 /**

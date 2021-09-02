@@ -1,10 +1,10 @@
 import React from 'react';
 import { InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { useReqBodyStyle } from './reqBody';
-import { useTableAdd } from '../../../../util/hook/useTableAdd';
-import { RequestXForm } from '../../../../util/http/requestXForm';
+import { useTableAdd } from '../../../../utils/hooks/useTableAdd';
+import { RequestXForm } from '../../../../utils/http/requestXForm';
 import UpdateTable from '../../../../components/work/request/updateTable';
-import { useForceUpdate } from '../../../../util/hook/useForceUpdate';
+import { useForceUpdate } from '../../../../utils/hooks/useForceUpdate';
 import { RequestContext } from '../request';
 
 /**

@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.scss';
+import './app.css';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Sponsorship from './view/sponsorship';
 import Work from './view/work';

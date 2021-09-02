@@ -1,8 +1,8 @@
 import React, { MutableRefObject } from 'react';
 import { IconButton, InputBase, TableCell, TableRow } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import { useForceUpdate } from '../../../util/hook/useForceUpdate';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { useForceUpdate } from '../../../utils/hooks/useForceUpdate';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 
 /**
  * @author sushao

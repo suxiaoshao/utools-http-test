@@ -1,9 +1,9 @@
 import React from 'react';
 import MySelector from '../../common/mySelector';
 import { HttpContext } from '../workPanel';
-import { useForceUpdate } from '../../../util/hook/useForceUpdate';
+import { useForceUpdate } from '../../../utils/hooks/useForceUpdate';
 import { useUrlStyles } from './urlPaper';
-import { MyMethod } from '../../../util/http/httpManager';
+import { MyMethod } from '../../../utils/http/httpManager';
 
 export const myMethodList: { text: string; value: MyMethod }[] = (
   ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'] as const

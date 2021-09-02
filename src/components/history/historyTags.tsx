@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip, createStyles, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAllTags } from '../../util/hook/useAllTags';
+import { useAllTags } from '../../utils/hooks/useAllTags';
 import { TagEntity } from '../../database/entity/tag.entity';
 
 const useStyle = makeStyles((theme) =>

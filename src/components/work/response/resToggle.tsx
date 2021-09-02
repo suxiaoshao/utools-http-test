@@ -1,9 +1,9 @@
 import React from 'react';
-import { useReStyle } from '../../../util/hook/useRestyle';
+import { useReStyle } from '../../../utils/hooks/useRestyle';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { ResponseContext } from './response';
 import MySelector from '../../../components/common/mySelector';
-import { ResponseContentType, ResponseTextType } from '../../../util/http/httpResponse';
+import { ResponseContentType, ResponseTextType } from '../../../utils/http/httpResponse';
 
 const contentItemList = (['text', 'image'] as const).map((value) => {
   return {

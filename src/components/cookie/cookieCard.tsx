@@ -11,9 +11,9 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add, DeleteForever, ExpandMore } from '@material-ui/icons';
-import { Cookie } from '../../util/http/cookie';
+import { Cookie } from '../../utils/http/cookie';
 import CookieForm from '../../components/cookie/cookieForm';
-import { useSqlData } from '../../util/store/sqlStore';
+import { useSqlData } from '../../utils/store/sqlStore';
 import { CookieEntity } from '../../database/entity/cookie.entity';
 import { execSql } from '../../database/mapper/util';
 

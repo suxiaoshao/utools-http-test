@@ -3,8 +3,8 @@ import MyDrawer from '../components/myDrawer';
 import { createStyles, Tabs } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import WorkPanel from '../components/work/workPanel';
-import { useHttpArray } from '../util/store/httpArray';
-import { useWorkIndex } from '../util/store/workIndex';
+import { useHttpArray } from '../utils/store/httpArray';
+import { useWorkIndex } from '../utils/store/workIndex';
 import { TabPanelDisappear } from '../components/common/tabPanel';
 import WorkTab from '../components/work/workTab';
 

@@ -1,4 +1,4 @@
-import { Cookie } from '../../util/http/cookie';
+import { Cookie } from '../../utils/http/cookie';
 import { execSql } from '../mapper/util';
 
 /**

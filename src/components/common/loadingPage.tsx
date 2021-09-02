@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { useSqlData } from '../../util/store/sqlStore';
+import { useSqlData } from '../../utils/store/sqlStore';
 import { Backdrop, CircularProgress, Typography } from '@material-ui/core';
 
 const useStyle = makeStyles((theme) =>

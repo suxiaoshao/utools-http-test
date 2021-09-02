@@ -2,11 +2,11 @@ import React from 'react';
 import MyDrawer from '../components/myDrawer';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CookieCard from '../components/cookie/cookieCard';
-import { Cookie } from '../util/http/cookie';
+import { Cookie } from '../utils/http/cookie';
 import CookieForm from '../components/cookie/cookieForm';
 import { Fab } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { useSqlData } from '../util/store/sqlStore';
+import { useSqlData } from '../utils/store/sqlStore';
 import LoadingPage from '../components/common/loadingPage';
 
 /**
