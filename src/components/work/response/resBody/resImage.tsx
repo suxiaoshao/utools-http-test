@@ -23,14 +23,14 @@ const useStyle = makeStyles(() =>
  * */
 export default function ResImage(): JSX.Element {
   const {
-    response: { buffer },
+    response: { arrayBuffer },
   } = React.useContext(ResponseContext);
   const bodyStyle = useReqBodyStyle();
   const style = useStyle();
   const [url, setUrl] = React.useState<string>(logo);
   React.useEffect(() => {
-    setUrl(URL.createObjectURL(new Blob([buffer.buffer])));
-  }, [buffer]);
+    setUrl(URL.createObjectURL(new Blob([arrayBuffer])));
+  }, [arrayBuffer]);
   return (
     <Paper className={`${bodyStyle.tabPanel} ${style.imageFather}`}>
       <img className={style.image} src={url} alt="图片" />

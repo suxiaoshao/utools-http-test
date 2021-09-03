@@ -1,5 +1,4 @@
 import { Header } from './header';
-import { Buffer } from 'buffer';
 import { Cookie } from './cookie';
 
 export type ResponseContentType = 'text' | 'image' | 'none' | 'error';
@@ -21,7 +20,7 @@ export class HttpResponse {
    * 编码方式
    * */
   charset: string;
-  buffer: Buffer;
+  arrayBuffer: ArrayBuffer;
   headers: Header[];
   responseTime: number;
   responseStatus: number;
@@ -32,7 +31,7 @@ export class HttpResponse {
   constructor(
     contentType: ResponseContentType,
     charset: string,
-    buffer: Buffer,
+    buffer: ArrayBuffer,
     headers: Header[],
     responseTime: number,
     responseStatus: number,
@@ -42,7 +41,7 @@ export class HttpResponse {
   ) {
     this.contentType = contentType;
     this.charset = charset;
-    this.buffer = buffer;
+    this.arrayBuffer = buffer;
     this.headers = headers;
     this.responseStatus = responseStatus;
     this.responseTime = responseTime;
@@ -52,7 +51,7 @@ export class HttpResponse {
   }
 
   static getNewResponseContent(): HttpResponse {
-    return new HttpResponse('none', 'utf-8', window.buffer.alloc(0), [], -1, -1, 'plain', '', -1);
+    return new HttpResponse('none', 'utf-8', new ArrayBuffer(0), [], -1, -1, 'plain', '', -1);
   }
 
   /**
@@ -64,7 +63,7 @@ export class HttpResponse {
   public setData(
     headerObject: AxiosHeaderObject,
     url: string,
-    buffer: Buffer,
+    buffer: ArrayBuffer,
     startTime: number,
     endTime: number,
   ): void {
@@ -80,7 +79,7 @@ export class HttpResponse {
       }
     });
     this.url = url;
-    this.buffer = buffer;
+    this.arrayBuffer = buffer;
     this.responseTime = endTime - startTime;
     this.startTime = startTime;
     this.setCharset();
@@ -143,7 +142,7 @@ export class HttpResponse {
    * */
   public getCode(): string {
     const decoder = new TextDecoder(this.charset);
-    const data = decoder.decode(this.buffer);
+    const data = decoder.decode(this.arrayBuffer);
     if (this.textType === 'json') {
       try {
         return JSON.stringify(JSON.parse(data));

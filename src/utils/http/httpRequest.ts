@@ -1,7 +1,6 @@
 import { RequestXForm, XFormProps } from './requestXForm';
 import { RequestUploadFile, UploadFileProps } from './requestUploadFile';
 import { Header, HeaderProps, OtherHeader } from './header';
-import Form from 'form-data';
 import { RequestEntity } from '../../database/entity/request.entity';
 import { sqlStore } from '../store/sqlStore';
 
@@ -151,15 +150,15 @@ export class HttpRequest {
    * @since 0.2.2
    * @description 根据 bodyChoose,textChoose 获取 http body 部分数据
    * */
-  public getData(): undefined | URLSearchParams | string | Form {
+  public getData(): undefined | URLSearchParams | string | FormData {
     switch (this.bodyChoose) {
       case 'none':
         return undefined;
       case 'form-data':
-        const formData = new window.formData();
+        const formData = new FormData();
         this.dataForms.forEach((value) => {
           const data = value.getData();
-          if (value.isFile && window.buffer.isBuffer(data)) {
+          if (value.isFile) {
             formData.append(value.key, data, value.getFileName());
           } else {
             formData.append(value.key, data);
@@ -190,7 +189,7 @@ export class HttpRequest {
    * */
   public async getHeaderAndData(url: string): Promise<{
     headers: HeaderObject;
-    data: undefined | URLSearchParams | string | Form;
+    data: undefined | URLSearchParams | string | FormData;
   }> {
     const data = this.getData();
     const headerObject: HeaderObject = {};
@@ -199,9 +198,6 @@ export class HttpRequest {
         headerObject[value.key] = value.value;
       }
     });
-    if (data instanceof window.formData) {
-      Object.assign(headerObject, data.getHeaders());
-    }
     this.headers.forEach((value) => {
       headerObject[value.key] = value.value;
     });

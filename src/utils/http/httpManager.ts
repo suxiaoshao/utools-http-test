@@ -1,8 +1,10 @@
-import { AxiosError, AxiosResponse, CancelTokenSource } from 'axios';
+import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios';
 import { HttpResponse } from './httpResponse';
 import { HttpRequest } from './httpRequest';
 import { HttpEntity } from '../../database/entity/http.entity';
 import { TagEntity } from '../../database/entity/tag.entity';
+
+axios.defaults.withCredentials = true;
 
 export type MyMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'PATCH';
 
@@ -101,26 +103,25 @@ export class HttpManager {
     const startTime = Date.now();
     this.response.url = this.url;
     this.response.contentType = 'none';
-    this.tokenSource = window.axios.CancelToken.source();
+    this.tokenSource = axios.CancelToken.source();
     /**
      * 发送
      * */
-    return await window
-      .axios({
-        method: this.method,
-        url: this.url,
-        responseType: 'arraybuffer',
-        cancelToken: this.tokenSource.token,
-        ...(await this.request.getHeaderAndData(this.url)),
-      })
-      .then((e: AxiosResponse<Buffer>) => {
+    return await axios({
+      method: this.method,
+      url: this.url,
+      responseType: 'arraybuffer',
+      cancelToken: this.tokenSource.token,
+      ...(await this.request.getHeaderAndData(this.url)),
+    })
+      .then((e: AxiosResponse<ArrayBuffer>) => {
         /**
          * 成功
          * */
         console.log(e);
         this.response.setData(e.headers, this.url, e.data, startTime, Date.now());
       })
-      .catch((e: AxiosError<Buffer>) => {
+      .catch((e: AxiosError<ArrayBuffer>) => {
         if (e.response) {
           /**
            * 异常,但是已经取到 response 数据
@@ -133,7 +134,8 @@ export class HttpManager {
            * 异常,为获取 response 数据
            * */
           console.log(e.message);
-          this.response.setData({}, this.url, window.buffer.from(e.message), startTime, Date.now());
+          const encode = new TextEncoder();
+          this.response.setData({}, this.url, encode.encode(e.message), startTime, Date.now());
           this.response.contentType = 'error';
         }
         return e.message;

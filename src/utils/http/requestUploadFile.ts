@@ -79,9 +79,10 @@ export class RequestUploadFile implements UploadFileProps {
   /**
    * 获取文件数据
    * */
-  public getData(): string | Buffer {
+  public getData(): string | Blob {
     if (this.isFile && this.fileExists()) {
-      return window.nodeFs.readFileSync(this.path ?? '');
+      const buffer = window.nodeFs.readFileSync(this.path ?? '');
+      return new Blob([new Uint8Array(buffer)]);
     } else {
       return this.value;
     }
